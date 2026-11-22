@@ -1,0 +1,4654 @@
+#arbs-golden 1
+#source ApexTriggerEffect / ApexTriggerBridge java=f3051641fb20a5210358b5e7d47e8ff05c568b0e
+#harness type ordinal: 0=OFF 1=FEEDBACK 2=VIBRATION 3=WEAPON 4=BOW 5=RHYTHM ; code 0=OK 1=UNSUPPORTED 2=INVALID
+#harness decode type=0x.. p=<10B hex>: ApexTriggerEffect.decode -> OUT! code= type= ... (all fields)
+#harness scale s= pct=: OUT! v=scaleStrength ; ceil s= pct=: OUT! v=limitCeiling ; posfor z=: OUT! v=positionFor ; burstdrive f=: OUT! v=burstDriveForForce
+#harness zonelevel zones=<10> pos=<double bits>: OUT~d v=zoneLevel ; shape a= h= r= hz=<double bits> i=: OUT~d v=shapeValue
+#harness bridge CASE: new ApexTriggerBridge; IN strength p= / ceiling p= ; IN pos l= r=: setPosition
+#harness   IN eff side=L|R type=0x.. p=<hex> t=: ret=onEffect(side==L,type,p,t) -> OUT! ret=null|str (TXT = Java string, not compared)
+#harness   IN render t=: render(t,out) -> OUT! en= route= ; OUT~1 s=<8> ; IN stats: OUT! v=stats() ; IN any: OUT! v=anyEffect() ; IN clear: clear()
+CASE decode
+IN decode type=0x00 p=00000000000000000000
+OUT! code=0 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x05 p=ffff0000000000000000
+OUT! code=0 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x21 p=ff0388c6fa3f00000000
+OUT! code=0 type=1 sz=0 ez=9 str=0 freq=0 snap=0 det=0 zones=1,2,3,4,5,6,7,8,8,8 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x21 p=7800008e050000000000
+OUT! code=0 type=1 sz=3 ez=6 str=0 freq=0 snap=0 det=0 zones=0,0,0,8,1,4,2,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x21 p=0000ffff000000000000
+OUT! code=0 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x21 p=00040000000000000000
+OUT! code=2 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x26 p=fc0180a4b6070000c800
+OUT! code=0 type=2 sz=2 ez=8 str=0 freq=200 snap=0 det=0 zones=0,0,3,3,3,6,6,6,8,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x26 p=fc0180a4b60700000000
+OUT! code=0 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x26 p=1f00e023000000001e00
+OUT! code=0 type=5 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=127 rp=33 rf=0 rt=255 pa=1 ph=12 pr=10
+IN decode type=0x26 p=fe03f8ffff3f00000a00
+OUT! code=0 type=5 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=127 rp=100 rf=26 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x26 p=20000080010000000100
+OUT! code=0 type=5 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=89 rp=1000 rf=128 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x26 p=01000100000000001f00
+OUT! code=0 type=2 sz=0 ez=0 str=0 freq=31 snap=0 det=0 zones=2,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x25 p=44000400000000000000
+OUT! code=0 type=3 sz=2 ez=6 str=5 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x25 p=01020700000000000000
+OUT! code=0 type=3 sz=0 ez=9 str=8 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x25 p=1c000000000000000000
+OUT! code=2 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x25 p=10000200000000000000
+OUT! code=2 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x22 p=82002b00000000000000
+OUT! code=0 type=4 sz=1 ez=7 str=4 freq=0 snap=6 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x22 p=02022b00000000000000
+OUT! code=2 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x22 p=82004000000000000000
+OUT! code=2 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x23 p=ff030000000000000000
+OUT! code=1 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x27 p=0102030405060708090a
+OUT! code=1 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x01 p=10000000000000000000
+OUT! code=1 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0x02 p=10800000000000000000
+OUT! code=1 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+IN decode type=0xfc p=00000000000000000000
+OUT! code=1 type=0 sz=0 ez=0 str=0 freq=0 snap=0 det=0 zones=0,0,0,0,0,0,0,0,0,0 rd=0 rp=0 rf=0 rt=255 pa=1 ph=40 pr=10
+END
+CASE helpers
+IN scale s=-127 pct=0
+OUT! v=0
+IN ceil s=-127 pct=0
+OUT! v=-24
+IN scale s=-127 pct=20
+OUT! v=-25
+IN ceil s=-127 pct=20
+OUT! v=-24
+IN scale s=-127 pct=50
+OUT! v=-63
+IN ceil s=-127 pct=50
+OUT! v=-56
+IN scale s=-127 pct=60
+OUT! v=-76
+IN ceil s=-127 pct=60
+OUT! v=-65
+IN scale s=-127 pct=99
+OUT! v=-125
+IN ceil s=-127 pct=99
+OUT! v=-95
+IN scale s=-127 pct=100
+OUT! v=-127
+IN ceil s=-127 pct=100
+OUT! v=-127
+IN scale s=-127 pct=150
+OUT! v=-127
+IN ceil s=-127 pct=150
+OUT! v=-127
+IN scale s=-64 pct=0
+OUT! v=0
+IN ceil s=-64 pct=0
+OUT! v=-23
+IN scale s=-64 pct=20
+OUT! v=-12
+IN ceil s=-64 pct=20
+OUT! v=-23
+IN scale s=-64 pct=50
+OUT! v=-32
+IN ceil s=-64 pct=50
+OUT! v=-48
+IN scale s=-64 pct=60
+OUT! v=-38
+IN ceil s=-64 pct=60
+OUT! v=-54
+IN scale s=-64 pct=99
+OUT! v=-63
+IN ceil s=-64 pct=99
+OUT! v=-64
+IN scale s=-64 pct=100
+OUT! v=-64
+IN ceil s=-64 pct=100
+OUT! v=-64
+IN scale s=-64 pct=150
+OUT! v=-64
+IN ceil s=-64 pct=150
+OUT! v=-64
+IN scale s=-1 pct=0
+OUT! v=0
+IN ceil s=-1 pct=0
+OUT! v=-1
+IN scale s=-1 pct=20
+OUT! v=0
+IN ceil s=-1 pct=20
+OUT! v=-1
+IN scale s=-1 pct=50
+OUT! v=0
+IN ceil s=-1 pct=50
+OUT! v=-1
+IN scale s=-1 pct=60
+OUT! v=0
+IN ceil s=-1 pct=60
+OUT! v=-1
+IN scale s=-1 pct=99
+OUT! v=0
+IN ceil s=-1 pct=99
+OUT! v=-1
+IN scale s=-1 pct=100
+OUT! v=-1
+IN ceil s=-1 pct=100
+OUT! v=-1
+IN scale s=-1 pct=150
+OUT! v=-1
+IN ceil s=-1 pct=150
+OUT! v=-1
+IN scale s=0 pct=0
+OUT! v=0
+IN ceil s=0 pct=0
+OUT! v=0
+IN scale s=0 pct=20
+OUT! v=0
+IN ceil s=0 pct=20
+OUT! v=0
+IN scale s=0 pct=50
+OUT! v=0
+IN ceil s=0 pct=50
+OUT! v=0
+IN scale s=0 pct=60
+OUT! v=0
+IN ceil s=0 pct=60
+OUT! v=0
+IN scale s=0 pct=99
+OUT! v=0
+IN ceil s=0 pct=99
+OUT! v=0
+IN scale s=0 pct=100
+OUT! v=0
+IN ceil s=0 pct=100
+OUT! v=0
+IN scale s=0 pct=150
+OUT! v=0
+IN ceil s=0 pct=150
+OUT! v=0
+IN scale s=1 pct=0
+OUT! v=0
+IN ceil s=1 pct=0
+OUT! v=1
+IN scale s=1 pct=20
+OUT! v=0
+IN ceil s=1 pct=20
+OUT! v=1
+IN scale s=1 pct=50
+OUT! v=0
+IN ceil s=1 pct=50
+OUT! v=1
+IN scale s=1 pct=60
+OUT! v=0
+IN ceil s=1 pct=60
+OUT! v=1
+IN scale s=1 pct=99
+OUT! v=0
+IN ceil s=1 pct=99
+OUT! v=1
+IN scale s=1 pct=100
+OUT! v=1
+IN ceil s=1 pct=100
+OUT! v=1
+IN scale s=1 pct=150
+OUT! v=1
+IN ceil s=1 pct=150
+OUT! v=1
+IN scale s=33 pct=0
+OUT! v=0
+IN ceil s=33 pct=0
+OUT! v=21
+IN scale s=33 pct=20
+OUT! v=6
+IN ceil s=33 pct=20
+OUT! v=21
+IN scale s=33 pct=50
+OUT! v=16
+IN ceil s=33 pct=50
+OUT! v=33
+IN scale s=33 pct=60
+OUT! v=19
+IN ceil s=33 pct=60
+OUT! v=33
+IN scale s=33 pct=99
+OUT! v=32
+IN ceil s=33 pct=99
+OUT! v=33
+IN scale s=33 pct=100
+OUT! v=33
+IN ceil s=33 pct=100
+OUT! v=33
+IN scale s=33 pct=150
+OUT! v=33
+IN ceil s=33 pct=150
+OUT! v=33
+IN scale s=63 pct=0
+OUT! v=0
+IN ceil s=63 pct=0
+OUT! v=23
+IN scale s=63 pct=20
+OUT! v=12
+IN ceil s=63 pct=20
+OUT! v=23
+IN scale s=63 pct=50
+OUT! v=31
+IN ceil s=63 pct=50
+OUT! v=47
+IN scale s=63 pct=60
+OUT! v=37
+IN ceil s=63 pct=60
+OUT! v=53
+IN scale s=63 pct=99
+OUT! v=62
+IN ceil s=63 pct=99
+OUT! v=63
+IN scale s=63 pct=100
+OUT! v=63
+IN ceil s=63 pct=100
+OUT! v=63
+IN scale s=63 pct=150
+OUT! v=63
+IN ceil s=63 pct=150
+OUT! v=63
+IN scale s=64 pct=0
+OUT! v=0
+IN ceil s=64 pct=0
+OUT! v=23
+IN scale s=64 pct=20
+OUT! v=12
+IN ceil s=64 pct=20
+OUT! v=23
+IN scale s=64 pct=50
+OUT! v=32
+IN ceil s=64 pct=50
+OUT! v=48
+IN scale s=64 pct=60
+OUT! v=38
+IN ceil s=64 pct=60
+OUT! v=54
+IN scale s=64 pct=99
+OUT! v=63
+IN ceil s=64 pct=99
+OUT! v=64
+IN scale s=64 pct=100
+OUT! v=64
+IN ceil s=64 pct=100
+OUT! v=64
+IN scale s=64 pct=150
+OUT! v=64
+IN ceil s=64 pct=150
+OUT! v=64
+IN scale s=100 pct=0
+OUT! v=0
+IN ceil s=100 pct=0
+OUT! v=24
+IN scale s=100 pct=20
+OUT! v=20
+IN ceil s=100 pct=20
+OUT! v=24
+IN scale s=100 pct=50
+OUT! v=50
+IN ceil s=100 pct=50
+OUT! v=53
+IN scale s=100 pct=60
+OUT! v=60
+IN ceil s=100 pct=60
+OUT! v=62
+IN scale s=100 pct=99
+OUT! v=99
+IN ceil s=100 pct=99
+OUT! v=86
+IN scale s=100 pct=100
+OUT! v=100
+IN ceil s=100 pct=100
+OUT! v=100
+IN scale s=100 pct=150
+OUT! v=100
+IN ceil s=100 pct=150
+OUT! v=100
+IN scale s=127 pct=0
+OUT! v=0
+IN ceil s=127 pct=0
+OUT! v=24
+IN scale s=127 pct=20
+OUT! v=25
+IN ceil s=127 pct=20
+OUT! v=24
+IN scale s=127 pct=50
+OUT! v=63
+IN ceil s=127 pct=50
+OUT! v=56
+IN scale s=127 pct=60
+OUT! v=76
+IN ceil s=127 pct=60
+OUT! v=65
+IN scale s=127 pct=99
+OUT! v=125
+IN ceil s=127 pct=99
+OUT! v=95
+IN scale s=127 pct=100
+OUT! v=127
+IN ceil s=127 pct=100
+OUT! v=127
+IN scale s=127 pct=150
+OUT! v=127
+IN ceil s=127 pct=150
+OUT! v=127
+IN posfor z=0
+OUT! v=0
+IN posfor z=1
+OUT! v=26
+IN posfor z=2
+OUT! v=52
+IN posfor z=3
+OUT! v=77
+IN posfor z=4
+OUT! v=103
+IN posfor z=5
+OUT! v=128
+IN posfor z=6
+OUT! v=154
+IN posfor z=7
+OUT! v=180
+IN posfor z=8
+OUT! v=205
+IN posfor z=9
+OUT! v=231
+IN posfor z=10
+OUT! v=256
+IN burstdrive f=0
+OUT! v=0
+IN burstdrive f=4
+OUT! v=70
+IN burstdrive f=8
+OUT! v=70
+IN burstdrive f=12
+OUT! v=76
+IN burstdrive f=16
+OUT! v=81
+IN burstdrive f=20
+OUT! v=87
+IN burstdrive f=24
+OUT! v=93
+IN burstdrive f=28
+OUT! v=99
+IN burstdrive f=32
+OUT! v=104
+IN burstdrive f=36
+OUT! v=110
+IN burstdrive f=40
+OUT! v=116
+IN burstdrive f=44
+OUT! v=121
+IN burstdrive f=48
+OUT! v=127
+IN burstdrive f=52
+OUT! v=127
+IN burstdrive f=56
+OUT! v=127
+IN burstdrive f=60
+OUT! v=127
+IN burstdrive f=64
+OUT! v=127
+IN burstdrive f=68
+OUT! v=127
+IN burstdrive f=72
+OUT! v=127
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:3fd0000000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4015000000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4024800000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:402e800000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4034400000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4039400000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:403e400000000000
+OUT~d v=d:3fe7400000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4041a00000000000
+OUT~d v=d:3ff8200000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4044200000000000
+OUT~d v=d:4001bc0000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4046a00000000000
+OUT~d v=d:40066c0000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4049200000000000
+OUT~d v=d:400b1c0000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:404ba00000000000
+OUT~d v=d:400fcc0000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:404e200000000000
+OUT~d v=d:40123e0000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4050500000000000
+OUT~d v=d:4014960000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4051900000000000
+OUT~d v=d:4016ee0000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4052d00000000000
+OUT~d v=d:4019460000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4054100000000000
+OUT~d v=d:401b9e0000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4055500000000000
+OUT~d v=d:401df60000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4056900000000000
+OUT~d v=d:4020000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4057d00000000000
+OUT~d v=d:4020000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4059100000000000
+OUT~d v=d:4020000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:405a500000000000
+OUT~d v=d:4020000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:405b900000000000
+OUT~d v=d:4020000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:405cd00000000000
+OUT~d v=d:401fe00000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:405e100000000000
+OUT~d v=d:4013600000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:405f500000000000
+OUT~d v=d:3ffb800000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4060480000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4060e80000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4061880000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4062280000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4062c80000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4063680000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4064080000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4064a80000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4065480000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4065e80000000000
+OUT~d v=d:0000000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4066880000000000
+OUT~d v=d:3fcf800000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4067280000000000
+OUT~d v=d:3ff6b00000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4067c80000000000
+OUT~d v=d:4004b80000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4068680000000000
+OUT~d v=d:400c100000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4069080000000000
+OUT~d v=d:4011280000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4069a80000000000
+OUT~d v=d:4014480000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406a480000000000
+OUT~d v=d:4017680000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406ae80000000000
+OUT~d v=d:401a880000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406b880000000000
+OUT~d v=d:4019840000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406c280000000000
+OUT~d v=d:4014d40000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406cc80000000000
+OUT~d v=d:4010240000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406d680000000000
+OUT~d v=d:4006e80000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406e080000000000
+OUT~d v=d:3ffb100000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406ea80000000000
+OUT~d v=d:3ff0000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406f480000000000
+OUT~d v=d:3ff0000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:406fe80000000000
+OUT~d v=d:3ff0000000000000
+IN zonelevel zones=0,2,5,8,8,0,0,3,7,1 pos=d:4070440000000000
+OUT~d v=d:3ff0000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=0
+OUT~d v=d:0000000000000000
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=0
+OUT~d v=d:0000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=3
+OUT~d v=d:3fef3ab5ca04a4f8
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=3
+OUT~d v=d:3feffbf52e9d1086
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=6
+OUT~d v=d:bfdb3ff7c925819c
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=6
+OUT~d v=d:bfb0130a1be09377
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=9
+OUT~d v=d:bfe948f32a1d91f4
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=9
+OUT~d v=d:bfefdba4c3e3935d
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=12
+OUT~d v=d:3fe8a80b635b6bea
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=12
+OUT~d v=d:3fc00aeb5da15bdd
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=15
+OUT~d v=d:3fdd0e2e2b44de15
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=15
+OUT~d v=d:3fef9b24942fe45b
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=18
+OUT~d v=d:bfeefea21d101edf
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=18
+OUT~d v=d:bfc33016b735fb6b
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=21
+OUT~d v=d:bfa015122df7578d
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=21
+OUT~d v=d:bfdf3ab5ca04a4f7
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=24
+OUT~d v=d:3fef6ee5ac2509fe
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=24
+OUT~d v=d:3fa9774194e3393f
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=27
+OUT~d v=d:bfd96adefc7ce9af
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=27
+OUT~d v=d:0000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=30
+OUT~d v=d:bfe9e3779b97f4b5
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=30
+OUT~d v=d:8000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=33
+OUT~d v=d:3fe800e8ee0dc5da
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=33
+OUT~d v=d:8000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=36
+OUT~d v=d:3fded50d5cbfa96a
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=36
+OUT~d v=d:0000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=39
+OUT~d v=d:bfeebab9d2d13574
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=39
+OUT~d v=d:0000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=42
+OUT~d v=d:bfa9b8102c9a843d
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=42
+OUT~d v=d:8000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=45
+OUT~d v=d:3fdf9b24942fe459
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=45
+OUT~d v=d:8000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=48
+OUT~d v=d:bfb2d91506ed5417
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=48
+OUT~d v=d:0000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=51
+OUT~d v=d:8000000000000000
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=51
+OUT~d v=d:0000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=54
+OUT~d v=d:0000000000000000
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=54
+OUT~d v=d:8000000000000000
+IN shape a=1 h=40 r=10 hz=d:4057c00000000000 i=57
+OUT~d v=d:0000000000000000
+IN shape a=3 h=14 r=10 hz=d:4055400000000000 i=57
+OUT~d v=d:8000000000000000
+END
+CASE bridge_weapon_right
+IN render t=2000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN eff side=R type=0x25 p=44000400000000000000 t=2008000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(R): Weapon(0x25) zone 2..6 str 5
+IN pos l=0 r=0
+IN render t=2008000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=8
+IN render t=2016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=17
+IN render t=2024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=25
+IN render t=2032000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=34
+IN render t=2040000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=42
+IN render t=2048000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=51
+IN render t=2056000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=59
+IN render t=2064000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=68
+IN render t=2072000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=76
+IN render t=2080000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=85
+IN render t=2088000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=93
+IN render t=2096000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=102
+IN render t=2104000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=110
+IN render t=2112000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=119
+IN render t=2120000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=127
+IN render t=2128000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=136
+IN render t=2136000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=144
+IN render t=2144000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=153
+IN render t=2152000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=161
+IN render t=2160000000
+OUT! en=1 route=1
+OUT~1 s=0,65,108,113,79,18,-49,-100
+IN pos l=0 r=170
+IN render t=2168000000
+OUT! en=1 route=1
+OUT~1 s=-116,-92,-36,32,89,115,102,53
+IN pos l=0 r=178
+IN render t=2176000000
+OUT! en=1 route=1
+OUT~1 s=-15,-77,-112,-109,-68,-4,62,106
+IN pos l=0 r=187
+IN render t=2184000000
+OUT! en=1 route=1
+OUT~1 s=114,82,22,-46,-98,-116,-94,-39
+IN pos l=0 r=195
+IN render t=2192000000
+OUT! en=1 route=1
+OUT~1 s=29,87,115,103,56,-11,-74,-111
+IN pos l=0 r=204
+IN render t=2200000000
+OUT! en=1 route=1
+OUT~1 s=-110,-64,-6,41,63,57,34,8
+IN pos l=0 r=212
+IN render t=2208000000
+OUT! en=1 route=1
+OUT~1 s=-9,-10,0,0,0,0,0,0
+IN pos l=0 r=221
+IN render t=2216000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=229
+IN render t=2224000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=238
+IN render t=2232000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=246
+IN render t=2240000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=255
+IN render t=2248000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=255
+IN render t=2256000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=247
+IN render t=2264000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=238
+IN render t=2272000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=230
+IN render t=2280000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=221
+IN render t=2288000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=213
+IN render t=2296000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=204
+IN render t=2304000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=196
+IN render t=2312000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=187
+IN render t=2320000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=179
+IN render t=2328000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=170
+IN render t=2336000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=162
+IN render t=2344000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=153
+IN render t=2352000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=145
+IN render t=2360000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=136
+IN render t=2368000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=128
+IN render t=2376000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=119
+IN render t=2384000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=111
+IN render t=2392000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=102
+IN render t=2400000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=94
+IN render t=2408000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=85
+IN render t=2416000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=77
+IN render t=2424000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=68
+IN render t=2432000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=60
+IN render t=2440000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=51
+IN render t=2448000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=43
+IN render t=2456000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=34
+IN render t=2464000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=26
+IN render t=2472000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=17
+IN render t=2480000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=9
+IN render t=2488000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2496000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2504000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=8
+IN render t=2512000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=17
+IN render t=2520000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=25
+IN render t=2528000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=34
+IN render t=2536000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=42
+IN render t=2544000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=51
+IN render t=2552000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=59
+IN render t=2560000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=68
+IN render t=2568000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=76
+IN render t=2576000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=85
+IN render t=2584000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=93
+IN render t=2592000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=102
+IN render t=2600000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=110
+IN render t=2608000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=119
+IN render t=2616000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=127
+IN render t=2624000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=136
+IN render t=2632000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=144
+IN render t=2640000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=153
+IN render t=2648000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=161
+IN render t=2656000000
+OUT! en=1 route=1
+OUT~1 s=0,65,108,113,79,18,-49,-100
+IN pos l=0 r=170
+IN render t=2664000000
+OUT! en=1 route=1
+OUT~1 s=-116,-92,-36,32,89,115,102,53
+IN pos l=0 r=178
+IN render t=2672000000
+OUT! en=1 route=1
+OUT~1 s=-15,-77,-112,-109,-68,-4,62,106
+IN pos l=0 r=187
+IN render t=2680000000
+OUT! en=1 route=1
+OUT~1 s=114,82,22,-46,-98,-116,-94,-39
+IN pos l=0 r=195
+IN render t=2688000000
+OUT! en=1 route=1
+OUT~1 s=29,87,115,103,56,-11,-74,-111
+IN pos l=0 r=204
+IN render t=2696000000
+OUT! en=1 route=1
+OUT~1 s=-110,-64,-6,41,63,57,34,8
+IN pos l=0 r=212
+IN render t=2704000000
+OUT! en=1 route=1
+OUT~1 s=-9,-10,0,0,0,0,0,0
+IN pos l=0 r=221
+IN render t=2712000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=229
+IN render t=2720000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=238
+IN render t=2728000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=246
+IN render t=2736000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=255
+IN render t=2744000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=255
+IN render t=2752000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=247
+IN render t=2760000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=238
+IN render t=2768000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=230
+IN render t=2776000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=221
+IN render t=2784000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=213
+IN render t=2792000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=204
+IN render t=2800000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=196
+IN render t=2808000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=187
+IN render t=2816000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=179
+IN render t=2824000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=170
+IN render t=2832000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=162
+IN render t=2840000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=153
+IN render t=2848000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=145
+IN render t=2856000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=136
+IN render t=2864000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=128
+IN render t=2872000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=119
+IN render t=2880000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=111
+IN render t=2888000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=102
+IN render t=2896000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=94
+IN render t=2904000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=85
+IN render t=2912000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=77
+IN render t=2920000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=68
+IN render t=2928000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=60
+IN render t=2936000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=51
+IN render t=2944000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=43
+IN render t=2952000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=34
+IN render t=2960000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=26
+IN render t=2968000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=17
+IN render t=2976000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=9
+IN render t=2984000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2992000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN eff side=R type=0x25 p=44000400000000000000 t=3000000000
+OUT! ret=null
+IN render t=3000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN any
+OUT! v=1
+IN stats
+OUT! v=0,2,1,0,0,0,1,0,2,0,0,0,14,0,0,0,37
+END
+CASE bridge_feedback_left
+IN eff side=L type=0x21 p=ff0388c6fa3f00000000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 0..9 maxStr 8
+IN pos l=0 r=0
+IN render t=2000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=6 r=0
+IN render t=2008000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=12 r=0
+IN render t=2016000000
+OUT! en=1 route=0
+OUT~1 s=1,1,-1,-3,-5,-6,-5,-2
+IN pos l=19 r=0
+IN render t=2024000000
+OUT! en=1 route=0
+OUT~1 s=2,6,8,9,6,2,-3,-7
+IN pos l=25 r=0
+IN render t=2032000000
+OUT! en=1 route=0
+OUT~1 s=-10,-10,-7,-2,4,9,11,11
+IN pos l=31 r=0
+IN render t=2040000000
+OUT! en=1 route=0
+OUT~1 s=7,1,-5,-11,-13,-12,-7,0
+IN pos l=38 r=0
+IN render t=2048000000
+OUT! en=1 route=0
+OUT~1 s=7,12,15,13,7,0,-8,-14
+IN pos l=44 r=0
+IN render t=2056000000
+OUT! en=1 route=0
+OUT~1 s=-16,-14,-7,2,10,16,17,14
+IN pos l=51 r=0
+IN render t=2064000000
+OUT! en=1 route=0
+OUT~1 s=7,-3,-12,-18,-19,-15,-6,4
+IN pos l=57 r=0
+IN render t=2072000000
+OUT! en=1 route=0
+OUT~1 s=14,20,20,15,5,-6,-16,-21
+IN pos l=63 r=0
+IN render t=2080000000
+OUT! en=1 route=0
+OUT~1 s=-21,-15,-4,8,18,23,22,15
+IN pos l=70 r=0
+IN render t=2088000000
+OUT! en=1 route=0
+OUT~1 s=3,-10,-20,-25,-23,-14,-2,12
+IN pos l=76 r=0
+IN render t=2096000000
+OUT! en=1 route=0
+OUT~1 s=22,26,23,14,0,-14,-24,-28
+IN pos l=82 r=0
+IN render t=2104000000
+OUT! en=1 route=0
+OUT~1 s=-24,-13,2,16,26,29,24,12
+IN pos l=89 r=0
+IN render t=2112000000
+OUT! en=1 route=0
+OUT~1 s=-4,-18,-28,-30,-24,-11,6,21
+IN pos l=95 r=0
+IN render t=2120000000
+OUT! en=1 route=0
+OUT~1 s=30,32,24,9,-8,-23,-32,-32
+IN pos l=102 r=0
+IN render t=2128000000
+OUT! en=1 route=0
+OUT~1 s=-23,-7,11,26,34,33,23,6
+IN pos l=108 r=0
+IN render t=2136000000
+OUT! en=1 route=0
+OUT~1 s=-13,-29,-36,-34,-22,-4,16,31
+IN pos l=114 r=0
+IN render t=2144000000
+OUT! en=1 route=0
+OUT~1 s=38,34,21,1,-19,-34,-39,-34
+IN pos l=121 r=0
+IN render t=2152000000
+OUT! en=1 route=0
+OUT~1 s=-19,1,22,36,41,34,18,-4
+IN pos l=127 r=0
+IN render t=2160000000
+OUT! en=1 route=0
+OUT~1 s=-25,-39,-42,-34,-16,7,28,41
+IN pos l=133 r=0
+IN render t=2168000000
+OUT! en=1 route=0
+OUT~1 s=43,33,14,-10,-31,-43,-44,-32
+IN pos l=140 r=0
+IN render t=2176000000
+OUT! en=1 route=0
+OUT~1 s=-11,13,34,46,45,31,9,-16
+IN pos l=146 r=0
+IN render t=2184000000
+OUT! en=1 route=0
+OUT~1 s=-37,-48,-45,-30,-6,20,40,49
+IN pos l=153 r=0
+IN render t=2192000000
+OUT! en=1 route=0
+OUT~1 s=45,28,3,-23,-43,-51,-45,-26
+IN pos l=159 r=0
+IN render t=2200000000
+OUT! en=1 route=0
+OUT~1 s=0,27,46,53,45,24,-3,-30
+IN pos l=165 r=0
+IN render t=2208000000
+OUT! en=1 route=0
+OUT~1 s=-49,-54,-44,-22,7,34,51,55
+IN pos l=172 r=0
+IN render t=2216000000
+OUT! en=1 route=0
+OUT~1 s=43,19,-11,-37,-54,-56,-42,-16
+IN pos l=178 r=0
+IN render t=2224000000
+OUT! en=1 route=0
+OUT~1 s=14,41,57,56,40,13,-18,-45
+IN pos l=184 r=0
+IN render t=2232000000
+OUT! en=1 route=0
+OUT~1 s=-59,-57,-38,-9,22,48,61,56
+IN pos l=191 r=0
+IN render t=2240000000
+OUT! en=1 route=0
+OUT~1 s=36,6,-27,-52,-63,-56,-34,-2
+IN pos l=197 r=0
+IN render t=2248000000
+OUT! en=1 route=0
+OUT~1 s=31,55,64,55,31,-2,-34,-57
+IN pos l=204 r=0
+IN render t=2256000000
+OUT! en=1 route=0
+OUT~1 s=-64,-53,-27,6,38,59,63,51
+IN pos l=210 r=0
+IN render t=2264000000
+OUT! en=1 route=0
+OUT~1 s=24,-10,-41,-60,-63,-48,-20,14
+IN pos l=216 r=0
+IN render t=2272000000
+OUT! en=1 route=0
+OUT~1 s=44,61,62,45,16,-18,-47,-62
+IN pos l=223 r=0
+IN render t=2280000000
+OUT! en=1 route=0
+OUT~1 s=-61,-42,-12,22,49,63,60,39
+IN pos l=229 r=0
+IN render t=2288000000
+OUT! en=1 route=0
+OUT~1 s=8,-25,-52,-64,-58,-36,-4,29
+IN pos l=235 r=0
+IN render t=2296000000
+OUT! en=1 route=0
+OUT~1 s=54,64,56,33,0,-33,-56,-64
+IN pos l=242 r=0
+IN render t=2304000000
+OUT! en=1 route=0
+OUT~1 s=-54,-29,4,36,58,64,52,25
+IN pos l=248 r=0
+IN render t=2312000000
+OUT! en=1 route=0
+OUT~1 s=-8,-39,-60,-63,-49,-22,12,42
+IN pos l=255 r=0
+IN render t=2320000000
+OUT! en=1 route=0
+OUT~1 s=61,62,47,18,-16,-45,-62,-61
+IN pos l=255 r=0
+IN render t=2328000000
+OUT! en=1 route=0
+OUT~1 s=-44,-14,20,48,63,60,41,10
+IN pos l=249 r=0
+IN render t=2336000000
+OUT! en=1 route=0
+OUT~1 s=-24,-51,-63,-59,-38,-6,27,53
+IN pos l=243 r=0
+IN render t=2344000000
+OUT! en=1 route=0
+OUT~1 s=64,57,34,2,-31,-55,-64,-55
+IN pos l=236 r=0
+IN render t=2352000000
+OUT! en=1 route=0
+OUT~1 s=-31,2,34,57,64,53,27,-6
+IN pos l=230 r=0
+IN render t=2360000000
+OUT! en=1 route=0
+OUT~1 s=-38,-59,-63,-51,-24,10,41,60
+IN pos l=224 r=0
+IN render t=2368000000
+OUT! en=1 route=0
+OUT~1 s=63,48,20,-14,-44,-61,-62,-45
+IN pos l=217 r=0
+IN render t=2376000000
+OUT! en=1 route=0
+OUT~1 s=-16,18,47,62,61,42,12,-22
+IN pos l=211 r=0
+IN render t=2384000000
+OUT! en=1 route=0
+OUT~1 s=-49,-63,-60,-39,-8,25,52,64
+IN pos l=204 r=0
+IN render t=2392000000
+OUT! en=1 route=0
+OUT~1 s=58,36,4,-29,-54,-64,-56,-33
+IN pos l=198 r=0
+IN render t=2400000000
+OUT! en=1 route=0
+OUT~1 s=0,33,56,64,54,29,-4,-36
+IN pos l=192 r=0
+IN render t=2408000000
+OUT! en=1 route=0
+OUT~1 s=-58,-64,-52,-25,8,39,60,63
+IN pos l=185 r=0
+IN render t=2416000000
+OUT! en=1 route=0
+OUT~1 s=49,21,-12,-42,-60,-61,-45,-17
+IN pos l=179 r=0
+IN render t=2424000000
+OUT! en=1 route=0
+OUT~1 s=15,43,59,58,42,13,-19,-45
+IN pos l=173 r=0
+IN render t=2432000000
+OUT! en=1 route=0
+OUT~1 s=-59,-56,-38,-9,22,46,58,53
+IN pos l=166 r=0
+IN render t=2440000000
+OUT! en=1 route=0
+OUT~1 s=34,5,-24,-47,-57,-50,-30,-2
+IN pos l=160 r=0
+IN render t=2448000000
+OUT! en=1 route=0
+OUT~1 s=27,48,55,47,26,-2,-29,-48
+IN pos l=153 r=0
+IN render t=2456000000
+OUT! en=1 route=0
+OUT~1 s=-54,-44,-23,5,31,48,52,41
+IN pos l=147 r=0
+IN render t=2464000000
+OUT! en=1 route=0
+OUT~1 s=19,-8,-33,-48,-50,-38,-16,11
+IN pos l=141 r=0
+IN render t=2472000000
+OUT! en=1 route=0
+OUT~1 s=34,48,48,35,12,-14,-35,-47
+IN pos l=134 r=0
+IN render t=2480000000
+OUT! en=1 route=0
+OUT~1 s=-45,-31,-9,16,36,46,43,28
+IN pos l=128 r=0
+IN render t=2488000000
+OUT! en=1 route=0
+OUT~1 s=6,-18,-37,-45,-40,-25,-3,20
+IN pos l=122 r=0
+IN render t=2496000000
+OUT! en=1 route=0
+OUT~1 s=37,44,38,22,0,-22,-37,-42
+IN pos l=115 r=0
+IN render t=2504000000
+OUT! en=1 route=0
+OUT~1 s=-35,-19,3,23,37,40,33,16
+IN pos l=109 r=0
+IN render t=2512000000
+OUT! en=1 route=0
+OUT~1 s=-5,-24,-36,-39,-30,-13,7,25
+IN pos l=102 r=0
+IN render t=2520000000
+OUT! en=1 route=0
+OUT~1 s=36,37,27,10,-9,-26,-35,-34
+IN pos l=96 r=0
+IN render t=2528000000
+OUT! en=1 route=0
+OUT~1 s=-24,-8,11,26,34,32,22,5
+IN pos l=90 r=0
+IN render t=2536000000
+OUT! en=1 route=0
+OUT~1 s=-12,-26,-33,-30,-19,-3,14,27
+IN pos l=83 r=0
+IN render t=2544000000
+OUT! en=1 route=0
+OUT~1 s=32,28,17,1,-15,-26,-30,-26
+IN pos l=77 r=0
+IN render t=2552000000
+OUT! en=1 route=0
+OUT~1 s=-14,1,16,26,29,24,12,-3
+IN pos l=71 r=0
+IN render t=2560000000
+OUT! en=1 route=0
+OUT~1 s=-16,-25,-27,-21,-10,4,17,25
+IN pos l=64 r=0
+IN render t=2568000000
+OUT! en=1 route=0
+OUT~1 s=25,19,8,-5,-17,-24,-24,-17
+IN pos l=58 r=0
+IN render t=2576000000
+OUT! en=1 route=0
+OUT~1 s=-6,7,17,23,22,15,4,-7
+IN pos l=51 r=0
+IN render t=2584000000
+OUT! en=1 route=0
+OUT~1 s=-17,-21,-20,-13,-3,8,16,20
+IN pos l=45 r=0
+IN render t=2592000000
+OUT! en=1 route=0
+OUT~1 s=18,11,1,-9,-16,-19,-16,-9
+IN pos l=39 r=0
+IN render t=2600000000
+OUT! en=1 route=0
+OUT~1 s=0,9,15,17,14,8,-1,-9
+IN pos l=32 r=0
+IN render t=2608000000
+OUT! en=1 route=0
+OUT~1 s=-14,-16,-12,-6,2,9,13,14
+IN pos l=26 r=0
+IN render t=2616000000
+OUT! en=1 route=0
+OUT~1 s=11,5,-2,-9,-12,-12,-9,-3
+IN pos l=20 r=0
+IN render t=2624000000
+OUT! en=1 route=0
+OUT~1 s=3,8,11,11,7,2,-3,-8
+IN pos l=13 r=0
+IN render t=2632000000
+OUT! en=1 route=0
+OUT~1 s=-10,-9,-6,-1,3,7,8,7
+IN pos l=7 r=0
+IN render t=2640000000
+OUT! en=1 route=0
+OUT~1 s=4,1,-2,-3,-3,-2,-1,0
+IN pos l=0 r=0
+IN render t=2648000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN eff side=L type=0x21 p=7800008e050000000000 t=2656000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 3..6 maxStr 8
+IN pos l=0 r=0
+IN render t=2656000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=10 r=0
+IN render t=2664000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=20 r=0
+IN render t=2672000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=30 r=0
+IN render t=2680000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=40 r=0
+IN render t=2688000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=2696000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=61 r=0
+IN render t=2704000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=71 r=0
+IN render t=2712000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=81 r=0
+IN render t=2720000000
+OUT! en=1 route=0
+OUT~1 s=2,5,6,3,-3,-11,-18,-20
+IN pos l=91 r=0
+IN render t=2728000000
+OUT! en=1 route=0
+OUT~1 s=-18,-7,11,31,45,48,36,10
+IN pos l=102 r=0
+IN render t=2736000000
+OUT! en=1 route=0
+OUT~1 s=-21,-43,-52,-45,-27,-4,17,30
+IN pos l=112 r=0
+IN render t=2744000000
+OUT! en=1 route=0
+OUT~1 s=34,28,15,1,-11,-18,-18,-13
+IN pos l=122 r=0
+IN render t=2752000000
+OUT! en=1 route=0
+OUT~1 s=-7,0,8,13,15,12,6,-1
+IN pos l=132 r=0
+IN render t=2760000000
+OUT! en=1 route=0
+OUT~1 s=-9,-15,-18,-15,-7,3,14,22
+IN pos l=142 r=0
+IN render t=2768000000
+OUT! en=1 route=0
+OUT~1 s=24,19,8,-6,-19,-28,-29,-22
+IN pos l=153 r=0
+IN render t=2776000000
+OUT! en=1 route=0
+OUT~1 s=-8,8,21,27,26,17,5,-8
+IN pos l=163 r=0
+IN render t=2784000000
+OUT! en=1 route=0
+OUT~1 s=-18,-23,-20,-13,-3,8,15,18
+IN pos l=173 r=0
+IN render t=2792000000
+OUT! en=1 route=0
+OUT~1 s=15,9,1,-6,-10,-10,-8,-4
+IN pos l=183 r=0
+IN render t=2800000000
+OUT! en=1 route=0
+OUT~1 s=0,3,4,4,2,1,0,0
+IN pos l=193 r=0
+IN render t=2808000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=204 r=0
+IN render t=2816000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=214 r=0
+IN render t=2824000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=224 r=0
+IN render t=2832000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=234 r=0
+IN render t=2840000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=244 r=0
+IN render t=2848000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=255 r=0
+IN render t=2856000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=255 r=0
+IN render t=2864000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=245 r=0
+IN render t=2872000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=235 r=0
+IN render t=2880000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=225 r=0
+IN render t=2888000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=215 r=0
+IN render t=2896000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=204 r=0
+IN render t=2904000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=194 r=0
+IN render t=2912000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=184 r=0
+IN render t=2920000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=174 r=0
+IN render t=2928000000
+OUT! en=1 route=0
+OUT~1 s=-1,0,1,2,4,5,4,1
+IN pos l=164 r=0
+IN render t=2936000000
+OUT! en=1 route=0
+OUT~1 s=-3,-7,-11,-11,-8,-1,7,14
+IN pos l=153 r=0
+IN render t=2944000000
+OUT! en=1 route=0
+OUT~1 s=18,17,11,1,-11,-20,-24,-21
+IN pos l=143 r=0
+IN render t=2952000000
+OUT! en=1 route=0
+OUT~1 s=-12,1,14,25,28,24,13,-3
+IN pos l=133 r=0
+IN render t=2960000000
+OUT! en=1 route=0
+OUT~1 s=-18,-27,-28,-22,-10,4,16,23
+IN pos l=123 r=0
+IN render t=2968000000
+OUT! en=1 route=0
+OUT~1 s=23,17,7,-4,-13,-17,-16,-11
+IN pos l=113 r=0
+IN render t=2976000000
+OUT! en=1 route=0
+OUT~1 s=-4,4,10,14,13,9,2,-4
+IN pos l=102 r=0
+IN render t=2984000000
+OUT! en=1 route=0
+OUT~1 s=-12,-19,-20,-15,-3,12,27,37
+IN pos l=92 r=0
+IN render t=2992000000
+OUT! en=1 route=0
+OUT~1 s=36,24,3,-22,-43,-53,-49,-30
+IN pos l=82 r=0
+IN render t=3000000000
+OUT! en=1 route=0
+OUT~1 s=0,26,41,42,32,16,-2,-15
+IN pos l=72 r=0
+IN render t=3008000000
+OUT! en=1 route=0
+OUT~1 s=-21,-19,-13,-5,1,4,3,0
+IN pos l=62 r=0
+IN render t=3016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=3024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=41 r=0
+IN render t=3032000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=31 r=0
+IN render t=3040000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=21 r=0
+IN render t=3048000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=11 r=0
+IN render t=3056000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=3064000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN stats
+OUT! v=2,0,2,0,0,0,0,0,0,0,0,101,0,0,0,33,0
+END
+CASE bridge_vibration_both_200hz
+IN eff side=L type=0x26 p=fe03d058ff3f0000c800 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Vibration(0x26) zone 1..9 maxStr 8 200Hz
+IN eff side=R type=0x26 p=fe03d058ff3f0000c800 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(R): Vibration(0x26) zone 1..9 maxStr 8 200Hz
+IN pos l=0 r=0
+IN render t=2000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=8 r=8
+IN render t=2008000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=17 r=17
+IN render t=2016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=25 r=25
+IN render t=2024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=34 r=34
+IN render t=2032000000
+OUT! en=1 route=2
+OUT~1 s=1,-3,-7,0,12,9,-10,-19
+IN pos l=42 r=42
+IN render t=2040000000
+OUT! en=1 route=2
+OUT~1 s=0,22,14,-15,-26,0,28,18
+IN pos l=51 r=51
+IN render t=2048000000
+OUT! en=1 route=2
+OUT~1 s=-19,-31,0,32,20,-20,-33,0
+IN pos l=59 r=59
+IN render t=2056000000
+OUT! en=1 route=2
+OUT~1 s=34,21,-21,-35,0,35,22,-22
+IN pos l=68 r=68
+IN render t=2064000000
+OUT! en=1 route=2
+OUT~1 s=-37,0,37,23,-24,-39,0,40
+IN pos l=76 r=76
+IN render t=2072000000
+OUT! en=1 route=2
+OUT~1 s=25,-25,-41,0,41,26,-26,-43
+IN pos l=85 r=85
+IN render t=2080000000
+OUT! en=1 route=2
+OUT~1 s=0,43,27,-27,-45,0,45,28
+IN pos l=93 r=93
+IN render t=2088000000
+OUT! en=1 route=2
+OUT~1 s=-29,-47,0,47,29,-30,-48,0
+IN pos l=102 r=102
+IN render t=2096000000
+OUT! en=1 route=2
+OUT~1 s=49,31,-31,-50,0,51,32,-32
+IN pos l=110 r=110
+IN render t=2104000000
+OUT! en=1 route=2
+OUT~1 s=-53,0,53,33,-33,-54,0,55
+IN pos l=119 r=119
+IN render t=2112000000
+OUT! en=1 route=2
+OUT~1 s=34,-35,-56,0,57,36,-36,-58
+IN pos l=127 r=127
+IN render t=2120000000
+OUT! en=1 route=2
+OUT~1 s=0,59,37,-37,-60,0,61,38
+IN pos l=136 r=136
+IN render t=2128000000
+OUT! en=1 route=2
+OUT~1 s=-38,-62,0,63,39,-40,-64,0
+IN pos l=144 r=144
+IN render t=2136000000
+OUT! en=1 route=2
+OUT~1 s=65,41,-41,-66,0,67,42,-42
+IN pos l=153 r=153
+IN render t=2144000000
+OUT! en=1 route=2
+OUT~1 s=-68,0,69,43,-43,-70,0,71
+IN pos l=161 r=161
+IN render t=2152000000
+OUT! en=1 route=2
+OUT~1 s=44,-44,-72,0,73,45,-46,-74
+IN pos l=170 r=170
+IN render t=2160000000
+OUT! en=1 route=2
+OUT~1 s=0,75,46,-46,-75,0,76,47
+IN pos l=178 r=178
+IN render t=2168000000
+OUT! en=1 route=2
+OUT~1 s=-47,-76,0,76,47,-47,-76,0
+IN pos l=187 r=187
+IN render t=2176000000
+OUT! en=1 route=2
+OUT~1 s=76,47,-47,-76,0,76,47,-47
+IN pos l=195 r=195
+IN render t=2184000000
+OUT! en=1 route=2
+OUT~1 s=-76,0,76,47,-47,-76,0,76
+IN pos l=204 r=204
+IN render t=2192000000
+OUT! en=1 route=2
+OUT~1 s=47,-47,-76,0,76,47,-47,-76
+IN pos l=212 r=212
+IN render t=2200000000
+OUT! en=1 route=2
+OUT~1 s=0,76,47,-47,-76,0,76,47
+IN pos l=221 r=221
+IN render t=2208000000
+OUT! en=1 route=2
+OUT~1 s=-47,-76,0,76,47,-47,-76,0
+IN pos l=229 r=229
+IN render t=2216000000
+OUT! en=1 route=2
+OUT~1 s=76,47,-47,-76,0,76,47,-47
+IN pos l=238 r=238
+IN render t=2224000000
+OUT! en=1 route=2
+OUT~1 s=-76,0,76,47,-47,-76,0,76
+IN pos l=246 r=246
+IN render t=2232000000
+OUT! en=1 route=2
+OUT~1 s=47,-47,-76,0,76,47,-47,-76
+IN pos l=255 r=255
+IN render t=2240000000
+OUT! en=1 route=2
+OUT~1 s=0,76,47,-47,-76,0,76,47
+IN pos l=255 r=255
+IN render t=2248000000
+OUT! en=1 route=2
+OUT~1 s=-47,-76,0,76,47,-47,-76,0
+IN pos l=247 r=247
+IN render t=2256000000
+OUT! en=1 route=2
+OUT~1 s=76,47,-47,-76,0,76,47,-47
+IN pos l=238 r=238
+IN render t=2264000000
+OUT! en=1 route=2
+OUT~1 s=-76,0,76,47,-47,-76,0,76
+IN pos l=230 r=230
+IN render t=2272000000
+OUT! en=1 route=2
+OUT~1 s=47,-47,-76,0,76,47,-47,-76
+IN pos l=221 r=221
+IN render t=2280000000
+OUT! en=1 route=2
+OUT~1 s=0,76,47,-47,-76,0,76,47
+IN pos l=213 r=213
+IN render t=2288000000
+OUT! en=1 route=2
+OUT~1 s=-47,-76,0,76,47,-47,-76,0
+IN pos l=204 r=204
+IN render t=2296000000
+OUT! en=1 route=2
+OUT~1 s=76,47,-47,-76,0,76,47,-47
+IN pos l=196 r=196
+IN render t=2304000000
+OUT! en=1 route=2
+OUT~1 s=-76,0,76,47,-47,-76,0,76
+IN pos l=187 r=187
+IN render t=2312000000
+OUT! en=1 route=2
+OUT~1 s=47,-47,-76,0,76,47,-47,-76
+IN pos l=179 r=179
+IN render t=2320000000
+OUT! en=1 route=2
+OUT~1 s=0,76,47,-47,-76,0,76,47
+IN pos l=170 r=170
+IN render t=2328000000
+OUT! en=1 route=2
+OUT~1 s=-47,-76,0,76,47,-47,-76,0
+IN pos l=162 r=162
+IN render t=2336000000
+OUT! en=1 route=2
+OUT~1 s=76,47,-47,-75,0,75,46,-46
+IN pos l=153 r=153
+IN render t=2344000000
+OUT! en=1 route=2
+OUT~1 s=-74,0,73,45,-45,-72,0,71
+IN pos l=145 r=145
+IN render t=2352000000
+OUT! en=1 route=2
+OUT~1 s=44,-43,-70,0,69,43,-42,-68
+IN pos l=136 r=136
+IN render t=2360000000
+OUT! en=1 route=2
+OUT~1 s=0,67,41,-41,-66,0,65,40
+IN pos l=128 r=128
+IN render t=2368000000
+OUT! en=1 route=2
+OUT~1 s=-40,-64,0,63,39,-39,-62,0
+IN pos l=119 r=119
+IN render t=2376000000
+OUT! en=1 route=2
+OUT~1 s=61,38,-37,-60,0,59,36,-36
+IN pos l=111 r=111
+IN render t=2384000000
+OUT! en=1 route=2
+OUT~1 s=-58,0,57,35,-35,-56,0,56
+IN pos l=102 r=102
+IN render t=2392000000
+OUT! en=1 route=2
+OUT~1 s=34,-34,-54,0,53,33,-32,-52
+IN pos l=94 r=94
+IN render t=2400000000
+OUT! en=1 route=2
+OUT~1 s=0,51,32,-31,-50,0,50,30
+IN pos l=85 r=85
+IN render t=2408000000
+OUT! en=1 route=2
+OUT~1 s=-30,-48,0,48,29,-29,-46,0
+IN pos l=77 r=77
+IN render t=2416000000
+OUT! en=1 route=2
+OUT~1 s=45,28,-28,-44,0,44,27,-26
+IN pos l=68 r=68
+IN render t=2424000000
+OUT! en=1 route=2
+OUT~1 s=-42,0,42,25,-25,-40,0,40
+IN pos l=60 r=60
+IN render t=2432000000
+OUT! en=1 route=2
+OUT~1 s=24,-24,-38,0,38,23,-23,-37
+IN pos l=51 r=51
+IN render t=2440000000
+OUT! en=1 route=2
+OUT~1 s=0,36,22,-22,-34,0,34,21
+IN pos l=43 r=43
+IN render t=2448000000
+OUT! en=1 route=2
+OUT~1 s=-20,-32,0,32,19,-19,-31,0
+IN pos l=34 r=34
+IN render t=2456000000
+OUT! en=1 route=2
+OUT~1 s=29,17,-16,-24,0,22,12,-12
+IN pos l=26 r=26
+IN render t=2464000000
+OUT! en=1 route=2
+OUT~1 s=-16,0,12,6,-5,-5,0,1
+IN pos l=17 r=17
+IN render t=2472000000
+OUT! en=1 route=2
+OUT~1 s=0,0,-1,0,0,0,0,0
+IN pos l=9 r=9
+IN render t=2480000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2488000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN eff side=L type=0x26 p=fe03d058ff3f00007800 t=2496000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Vibration(0x26) zone 1..9 maxStr 8 120Hz
+IN pos l=0 r=0
+IN render t=2496000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=12 r=12
+IN render t=2504000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=25 r=25
+IN render t=2512000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=38 r=38
+IN render t=2520000000
+OUT! en=1 route=2
+OUT~1 s=2,6,-2,-24,-29,0,41,46
+IN pos l=51 r=51
+IN render t=2528000000
+OUT! en=1 route=2
+OUT~1 s=5,-25,-18,-1,-9,-28,-17,33
+IN pos l=63 r=63
+IN render t=2536000000
+OUT! en=1 route=2
+OUT~1 s=66,34,-36,-69,-36,18,33,10
+IN pos l=76 r=76
+IN render t=2544000000
+OUT! en=1 route=2
+OUT~1 s=2,24,34,-7,-68,-71,0,74
+IN pos l=89 r=89
+IN render t=2552000000
+OUT! en=1 route=2
+OUT~1 s=72,8,-38,-28,-1,-12,-41,-23
+IN pos l=102 r=102
+IN render t=2560000000
+OUT! en=1 route=2
+OUT~1 s=48,95,49,-50,-98,-51,26,46
+IN pos l=114 r=114
+IN render t=2568000000
+OUT! en=1 route=2
+OUT~1 s=14,2,33,47,-11,-92,-96,0
+IN pos l=127 r=127
+IN render t=2576000000
+OUT! en=1 route=2
+OUT~1 s=98,97,11,-51,-37,-2,-16,-54
+IN pos l=140 r=140
+IN render t=2584000000
+OUT! en=1 route=2
+OUT~1 s=-31,63,123,64,-65,-127,-66,32
+IN pos l=153 r=153
+IN render t=2592000000
+OUT! en=1 route=2
+OUT~1 s=58,18,2,42,60,-14,-118,-122
+IN pos l=165 r=165
+IN render t=2600000000
+OUT! en=1 route=2
+OUT~1 s=0,124,121,14,-64,-46,-2,-20
+IN pos l=178 r=178
+IN render t=2608000000
+OUT! en=1 route=2
+OUT~1 s=-67,-38,76,127,76,-76,-127,-76
+IN pos l=191 r=191
+IN render t=2616000000
+OUT! en=1 route=2
+OUT~1 s=37,67,21,3,47,66,-15,-127
+IN pos l=204 r=204
+IN render t=2624000000
+OUT! en=1 route=2
+OUT~1 s=-127,0,127,127,15,-66,-47,-3
+IN pos l=216 r=216
+IN render t=2632000000
+OUT! en=1 route=2
+OUT~1 s=-21,-67,-37,76,127,76,-76,-127
+IN pos l=229 r=229
+IN render t=2640000000
+OUT! en=1 route=2
+OUT~1 s=-76,37,67,21,3,47,66,-15
+IN pos l=242 r=242
+IN render t=2648000000
+OUT! en=1 route=2
+OUT~1 s=-127,-127,0,127,127,15,-66,-47
+IN pos l=255 r=255
+IN render t=2656000000
+OUT! en=1 route=2
+OUT~1 s=-3,-21,-67,-37,76,127,76,-76
+IN stats
+OUT! v=2,1,3,0,0,0,0,0,0,0,0,0,0,56,18,38,38
+END
+CASE bridge_pulse_train_10hz
+IN eff side=L type=0x26 p=fc0340d6ff3f00000a00 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): PulseTrain(0x26<=30Hz) period 100ms drive 127 from 52
+IN pos l=0 r=0
+IN render t=2000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2008000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2032000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2040000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2048000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2056000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2064000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2072000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=200 r=0
+IN render t=2080000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2088000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2096000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-123,-119,-75,-4,68,117
+IN render t=2104000000
+OUT! en=1 route=0
+OUT~1 s=125,90,24,-50,-107,-127,-103,-43
+IN render t=2112000000
+OUT! en=1 route=0
+OUT~1 s=32,95,126,113,61,-12,-81,-122
+IN render t=2120000000
+OUT! en=1 route=0
+OUT~1 s=-121,-70,-6,45,69,63,37,8
+IN render t=2128000000
+OUT! en=1 route=0
+OUT~1 s=-9,-11,0,0,0,0,0,0
+IN render t=2136000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2144000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2152000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2160000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2168000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2176000000
+OUT! en=1 route=0
+OUT~1 s=0,0,0,0,0,71,118,124
+IN render t=2184000000
+OUT! en=1 route=0
+OUT~1 s=87,20,-54,-109,-127,-100,-39,35
+IN render t=2192000000
+OUT! en=1 route=0
+OUT~1 s=98,126,111,58,-16,-84,-123,-119
+IN render t=2200000000
+OUT! en=1 route=0
+OUT~1 s=-75,-4,68,117,125,90,24,-50
+IN render t=2208000000
+OUT! en=1 route=0
+OUT~1 s=-107,-127,-103,-43,32,95,126,113
+IN render t=2216000000
+OUT! en=1 route=0
+OUT~1 s=61,-12,-81,-122,-121,-70,-6,45
+IN render t=2224000000
+OUT! en=1 route=0
+OUT~1 s=69,63,37,8,-9,-11,0,0
+IN render t=2232000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2240000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2248000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2256000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2264000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2272000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2280000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2288000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2296000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-123,-119,-75,-4,68,117
+IN render t=2304000000
+OUT! en=1 route=0
+OUT~1 s=125,90,24,-50,-107,-127,-103,-43
+IN render t=2312000000
+OUT! en=1 route=0
+OUT~1 s=32,95,126,113,61,-12,-81,-122
+IN render t=2320000000
+OUT! en=1 route=0
+OUT~1 s=-121,-70,-6,45,69,63,37,8
+IN render t=2328000000
+OUT! en=1 route=0
+OUT~1 s=-9,-11,0,0,0,0,0,0
+IN render t=2336000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2344000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2352000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2360000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2368000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2376000000
+OUT! en=1 route=0
+OUT~1 s=0,0,0,0,0,71,118,124
+IN render t=2384000000
+OUT! en=1 route=0
+OUT~1 s=87,20,-54,-109,-127,-100,-39,35
+IN render t=2392000000
+OUT! en=1 route=0
+OUT~1 s=98,126,111,58,-16,-84,-123,-119
+IN pos l=40 r=0
+IN render t=2400000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2408000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2416000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2424000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2432000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2440000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2448000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2456000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2464000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2472000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=10 r=0
+IN render t=2480000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2488000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2496000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2504000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2512000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2520000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2528000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2536000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2544000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2552000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN eff side=L type=0x26 p=fc0340d6ff3f00001900 t=2560000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): PulseTrain(0x26<=30Hz) period 40ms drive 127 from 52
+IN pos l=255 r=0
+IN render t=2560000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2568000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2576000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-111,-96,-52,-2,34,47
+IN render t=2584000000
+OUT! en=1 route=0
+OUT~1 s=37,18,2,0,0,0,0,0
+IN render t=2592000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2600000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2608000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2616000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-111,-96,-52,-2,34,47
+IN render t=2624000000
+OUT! en=1 route=0
+OUT~1 s=37,18,2,0,0,0,0,0
+IN render t=2632000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2640000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2648000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2656000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-111,-96,-52,-2,34,47
+IN render t=2664000000
+OUT! en=1 route=0
+OUT~1 s=37,18,2,0,0,0,0,0
+IN render t=2672000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2680000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2688000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2696000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-111,-96,-52,-2,34,47
+IN render t=2704000000
+OUT! en=1 route=0
+OUT~1 s=37,18,2,0,0,0,0,0
+IN render t=2712000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2720000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2728000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2736000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-111,-96,-52,-2,34,47
+IN render t=2744000000
+OUT! en=1 route=0
+OUT~1 s=37,18,2,0,0,0,0,0
+IN render t=2752000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2760000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN render t=2768000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN render t=2776000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-111,-96,-52,-2,34,47
+IN render t=2784000000
+OUT! en=1 route=0
+OUT~1 s=37,18,2,0,0,0,0,0
+IN render t=2792000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN stats
+OUT! v=2,0,2,0,0,0,0,0,0,0,0,48,0,0,0,38,0
+END
+CASE bridge_bow_left
+IN eff side=L type=0x22 p=82002b00000000000000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Bow(0x22) zone 1..7 str 4 snap 6
+IN pos l=0 r=0
+IN render t=2000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=7 r=0
+IN render t=2008000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=14 r=0
+IN render t=2016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=21 r=0
+IN render t=2024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=29 r=0
+IN render t=2032000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=36 r=0
+IN render t=2040000000
+OUT! en=1 route=0
+OUT~1 s=0,0,0,-1,-1,-1,-1,0
+IN pos l=43 r=0
+IN render t=2048000000
+OUT! en=1 route=0
+OUT~1 s=1,2,2,2,1,0,-1,-2
+IN pos l=51 r=0
+IN render t=2056000000
+OUT! en=1 route=0
+OUT~1 s=-3,-2,-1,0,2,3,4,3
+IN pos l=58 r=0
+IN render t=2064000000
+OUT! en=1 route=0
+OUT~1 s=1,-1,-3,-4,-4,-4,-1,1
+IN pos l=65 r=0
+IN render t=2072000000
+OUT! en=1 route=0
+OUT~1 s=4,5,5,4,1,-2,-4,-6
+IN pos l=72 r=0
+IN render t=2080000000
+OUT! en=1 route=0
+OUT~1 s=-6,-4,-1,2,5,7,7,4
+IN pos l=80 r=0
+IN render t=2088000000
+OUT! en=1 route=0
+OUT~1 s=1,-3,-6,-8,-7,-5,-1,4
+IN pos l=87 r=0
+IN render t=2096000000
+OUT! en=1 route=0
+OUT~1 s=7,9,8,5,0,-5,-8,-10
+IN pos l=94 r=0
+IN render t=2104000000
+OUT! en=1 route=0
+OUT~1 s=-8,-4,1,6,9,10,8,4
+IN pos l=102 r=0
+IN render t=2112000000
+OUT! en=1 route=0
+OUT~1 s=-1,-7,-10,-11,-9,-4,2,8
+IN pos l=109 r=0
+IN render t=2120000000
+OUT! en=1 route=0
+OUT~1 s=11,12,9,3,-3,-9,-12,-12
+IN pos l=116 r=0
+IN render t=2128000000
+OUT! en=1 route=0
+OUT~1 s=-9,-3,4,10,13,13,9,2
+IN pos l=123 r=0
+IN render t=2136000000
+OUT! en=1 route=0
+OUT~1 s=-5,-11,-14,-13,-9,-1,6,13
+IN pos l=131 r=0
+IN render t=2144000000
+OUT! en=1 route=0
+OUT~1 s=15,14,8,0,-8,-14,-16,-14
+IN pos l=138 r=0
+IN render t=2152000000
+OUT! en=1 route=0
+OUT~1 s=-8,1,9,15,17,14,7,-2
+IN pos l=145 r=0
+IN render t=2160000000
+OUT! en=1 route=0
+OUT~1 s=-10,-16,-18,-14,-7,3,12,17
+IN pos l=153 r=0
+IN render t=2168000000
+OUT! en=1 route=0
+OUT~1 s=18,14,6,-4,-13,-19,-19,-14
+IN pos l=160 r=0
+IN render t=2176000000
+OUT! en=1 route=0
+OUT~1 s=-5,6,15,20,19,14,4,-7
+IN pos l=167 r=0
+IN render t=2184000000
+OUT! en=1 route=0
+OUT~1 s=-16,-21,-20,-13,-3,9,18,22
+IN pos l=174 r=0
+IN render t=2192000000
+OUT! en=1 route=0
+OUT~1 s=20,13,1,-10,-19,-23,-20,-12
+IN pos l=182 r=0
+IN render t=2200000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN pos l=189 r=0
+IN render t=2208000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN pos l=196 r=0
+IN render t=2216000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-123,-119,-75,-4,68,117
+IN pos l=204 r=0
+IN render t=2224000000
+OUT! en=1 route=0
+OUT~1 s=125,90,24,-50,-107,-127,-103,-43
+IN pos l=211 r=0
+IN render t=2232000000
+OUT! en=1 route=0
+OUT~1 s=32,95,126,113,61,-12,-81,-122
+IN pos l=218 r=0
+IN render t=2240000000
+OUT! en=1 route=0
+OUT~1 s=-121,-70,-6,45,69,63,37,8
+IN pos l=225 r=0
+IN render t=2248000000
+OUT! en=1 route=0
+OUT~1 s=-9,-11,0,0,0,0,0,0
+IN pos l=233 r=0
+IN render t=2256000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=240 r=0
+IN render t=2264000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=247 r=0
+IN render t=2272000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=255 r=0
+IN render t=2280000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=255 r=0
+IN render t=2288000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=248 r=0
+IN render t=2296000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=241 r=0
+IN render t=2304000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=234 r=0
+IN render t=2312000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=226 r=0
+IN render t=2320000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=219 r=0
+IN render t=2328000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=212 r=0
+IN render t=2336000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=204 r=0
+IN render t=2344000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=197 r=0
+IN render t=2352000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=190 r=0
+IN render t=2360000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=183 r=0
+IN render t=2368000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=175 r=0
+IN render t=2376000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=168 r=0
+IN render t=2384000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=161 r=0
+IN render t=2392000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=153 r=0
+IN render t=2400000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=146 r=0
+IN render t=2408000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=139 r=0
+IN render t=2416000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=132 r=0
+IN render t=2424000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=124 r=0
+IN render t=2432000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=117 r=0
+IN render t=2440000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=110 r=0
+IN render t=2448000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=102 r=0
+IN render t=2456000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=95 r=0
+IN render t=2464000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=88 r=0
+IN render t=2472000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=81 r=0
+IN render t=2480000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=73 r=0
+IN render t=2488000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=66 r=0
+IN render t=2496000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=59 r=0
+IN render t=2504000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=2512000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=44 r=0
+IN render t=2520000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=37 r=0
+IN render t=2528000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=30 r=0
+IN render t=2536000000
+OUT! en=1 route=0
+OUT~1 s=0,0,0,0,0,0,-1,-1
+IN pos l=22 r=0
+IN render t=2544000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=15 r=0
+IN render t=2552000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=8 r=0
+IN render t=2560000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2568000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2576000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=7 r=0
+IN render t=2584000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=14 r=0
+IN render t=2592000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=21 r=0
+IN render t=2600000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=29 r=0
+IN render t=2608000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=36 r=0
+IN render t=2616000000
+OUT! en=1 route=0
+OUT~1 s=0,0,1,1,1,0,0,-1
+IN pos l=43 r=0
+IN render t=2624000000
+OUT! en=1 route=0
+OUT~1 s=-2,-2,-1,-1,1,2,2,3
+IN pos l=51 r=0
+IN render t=2632000000
+OUT! en=1 route=0
+OUT~1 s=2,1,-1,-3,-3,-3,-2,0
+IN pos l=58 r=0
+IN render t=2640000000
+OUT! en=1 route=0
+OUT~1 s=2,3,4,4,3,0,-2,-4
+IN pos l=65 r=0
+IN render t=2648000000
+OUT! en=1 route=0
+OUT~1 s=-5,-5,-3,0,3,5,6,5
+IN pos l=72 r=0
+IN render t=2656000000
+OUT! en=1 route=0
+OUT~1 s=3,0,-4,-6,-7,-6,-3,1
+IN pos l=80 r=0
+IN render t=2664000000
+OUT! en=1 route=0
+OUT~1 s=4,7,8,6,3,-2,-5,-8
+IN pos l=87 r=0
+IN render t=2672000000
+OUT! en=1 route=0
+OUT~1 s=-8,-6,-2,2,6,9,9,7
+IN pos l=94 r=0
+IN render t=2680000000
+OUT! en=1 route=0
+OUT~1 s=2,-3,-7,-10,-10,-7,-2,4
+IN pos l=102 r=0
+IN render t=2688000000
+OUT! en=1 route=0
+OUT~1 s=8,11,10,7,1,-5,-10,-12
+IN pos l=109 r=0
+IN render t=2696000000
+OUT! en=1 route=0
+OUT~1 s=-11,-6,0,6,11,13,11,6
+IN pos l=116 r=0
+IN render t=2704000000
+OUT! en=1 route=0
+OUT~1 s=0,-7,-12,-13,-11,-6,1,8
+IN pos l=123 r=0
+IN render t=2712000000
+OUT! en=1 route=0
+OUT~1 s=13,14,11,5,-2,-9,-14,-15
+IN pos l=131 r=0
+IN render t=2720000000
+OUT! en=1 route=0
+OUT~1 s=-11,-5,3,11,15,16,11,4
+IN pos l=138 r=0
+IN render t=2728000000
+OUT! en=1 route=0
+OUT~1 s=-5,-12,-16,-16,-11,-3,6,13
+IN pos l=145 r=0
+IN render t=2736000000
+OUT! en=1 route=0
+OUT~1 s=17,16,11,2,-7,-15,-18,-17
+IN pos l=153 r=0
+IN render t=2744000000
+OUT! en=1 route=0
+OUT~1 s=-11,-1,9,16,19,17,10,0
+IN pos l=160 r=0
+IN render t=2752000000
+OUT! en=1 route=0
+OUT~1 s=-10,-18,-20,-17,-9,1,12,19
+IN pos l=167 r=0
+IN render t=2760000000
+OUT! en=1 route=0
+OUT~1 s=21,17,8,-3,-13,-20,-22,-17
+IN pos l=174 r=0
+IN render t=2768000000
+OUT! en=1 route=0
+OUT~1 s=-7,4,15,21,22,17,6,-6
+IN pos l=182 r=0
+IN render t=2776000000
+OUT! en=1 route=0
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN pos l=189 r=0
+IN render t=2784000000
+OUT! en=1 route=0
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN pos l=196 r=0
+IN render t=2792000000
+OUT! en=1 route=0
+OUT~1 s=-16,-84,-123,-119,-75,-4,68,117
+IN pos l=204 r=0
+IN render t=2800000000
+OUT! en=1 route=0
+OUT~1 s=125,90,24,-50,-107,-127,-103,-43
+IN pos l=211 r=0
+IN render t=2808000000
+OUT! en=1 route=0
+OUT~1 s=32,95,126,113,61,-12,-81,-122
+IN pos l=218 r=0
+IN render t=2816000000
+OUT! en=1 route=0
+OUT~1 s=-121,-70,-6,45,69,63,37,8
+IN pos l=225 r=0
+IN render t=2824000000
+OUT! en=1 route=0
+OUT~1 s=-9,-11,0,0,0,0,0,0
+IN pos l=233 r=0
+IN render t=2832000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=240 r=0
+IN render t=2840000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=247 r=0
+IN render t=2848000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=255 r=0
+IN render t=2856000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=255 r=0
+IN render t=2864000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=248 r=0
+IN render t=2872000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=241 r=0
+IN render t=2880000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=234 r=0
+IN render t=2888000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=226 r=0
+IN render t=2896000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=219 r=0
+IN render t=2904000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=212 r=0
+IN render t=2912000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=204 r=0
+IN render t=2920000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=197 r=0
+IN render t=2928000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=190 r=0
+IN render t=2936000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=183 r=0
+IN render t=2944000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=175 r=0
+IN render t=2952000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=168 r=0
+IN render t=2960000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=161 r=0
+IN render t=2968000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=153 r=0
+IN render t=2976000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=146 r=0
+IN render t=2984000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=139 r=0
+IN render t=2992000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=132 r=0
+IN render t=3000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=124 r=0
+IN render t=3008000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=117 r=0
+IN render t=3016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=110 r=0
+IN render t=3024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=102 r=0
+IN render t=3032000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=95 r=0
+IN render t=3040000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=88 r=0
+IN render t=3048000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=81 r=0
+IN render t=3056000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=73 r=0
+IN render t=3064000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=66 r=0
+IN render t=3072000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=59 r=0
+IN render t=3080000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=3088000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=44 r=0
+IN render t=3096000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=37 r=0
+IN render t=3104000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=30 r=0
+IN render t=3112000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=22 r=0
+IN render t=3120000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=15 r=0
+IN render t=3128000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=8 r=0
+IN render t=3136000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=3144000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN stats
+OUT! v=1,0,1,0,0,0,0,0,0,2,0,55,0,0,0,34,0
+END
+CASE bridge_detent_feedback_then_vibration
+IN pos l=0 r=0
+IN eff side=L type=0x21 p=ff034992240900000000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 0..9 maxStr 2
+IN render t=2000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2008000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN eff side=L type=0x26 p=f8030048922400009600 t=2016000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Vibration(0x26) zone 3..9 maxStr 5 150Hz detent
+IN pos l=0 r=0
+IN render t=2016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=8 r=0
+IN render t=2024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=17 r=0
+IN render t=2032000000
+OUT! en=1 route=0
+OUT~1 s=0,54,89,94,66,15,-41,-83
+IN pos l=25 r=0
+IN render t=2040000000
+OUT! en=1 route=0
+OUT~1 s=-96,-76,-30,27,74,96,84,39
+IN pos l=34 r=0
+IN render t=2048000000
+OUT! en=1 route=0
+OUT~1 s=-10,-44,-56,-45,-23,-1,10,9
+IN pos l=42 r=0
+IN render t=2056000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=2064000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=59 r=0
+IN render t=2072000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=68 r=0
+IN render t=2080000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=76 r=0
+IN render t=2088000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=85 r=0
+IN render t=2096000000
+OUT! en=1 route=0
+OUT~1 s=0,54,89,94,66,15,-41,-83
+IN pos l=93 r=0
+IN render t=2104000000
+OUT! en=1 route=0
+OUT~1 s=-96,-76,-30,27,74,96,84,39
+IN pos l=102 r=0
+IN render t=2112000000
+OUT! en=1 route=0
+OUT~1 s=-10,-44,-56,-45,-23,-1,10,9
+IN pos l=110 r=0
+IN render t=2120000000
+OUT! en=1 route=0
+OUT~1 s=0,0,15,24,10,-22,-44,-29
+IN pos l=119 r=0
+IN render t=2128000000
+OUT! en=1 route=0
+OUT~1 s=6,10,0,-20,-30,-12,26,50
+IN pos l=127 r=0
+IN render t=2136000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=136 r=0
+IN render t=2144000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=144 r=0
+IN render t=2152000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=153 r=0
+IN render t=2160000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=161 r=0
+IN render t=2168000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=170 r=0
+IN render t=2176000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=178 r=0
+IN render t=2184000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=187 r=0
+IN render t=2192000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=195 r=0
+IN render t=2200000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=204 r=0
+IN render t=2208000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=212 r=0
+IN render t=2216000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=221 r=0
+IN render t=2224000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=229 r=0
+IN render t=2232000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=238 r=0
+IN render t=2240000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=246 r=0
+IN render t=2248000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=255 r=0
+IN render t=2256000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=255 r=0
+IN render t=2264000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=247 r=0
+IN render t=2272000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=238 r=0
+IN render t=2280000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=230 r=0
+IN render t=2288000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=221 r=0
+IN render t=2296000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=213 r=0
+IN render t=2304000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=204 r=0
+IN render t=2312000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=196 r=0
+IN render t=2320000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=187 r=0
+IN render t=2328000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=179 r=0
+IN render t=2336000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=170 r=0
+IN render t=2344000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=162 r=0
+IN render t=2352000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=153 r=0
+IN render t=2360000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=145 r=0
+IN render t=2368000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=136 r=0
+IN render t=2376000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=128 r=0
+IN render t=2384000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=119 r=0
+IN render t=2392000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=111 r=0
+IN render t=2400000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=102 r=0
+IN render t=2408000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=94 r=0
+IN render t=2416000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=85 r=0
+IN render t=2424000000
+OUT! en=1 route=0
+OUT~1 s=-28,-46,-25,13,37,30,0,-26
+IN pos l=77 r=0
+IN render t=2432000000
+OUT! en=1 route=0
+OUT~1 s=-27,-7,12,16,7,-3,-4,-1
+IN pos l=68 r=0
+IN render t=2440000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=60 r=0
+IN render t=2448000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=2456000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=43 r=0
+IN render t=2464000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=34 r=0
+IN render t=2472000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=26 r=0
+IN render t=2480000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=17 r=0
+IN render t=2488000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=9 r=0
+IN render t=2496000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2504000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2512000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=8 r=0
+IN render t=2520000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=17 r=0
+IN render t=2528000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=25 r=0
+IN render t=2536000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=34 r=0
+IN render t=2544000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=42 r=0
+IN render t=2552000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=2560000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=59 r=0
+IN render t=2568000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=68 r=0
+IN render t=2576000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=76 r=0
+IN render t=2584000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=85 r=0
+IN render t=2592000000
+OUT! en=1 route=0
+OUT~1 s=0,54,89,94,66,15,-41,-83
+IN pos l=93 r=0
+IN render t=2600000000
+OUT! en=1 route=0
+OUT~1 s=-96,-76,-30,27,74,96,84,39
+IN pos l=102 r=0
+IN render t=2608000000
+OUT! en=1 route=0
+OUT~1 s=-10,-44,-56,-45,-23,-1,10,9
+IN pos l=110 r=0
+IN render t=2616000000
+OUT! en=1 route=0
+OUT~1 s=0,7,-6,-24,-25,0,35,48
+IN pos l=119 r=0
+IN render t=2624000000
+OUT! en=1 route=0
+OUT~1 s=-4,-13,-11,8,30,30,0,-40
+IN pos l=127 r=0
+IN render t=2632000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=136 r=0
+IN render t=2640000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=144 r=0
+IN render t=2648000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=153 r=0
+IN render t=2656000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=161 r=0
+IN render t=2664000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=170 r=0
+IN render t=2672000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=178 r=0
+IN render t=2680000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=187 r=0
+IN render t=2688000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=195 r=0
+IN render t=2696000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=204 r=0
+IN render t=2704000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=212 r=0
+IN render t=2712000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=221 r=0
+IN render t=2720000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=229 r=0
+IN render t=2728000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=238 r=0
+IN render t=2736000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=246 r=0
+IN render t=2744000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=255 r=0
+IN render t=2752000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=255 r=0
+IN render t=2760000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=247 r=0
+IN render t=2768000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=238 r=0
+IN render t=2776000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=230 r=0
+IN render t=2784000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=221 r=0
+IN render t=2792000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=213 r=0
+IN render t=2800000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=204 r=0
+IN render t=2808000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=196 r=0
+IN render t=2816000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=187 r=0
+IN render t=2824000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=179 r=0
+IN render t=2832000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=170 r=0
+IN render t=2840000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=162 r=0
+IN render t=2848000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=153 r=0
+IN render t=2856000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=145 r=0
+IN render t=2864000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=136 r=0
+IN render t=2872000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=128 r=0
+IN render t=2880000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN pos l=119 r=0
+IN render t=2888000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN pos l=111 r=0
+IN render t=2896000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN pos l=102 r=0
+IN render t=2904000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN pos l=94 r=0
+IN render t=2912000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN pos l=85 r=0
+IN render t=2920000000
+OUT! en=1 route=0
+OUT~1 s=0,37,41,13,-23,-37,-20,10
+IN pos l=77 r=0
+IN render t=2928000000
+OUT! en=1 route=0
+OUT~1 s=27,20,0,-13,-12,-3,3,1
+IN pos l=68 r=0
+IN render t=2936000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=60 r=0
+IN render t=2944000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=51 r=0
+IN render t=2952000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=43 r=0
+IN render t=2960000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=34 r=0
+IN render t=2968000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=26 r=0
+IN render t=2976000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=17 r=0
+IN render t=2984000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=9 r=0
+IN render t=2992000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=3000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN eff side=L type=0x21 p=ff034992240900000000 t=3608000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 0..9 maxStr 2
+IN eff side=L type=0x26 p=f8030048922400009600 t=4208000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Vibration(0x26) zone 3..9 maxStr 5 150Hz
+IN pos l=200 r=0
+IN render t=4208000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN render t=4216000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN render t=4224000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN render t=4232000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN render t=4240000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN render t=4248000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN render t=4256000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN render t=4264000000
+OUT! en=1 route=0
+OUT~1 s=-29,-50,-29,15,48,40,0,-40
+IN render t=4272000000
+OUT! en=1 route=0
+OUT~1 s=-48,-15,29,50,29,-15,-48,-40
+IN render t=4280000000
+OUT! en=1 route=0
+OUT~1 s=0,40,48,15,-29,-50,-29,15
+IN render t=4288000000
+OUT! en=1 route=0
+OUT~1 s=48,40,0,-40,-48,-15,29,50
+IN render t=4296000000
+OUT! en=1 route=0
+OUT~1 s=29,-15,-48,-40,0,40,48,15
+IN stats
+OUT! v=4,0,4,0,0,0,0,0,3,0,0,101,0,0,0,38,0
+END
+CASE bridge_unsupported_malformed
+IN eff side=L type=0x21 p=ff03ffffff3f00000000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 0..9 maxStr 8
+IN pos l=128 r=128
+IN render t=2000000000
+OUT! en=1 route=0
+OUT~1 s=0,33,56,64,54,29,-4,-36
+IN eff side=L type=0x23 p=ff030000000000000000 t=2008000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ubbf8\uc9c0\uc6d0(ARBS \ubbf8\uc774\uc2dd)(L, type=0x23) -> Off \ucc98\ub9ac
+IN render t=2008000000
+OUT! en=1 route=0
+OUT~1 s=-51,-48,-32,-13,3,10,7,0
+IN eff side=R type=0x27 p=0102030405060708090a t=2016000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ubbf8\uc9c0\uc6d0(ARBS \ubbf8\uc774\uc2dd)(R, type=0x27) -> Off \ucc98\ub9ac
+IN eff side=R type=0x01 p=10000000000000000000 t=2016000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ubbf8\uc9c0\uc6d0(ARBS \ubbf8\uc774\uc2dd)(R, type=0x01) -> Off \ucc98\ub9ac
+IN eff side=L type=0x21 p=00040000000000000000 t=2016000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ud615\uc2dd \uc624\ub958(L, type=0x21) -> Off \ucc98\ub9ac
+IN eff side=R type=0x25 p=1c000000000000000000 t=2016000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ud615\uc2dd \uc624\ub958(R, type=0x25) -> Off \ucc98\ub9ac
+IN eff side=L type=0x22 p=02022b00000000000000 t=2016000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ud615\uc2dd \uc624\ub958(L, type=0x22) -> Off \ucc98\ub9ac
+IN render t=2016000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2024000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2032000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2040000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2048000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN any
+OUT! v=0
+IN stats
+OUT! v=4,3,1,0,3,3,0,0,0,0,0,2,0,0,0,34,37
+END
+CASE bridge_off_clear_hold
+IN eff side=L type=0x21 p=ff036ddbb62d00000000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 0..9 maxStr 6
+IN pos l=180 r=0
+IN render t=2000000000
+OUT! en=1 route=0
+OUT~1 s=0,24,42,48,41,22,-3,-27
+IN render t=2008000000
+OUT! en=1 route=0
+OUT~1 s=-43,-48,-39,-19,6,29,45,47
+IN render t=2016000000
+OUT! en=1 route=0
+OUT~1 s=37,16,-9,-32,-46,-47,-35,-13
+IN render t=2024000000
+OUT! en=1 route=0
+OUT~1 s=12,34,46,46,33,10,-15,-36
+IN render t=2032000000
+OUT! en=1 route=0
+OUT~1 s=-47,-45,-31,-8,18,38,48,44
+IN eff side=L type=0x00 p=00000000000000000000 t=2040000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ud574\uc81c \uc608\uc57d(L, 100ms \ud6c4)
+IN eff side=L type=0x00 p=00000000000000000000 t=2040000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ud574\uc81c \uc608\uc57d(L, 100ms \ud6c4)
+IN render t=2040000000
+OUT! en=1 route=0
+OUT~1 s=28,5,-20,-40,-48,-43,-26,-2
+IN render t=2048000000
+OUT! en=1 route=0
+OUT~1 s=23,41,48,41,23,-2,-26,-43
+IN render t=2056000000
+OUT! en=1 route=0
+OUT~1 s=-48,-40,-20,5,28,44,48,38
+IN render t=2064000000
+OUT! en=1 route=0
+OUT~1 s=18,-8,-31,-45,-47,-36,-15,10
+IN render t=2072000000
+OUT! en=1 route=0
+OUT~1 s=33,46,46,34,12,-13,-35,-47
+IN render t=2080000000
+OUT! en=1 route=0
+OUT~1 s=-46,-32,-9,16,37,47,45,29
+IN render t=2088000000
+OUT! en=1 route=0
+OUT~1 s=6,-19,-39,-48,-43,-27,-3,22
+IN render t=2096000000
+OUT! en=1 route=0
+OUT~1 s=41,48,42,24,0,-24,-42,-48
+IN render t=2104000000
+OUT! en=1 route=0
+OUT~1 s=-41,-22,3,27,43,48,39,19
+IN render t=2112000000
+OUT! en=1 route=0
+OUT~1 s=-6,-29,-45,-47,-37,-16,9,32
+IN render t=2120000000
+OUT! en=1 route=0
+OUT~1 s=46,47,35,13,-12,-34,-46,-46
+IN render t=2128000000
+OUT! en=1 route=0
+OUT~1 s=-33,-10,15,36,47,45,31,8
+IN render t=2136000000
+OUT! en=1 route=0
+OUT~1 s=-18,-38,-48,-44,-28,-5,20,40
+IN render t=2144000000
+OUT! en=1 route=0
+OUT~1 s=42,32,16,1,-9,-10,-6,0
+IN render t=2152000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2160000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN any
+OUT! v=0
+IN eff side=L type=0x21 p=ff036ddbb62d00000000 t=2168000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 0..9 maxStr 6
+IN render t=2168000000
+OUT! en=1 route=0
+OUT~1 s=47,36,15,-10,-33,-46,-46,-34
+IN render t=2176000000
+OUT! en=1 route=0
+OUT~1 s=-12,13,35,47,46,32,9,-16
+IN render t=2184000000
+OUT! en=1 route=0
+OUT~1 s=-37,-47,-45,-29,-6,19,39,48
+IN eff side=L type=0x05 p=00000000000000000000 t=2192000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ud574\uc81c \uc608\uc57d(L, 100ms \ud6c4)
+IN render t=2192000000
+OUT! en=1 route=0
+OUT~1 s=43,27,3,-22,-41,-48,-42,-24
+IN eff side=L type=0x21 p=ff036ddbb62d00000000 t=2200000000
+OUT! ret=null
+IN render t=2200000000
+OUT! en=1 route=0
+OUT~1 s=0,24,42,48,41,22,-3,-27
+IN render t=2208000000
+OUT! en=1 route=0
+OUT~1 s=-43,-48,-39,-19,6,29,45,47
+IN render t=2216000000
+OUT! en=1 route=0
+OUT~1 s=37,16,-9,-32,-46,-47,-35,-13
+IN render t=2224000000
+OUT! en=1 route=0
+OUT~1 s=12,34,46,46,33,10,-15,-36
+IN render t=2232000000
+OUT! en=1 route=0
+OUT~1 s=-47,-45,-31,-8,18,38,48,44
+IN render t=2240000000
+OUT! en=1 route=0
+OUT~1 s=28,5,-20,-40,-48,-43,-26,-2
+IN render t=2248000000
+OUT! en=1 route=0
+OUT~1 s=23,41,48,41,23,-2,-26,-43
+IN render t=2256000000
+OUT! en=1 route=0
+OUT~1 s=-48,-40,-20,5,28,44,48,38
+IN render t=2264000000
+OUT! en=1 route=0
+OUT~1 s=18,-8,-31,-45,-47,-36,-15,10
+IN render t=2272000000
+OUT! en=1 route=0
+OUT~1 s=33,46,46,34,12,-13,-35,-47
+IN render t=2280000000
+OUT! en=1 route=0
+OUT~1 s=-46,-32,-9,16,37,47,45,29
+IN render t=2288000000
+OUT! en=1 route=0
+OUT~1 s=6,-19,-39,-48,-43,-27,-3,22
+IN render t=2296000000
+OUT! en=1 route=0
+OUT~1 s=41,48,42,24,0,-24,-42,-48
+IN render t=2304000000
+OUT! en=1 route=0
+OUT~1 s=-41,-22,3,27,43,48,39,19
+IN render t=2312000000
+OUT! en=1 route=0
+OUT~1 s=-6,-29,-45,-47,-37,-16,9,32
+IN render t=2320000000
+OUT! en=1 route=0
+OUT~1 s=46,47,35,13,-12,-34,-46,-46
+IN clear
+IN any
+OUT! v=0
+IN render t=2328000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2336000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2344000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN stats
+OUT! v=6,0,2,3,0,0,1,0,0,0,0,39,0,0,0,33,0
+END
+CASE bridge_dual_mix_preempt
+IN eff side=L type=0x21 p=ff03dbb66d1b00000000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Feedback(0x21) zone 0..9 maxStr 4
+IN eff side=R type=0x26 p=ff036ddbb62d00005a00 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(R): Vibration(0x26) zone 0..9 maxStr 6 90Hz
+IN pos l=150 r=150
+IN render t=2000000000
+OUT! en=1 route=2
+OUT~1 s=0,48,82,92,73,34,-17,-62
+IN render t=2008000000
+OUT! en=1 route=2
+OUT~1 s=-88,-88,-61,-17,33,73,90,81
+IN render t=2016000000
+OUT! en=1 route=2
+OUT~1 s=47,0,-47,-79,-87,-69,-31,17
+IN render t=2024000000
+OUT! en=1 route=2
+OUT~1 s=59,83,82,57,14,-31,-67,-82
+IN render t=2032000000
+OUT! en=1 route=2
+OUT~1 s=-72,-41,2,44,72,78,61,25
+IN render t=2040000000
+OUT! en=1 route=2
+OUT~1 s=-16,-53,-73,-70,-47,-10,29,59
+IN render t=2048000000
+OUT! en=1 route=2
+OUT~1 s=69,60,32,-4,-39,-61,-63,-48
+IN render t=2056000000
+OUT! en=1 route=2
+OUT~1 s=-17,18,45,59,54,33,3,-28
+IN render t=2064000000
+OUT! en=1 route=2
+OUT~1 s=-48,-54,-42,-19,10,34,47,45
+IN render t=2072000000
+OUT! en=1 route=2
+OUT~1 s=30,5,-20,-37,-43,-35,-15,7
+IN render t=2080000000
+OUT! en=1 route=2
+OUT~1 s=27,37,35,22,3,-17,-30,-33
+IN render t=2088000000
+OUT! en=1 route=2
+OUT~1 s=-25,-9,9,24,30,26,13,-4
+IN render t=2096000000
+OUT! en=1 route=2
+OUT~1 s=-19,-28,-26,-16,0,16,26,28
+IN render t=2104000000
+OUT! en=1 route=2
+OUT~1 s=19,4,-13,-26,-30,-24,-9,9
+IN render t=2112000000
+OUT! en=1 route=2
+OUT~1 s=25,33,30,17,-3,-22,-35,-37
+IN render t=2120000000
+OUT! en=1 route=2
+OUT~1 s=-27,-7,15,35,43,37,20,-5
+IN render t=2128000000
+OUT! en=1 route=2
+OUT~1 s=-30,-45,-47,-34,-10,19,42,54
+IN render t=2136000000
+OUT! en=1 route=2
+OUT~1 s=48,28,-3,-33,-54,-59,-45,-18
+IN render t=2144000000
+OUT! en=1 route=2
+OUT~1 s=17,48,63,61,39,4,-32,-60
+IN render t=2152000000
+OUT! en=1 route=2
+OUT~1 s=-69,-59,-29,10,47,70,73,53
+IN eff side=R type=0x25 p=44000700000000000000 t=2160000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(R): Weapon(0x25) zone 2..6 str 8
+IN pos l=0 r=0
+IN render t=2160000000
+OUT! en=1 route=2
+OUT~1 s=15,-18,-36,-38,-26,-12,-1,0
+IN pos l=0 r=10
+IN render t=2168000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=20
+IN render t=2176000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=30
+IN render t=2184000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=40
+IN render t=2192000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=51
+IN render t=2200000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=61
+IN render t=2208000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=71
+IN render t=2216000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=81
+IN render t=2224000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=91
+IN render t=2232000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=102
+IN render t=2240000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=112
+IN render t=2248000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=122
+IN render t=2256000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=132
+IN render t=2264000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=142
+IN render t=2272000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=153
+IN render t=2280000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=163
+IN render t=2288000000
+OUT! en=1 route=2
+OUT~1 s=0,71,118,124,87,20,-54,-109
+IN pos l=0 r=173
+IN render t=2296000000
+OUT! en=1 route=2
+OUT~1 s=-127,-100,-39,35,98,126,111,58
+IN pos l=0 r=183
+IN render t=2304000000
+OUT! en=1 route=2
+OUT~1 s=-16,-84,-123,-119,-75,-4,68,117
+IN pos l=0 r=193
+IN render t=2312000000
+OUT! en=1 route=2
+OUT~1 s=125,90,24,-50,-107,-127,-103,-43
+IN pos l=0 r=204
+IN render t=2320000000
+OUT! en=1 route=2
+OUT~1 s=32,95,126,113,61,-12,-81,-122
+IN pos l=0 r=214
+IN render t=2328000000
+OUT! en=1 route=2
+OUT~1 s=-121,-70,-6,45,69,63,37,8
+IN pos l=0 r=224
+IN render t=2336000000
+OUT! en=1 route=2
+OUT~1 s=-9,-11,0,0,0,0,0,0
+IN pos l=0 r=234
+IN render t=2344000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=244
+IN render t=2352000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=255
+IN render t=2360000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=255
+IN render t=2368000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=245
+IN render t=2376000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=235
+IN render t=2384000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=225
+IN render t=2392000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=215
+IN render t=2400000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=204
+IN render t=2408000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=194
+IN render t=2416000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=184
+IN render t=2424000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=174
+IN render t=2432000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=164
+IN render t=2440000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=153
+IN render t=2448000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=143
+IN render t=2456000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=133
+IN render t=2464000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=123
+IN render t=2472000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=113
+IN render t=2480000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=102
+IN render t=2488000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=92
+IN render t=2496000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=82
+IN render t=2504000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=72
+IN render t=2512000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=62
+IN render t=2520000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=51
+IN render t=2528000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=41
+IN render t=2536000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=31
+IN render t=2544000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=21
+IN render t=2552000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=11
+IN render t=2560000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=0 r=0
+IN render t=2568000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=150 r=0
+IN render t=2576000000
+OUT! en=1 route=2
+OUT~1 s=-1,2,9,16,19,16,5,-11
+IN render t=2584000000
+OUT! en=1 route=2
+OUT~1 s=-25,-32,-30,-20,-4,13,26,32
+IN render t=2592000000
+OUT! en=1 route=2
+OUT~1 s=29,18,2,-15,-27,-32,-28,-16
+IN render t=2600000000
+OUT! en=1 route=2
+OUT~1 s=0,16,28,32,27,15,-2,-18
+IN render t=2608000000
+OUT! en=1 route=2
+OUT~1 s=-29,-32,-26,-13,4,20,30,32
+IN render t=2616000000
+OUT! en=1 route=2
+OUT~1 s=25,11,-6,-21,-30,-31,-23,-9
+IN render t=2624000000
+OUT! en=1 route=2
+OUT~1 s=8,23,31,31,22,7,-10,-24
+IN render t=2632000000
+OUT! en=1 route=2
+OUT~1 s=-31,-30,-20,-5,12,25,32,29
+IN render t=2640000000
+OUT! en=1 route=2
+OUT~1 s=19,3,-14,-26,-32,-29,-17,-1
+IN render t=2648000000
+OUT! en=1 route=2
+OUT~1 s=15,28,32,28,15,-1,-17,-29
+IN render t=2656000000
+OUT! en=1 route=2
+OUT~1 s=-32,-26,-14,3,19,29,32,25
+IN render t=2664000000
+OUT! en=1 route=2
+OUT~1 s=12,-5,-20,-30,-31,-24,-10,7
+IN render t=2672000000
+OUT! en=1 route=2
+OUT~1 s=22,31,31,23,8,-9,-23,-31
+IN render t=2680000000
+OUT! en=1 route=2
+OUT~1 s=-30,-21,-6,11,25,32,30,20
+IN render t=2688000000
+OUT! en=1 route=2
+OUT~1 s=4,-13,-26,-32,-29,-18,-2,15
+IN render t=2696000000
+OUT! en=1 route=2
+OUT~1 s=27,32,28,16,0,-16,-28,-32
+IN render t=2704000000
+OUT! en=1 route=2
+OUT~1 s=-27,-15,2,18,29,32,26,13
+IN render t=2712000000
+OUT! en=1 route=2
+OUT~1 s=-4,-20,-30,-32,-25,-11,6,21
+IN render t=2720000000
+OUT! en=1 route=2
+OUT~1 s=30,31,23,9,-8,-23,-31,-31
+IN render t=2728000000
+OUT! en=1 route=2
+OUT~1 s=-22,-7,10,24,31,30,20,5
+IN render t=2736000000
+OUT! en=1 route=2
+OUT~1 s=-12,-25,-32,-29,-19,-3,14,26
+IN render t=2744000000
+OUT! en=1 route=2
+OUT~1 s=32,29,17,1,-15,-28,-32,-28
+IN render t=2752000000
+OUT! en=1 route=2
+OUT~1 s=-15,1,17,29,32,26,14,-3
+IN render t=2760000000
+OUT! en=1 route=2
+OUT~1 s=-19,-29,-32,-25,-12,5,20,30
+IN render t=2768000000
+OUT! en=1 route=2
+OUT~1 s=31,24,10,-7,-22,-31,-31,-23
+IN render t=2776000000
+OUT! en=1 route=2
+OUT~1 s=-8,9,23,31,30,21,6,-11
+IN render t=2784000000
+OUT! en=1 route=2
+OUT~1 s=-25,-32,-30,-20,-4,13,26,32
+IN render t=2792000000
+OUT! en=1 route=2
+OUT~1 s=29,18,2,-15,-27,-32,-28,-16
+IN render t=2800000000
+OUT! en=1 route=2
+OUT~1 s=0,16,28,32,27,15,-2,-18
+IN render t=2808000000
+OUT! en=1 route=2
+OUT~1 s=-29,-32,-26,-13,4,20,30,32
+IN render t=2816000000
+OUT! en=1 route=2
+OUT~1 s=25,11,-6,-21,-30,-31,-23,-9
+IN render t=2824000000
+OUT! en=1 route=2
+OUT~1 s=8,23,31,31,22,7,-10,-24
+IN render t=2832000000
+OUT! en=1 route=2
+OUT~1 s=-31,-30,-20,-5,12,25,32,29
+IN render t=2840000000
+OUT! en=1 route=2
+OUT~1 s=19,3,-14,-26,-32,-29,-17,-1
+IN render t=2848000000
+OUT! en=1 route=0
+OUT~1 s=15,28,32,28,15,-1,-17,-29
+IN render t=2856000000
+OUT! en=1 route=0
+OUT~1 s=-32,-26,-14,3,19,29,32,25
+IN render t=2864000000
+OUT! en=1 route=0
+OUT~1 s=12,-5,-20,-30,-31,-24,-10,7
+IN render t=2872000000
+OUT! en=1 route=0
+OUT~1 s=22,31,31,23,8,-9,-23,-31
+IN render t=2880000000
+OUT! en=1 route=0
+OUT~1 s=-30,-21,-6,11,25,32,30,20
+IN render t=2888000000
+OUT! en=1 route=0
+OUT~1 s=4,-13,-26,-32,-29,-18,-2,15
+IN render t=2896000000
+OUT! en=1 route=0
+OUT~1 s=27,32,28,16,0,-16,-28,-32
+IN render t=2904000000
+OUT! en=1 route=0
+OUT~1 s=-27,-15,2,18,29,32,26,13
+IN render t=2912000000
+OUT! en=1 route=0
+OUT~1 s=-4,-20,-30,-32,-25,-11,6,21
+IN render t=2920000000
+OUT! en=1 route=0
+OUT~1 s=30,31,23,9,-8,-23,-31,-31
+IN render t=2928000000
+OUT! en=1 route=0
+OUT~1 s=-22,-7,10,24,31,30,20,5
+IN render t=2936000000
+OUT! en=1 route=0
+OUT~1 s=-12,-25,-32,-29,-19,-3,14,26
+IN render t=2944000000
+OUT! en=1 route=0
+OUT~1 s=32,29,17,1,-15,-28,-32,-28
+IN render t=2952000000
+OUT! en=1 route=0
+OUT~1 s=-15,1,17,29,32,26,14,-3
+IN render t=2960000000
+OUT! en=1 route=0
+OUT~1 s=-19,-29,-32,-25,-12,5,20,30
+IN render t=2968000000
+OUT! en=1 route=0
+OUT~1 s=31,24,10,-7,-22,-31,-31,-23
+IN render t=2976000000
+OUT! en=1 route=0
+OUT~1 s=-8,9,23,31,30,21,6,-11
+IN render t=2984000000
+OUT! en=1 route=0
+OUT~1 s=-25,-32,-30,-20,-4,13,26,32
+IN render t=2992000000
+OUT! en=1 route=0
+OUT~1 s=29,18,2,-15,-27,-32,-28,-16
+IN render t=3000000000
+OUT! en=1 route=0
+OUT~1 s=0,16,28,32,27,15,-2,-18
+IN render t=3008000000
+OUT! en=1 route=0
+OUT~1 s=-29,-32,-26,-13,4,20,30,32
+IN render t=3016000000
+OUT! en=1 route=0
+OUT~1 s=25,11,-6,-21,-30,-31,-23,-9
+IN render t=3024000000
+OUT! en=1 route=0
+OUT~1 s=8,23,31,31,22,7,-10,-24
+IN render t=3032000000
+OUT! en=1 route=0
+OUT~1 s=-31,-30,-20,-5,12,25,32,29
+IN render t=3040000000
+OUT! en=1 route=0
+OUT~1 s=19,3,-14,-26,-32,-29,-17,-1
+IN render t=3048000000
+OUT! en=1 route=0
+OUT~1 s=15,28,32,28,15,-1,-17,-29
+IN render t=3056000000
+OUT! en=1 route=0
+OUT~1 s=-32,-26,-14,3,19,29,32,25
+IN render t=3064000000
+OUT! en=1 route=0
+OUT~1 s=12,-5,-20,-30,-31,-24,-10,7
+IN render t=3072000000
+OUT! en=1 route=0
+OUT~1 s=22,31,31,23,8,-9,-23,-31
+IN render t=3080000000
+OUT! en=1 route=0
+OUT~1 s=-30,-21,-6,11,25,32,30,20
+IN render t=3088000000
+OUT! en=1 route=0
+OUT~1 s=4,-13,-26,-32,-29,-18,-2,15
+IN render t=3096000000
+OUT! en=1 route=0
+OUT~1 s=27,32,28,16,0,-16,-28,-32
+IN render t=3104000000
+OUT! en=1 route=0
+OUT~1 s=-27,-15,2,18,29,32,26,13
+IN render t=3112000000
+OUT! en=1 route=0
+OUT~1 s=-4,-20,-30,-32,-25,-11,6,21
+IN render t=3120000000
+OUT! en=1 route=0
+OUT~1 s=30,31,23,9,-8,-23,-31,-31
+IN render t=3128000000
+OUT! en=1 route=0
+OUT~1 s=-22,-7,10,24,31,30,20,5
+IN render t=3136000000
+OUT! en=1 route=0
+OUT~1 s=-12,-25,-32,-29,-19,-3,14,26
+IN render t=3144000000
+OUT! en=1 route=0
+OUT~1 s=32,29,17,1,-15,-28,-32,-28
+IN render t=3152000000
+OUT! en=1 route=0
+OUT~1 s=-15,1,17,29,32,26,14,-3
+IN render t=3160000000
+OUT! en=1 route=0
+OUT~1 s=-19,-29,-32,-25,-12,5,20,30
+IN render t=3168000000
+OUT! en=1 route=0
+OUT~1 s=31,24,10,-7,-22,-31,-31,-23
+IN render t=3176000000
+OUT! en=1 route=0
+OUT~1 s=-8,9,23,31,30,21,6,-11
+IN render t=3184000000
+OUT! en=1 route=0
+OUT~1 s=-25,-32,-30,-20,-4,13,26,32
+IN render t=3192000000
+OUT! en=1 route=0
+OUT~1 s=29,18,2,-15,-27,-32,-28,-16
+IN render t=3200000000
+OUT! en=1 route=0
+OUT~1 s=0,16,28,32,27,15,-2,-18
+IN render t=3208000000
+OUT! en=1 route=0
+OUT~1 s=-29,-32,-26,-13,4,20,30,32
+IN eff side=L type=0x00 p=00000000000000000000 t=3216000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \ud574\uc81c \uc608\uc57d(L, 100ms \ud6c4)
+IN eff side=R type=0x26 p=ff036ddbb62d00005a00 t=3216000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(R): Vibration(0x26) zone 0..9 maxStr 6 90Hz
+IN pos l=0 r=200
+IN render t=3216000000
+OUT! en=1 route=2
+OUT~1 s=44,-3,-45,-69,-68,-46,-11,26
+IN render t=3224000000
+OUT! en=1 route=2
+OUT~1 s=51,60,51,26,-8,-38,-57,-58
+IN render t=3232000000
+OUT! en=1 route=2
+OUT~1 s=-41,-11,22,49,60,53,29,-4
+IN render t=3240000000
+OUT! en=1 route=2
+OUT~1 s=-35,-56,-59,-44,-15,19,46,60
+IN render t=3248000000
+OUT! en=1 route=2
+OUT~1 s=54,32,0,-32,-54,-60,-46,-19
+IN render t=3256000000
+OUT! en=1 route=2
+OUT~1 s=15,44,59,56,35,4,-29,-53
+IN render t=3264000000
+OUT! en=1 route=2
+OUT~1 s=-60,-49,-22,11,41,58,57,38
+IN render t=3272000000
+OUT! en=1 route=2
+OUT~1 s=8,-26,-51,-60,-51,-26,8,38
+IN render t=3280000000
+OUT! en=1 route=2
+OUT~1 s=57,58,41,11,-22,-49,-60,-53
+IN render t=3288000000
+OUT! en=1 route=2
+OUT~1 s=-29,4,35,56,59,44,15,-19
+IN render t=3296000000
+OUT! en=1 route=2
+OUT~1 s=-46,-60,-54,-32,0,32,54,60
+IN render t=3304000000
+OUT! en=1 route=2
+OUT~1 s=46,19,-15,-44,-59,-56,-35,-4
+IN render t=3312000000
+OUT! en=1 route=2
+OUT~1 s=29,53,60,49,22,-11,-41,-58
+IN render t=3320000000
+OUT! en=1 route=2
+OUT~1 s=-57,-38,-8,26,51,60,51,26
+IN render t=3328000000
+OUT! en=1 route=2
+OUT~1 s=-8,-38,-57,-58,-41,-11,22,49
+IN render t=3336000000
+OUT! en=1 route=2
+OUT~1 s=60,53,29,-4,-35,-56,-59,-44
+IN render t=3344000000
+OUT! en=1 route=2
+OUT~1 s=-15,19,46,60,54,32,0,-32
+IN render t=3352000000
+OUT! en=1 route=2
+OUT~1 s=-54,-60,-46,-19,15,44,59,56
+IN render t=3360000000
+OUT! en=1 route=2
+OUT~1 s=35,4,-29,-53,-60,-49,-22,11
+IN render t=3368000000
+OUT! en=1 route=2
+OUT~1 s=41,58,57,38,8,-26,-51,-60
+IN render t=3376000000
+OUT! en=1 route=2
+OUT~1 s=-51,-26,8,38,57,58,41,11
+IN render t=3384000000
+OUT! en=1 route=2
+OUT~1 s=-22,-49,-60,-53,-29,4,35,56
+IN render t=3392000000
+OUT! en=1 route=2
+OUT~1 s=59,44,15,-19,-46,-60,-54,-32
+IN render t=3400000000
+OUT! en=1 route=2
+OUT~1 s=0,32,54,60,46,19,-15,-44
+IN render t=3408000000
+OUT! en=1 route=2
+OUT~1 s=-59,-56,-35,-4,29,53,60,49
+IN render t=3416000000
+OUT! en=1 route=2
+OUT~1 s=22,-11,-41,-58,-57,-38,-8,26
+IN render t=3424000000
+OUT! en=1 route=2
+OUT~1 s=51,60,51,26,-8,-38,-57,-58
+IN render t=3432000000
+OUT! en=1 route=2
+OUT~1 s=-41,-11,22,49,60,53,29,-4
+IN render t=3440000000
+OUT! en=1 route=2
+OUT~1 s=-35,-56,-59,-44,-15,19,46,60
+IN render t=3448000000
+OUT! en=1 route=2
+OUT~1 s=54,32,0,-32,-54,-60,-46,-19
+IN stats
+OUT! v=2,3,4,1,0,0,0,0,1,0,0,46,0,0,92,0,38
+END
+CASE bridge_strength60_ceiling50
+IN strength p=60
+IN ceiling p=50
+IN eff side=L type=0x26 p=ff03ffffff3f0000a000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(L): Vibration(0x26) zone 0..9 maxStr 8 160Hz
+IN eff side=R type=0x25 p=22000700000000000000 t=2000000000
+OUT! ret=str
+TXT \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9(R): Weapon(0x25) zone 1..5 str 8
+IN pos l=0 r=0
+IN render t=2000000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=12 r=12
+IN render t=2008000000
+OUT! en=1 route=0
+OUT~1 s=6,4,-10,-24,-14,17,39,28
+IN pos l=25 r=25
+IN render t=2016000000
+OUT! en=1 route=0
+OUT~1 s=-17,-42,-33,12,41,36,-6,-40
+IN pos l=38 r=38
+IN render t=2024000000
+OUT! en=1 route=0
+OUT~1 s=-38,0,38,40,6,-36,-41,-12
+IN pos l=51 r=51
+IN render t=2032000000
+OUT! en=1 route=0
+OUT~1 s=33,42,17,-28,-42,-23,23,42
+IN pos l=63 r=63
+IN render t=2040000000
+OUT! en=1 route=0
+OUT~1 s=28,-17,-42,-33,12,41,36,-6
+IN pos l=76 r=76
+IN render t=2048000000
+OUT! en=1 route=0
+OUT~1 s=-40,-38,0,38,40,6,-36,-41
+IN pos l=89 r=89
+IN render t=2056000000
+OUT! en=1 route=0
+OUT~1 s=-12,33,42,17,-28,-42,-23,23
+IN pos l=102 r=102
+IN render t=2064000000
+OUT! en=1 route=0
+OUT~1 s=42,28,-17,-42,-33,12,41,36
+IN pos l=114 r=114
+IN render t=2072000000
+OUT! en=1 route=0
+OUT~1 s=-6,-40,-38,0,38,40,6,-36
+IN pos l=127 r=127
+IN render t=2080000000
+OUT! en=1 route=0
+OUT~1 s=-41,-12,33,42,17,-28,-42,-23
+IN pos l=140 r=140
+IN render t=2088000000
+OUT! en=1 route=2
+OUT~1 s=23,81,77,33,2,-21,-20,-7
+IN pos l=153 r=153
+IN render t=2096000000
+OUT! en=1 route=2
+OUT~1 s=-14,-53,-63,-17,46,88,88,40
+IN pos l=165 r=165
+IN render t=2104000000
+OUT! en=1 route=2
+OUT~1 s=-45,-84,-62,-16,1,15,10,7
+IN pos l=178 r=178
+IN render t=2112000000
+OUT! en=1 route=2
+OUT~1 s=27,68,56,-2,-65,-92,-80,-13
+IN pos l=191 r=191
+IN render t=2120000000
+OUT! en=1 route=2
+OUT~1 s=60,82,44,8,-3,-7,-4,-10
+IN pos l=204 r=204
+IN render t=2128000000
+OUT! en=1 route=2
+OUT~1 s=-43,-75,-44,15,72,78,39,-24
+IN pos l=216 r=216
+IN render t=2136000000
+OUT! en=1 route=2
+OUT~1 s=-47,-29,23,42,28,-17,-42,-33
+IN pos l=229 r=229
+IN render t=2144000000
+OUT! en=1 route=2
+OUT~1 s=12,41,36,-6,-40,-38,0,38
+IN pos l=242 r=242
+IN render t=2152000000
+OUT! en=1 route=2
+OUT~1 s=40,6,-36,-41,-12,33,42,17
+IN pos l=255 r=255
+IN render t=2160000000
+OUT! en=1 route=2
+OUT~1 s=-28,-42,-23,23,42,28,-17,-42
+IN pos l=255 r=255
+IN render t=2168000000
+OUT! en=1 route=2
+OUT~1 s=-33,12,41,36,-6,-40,-38,0
+IN pos l=243 r=243
+IN render t=2176000000
+OUT! en=1 route=2
+OUT~1 s=38,40,6,-36,-41,-12,33,42
+IN pos l=230 r=230
+IN render t=2184000000
+OUT! en=1 route=2
+OUT~1 s=17,-28,-42,-23,23,42,28,-17
+IN pos l=217 r=217
+IN render t=2192000000
+OUT! en=1 route=2
+OUT~1 s=-42,-33,12,41,36,-6,-40,-38
+IN pos l=204 r=204
+IN render t=2200000000
+OUT! en=1 route=2
+OUT~1 s=0,38,40,6,-36,-41,-12,33
+IN pos l=192 r=192
+IN render t=2208000000
+OUT! en=1 route=2
+OUT~1 s=42,17,-28,-42,-23,23,42,28
+IN pos l=179 r=179
+IN render t=2216000000
+OUT! en=1 route=2
+OUT~1 s=-17,-42,-33,12,41,36,-6,-40
+IN pos l=166 r=166
+IN render t=2224000000
+OUT! en=1 route=2
+OUT~1 s=-38,0,38,40,6,-36,-41,-12
+IN pos l=153 r=153
+IN render t=2232000000
+OUT! en=1 route=2
+OUT~1 s=33,42,17,-28,-42,-23,23,42
+IN pos l=141 r=141
+IN render t=2240000000
+OUT! en=1 route=2
+OUT~1 s=28,-17,-42,-33,12,41,36,-6
+IN pos l=128 r=128
+IN render t=2248000000
+OUT! en=1 route=2
+OUT~1 s=-40,-38,0,38,40,6,-36,-41
+IN pos l=115 r=115
+IN render t=2256000000
+OUT! en=1 route=2
+OUT~1 s=-12,33,42,17,-28,-42,-23,23
+IN pos l=102 r=102
+IN render t=2264000000
+OUT! en=1 route=2
+OUT~1 s=42,28,-17,-42,-33,12,41,36
+IN pos l=90 r=90
+IN render t=2272000000
+OUT! en=1 route=2
+OUT~1 s=-6,-40,-38,0,38,40,6,-36
+IN pos l=77 r=77
+IN render t=2280000000
+OUT! en=1 route=2
+OUT~1 s=-41,-12,33,42,17,-28,-42,-23
+IN pos l=64 r=64
+IN render t=2288000000
+OUT! en=1 route=2
+OUT~1 s=23,42,28,-17,-42,-33,12,41
+IN pos l=51 r=51
+IN render t=2296000000
+OUT! en=1 route=2
+OUT~1 s=36,-6,-40,-38,0,38,40,6
+IN pos l=39 r=39
+IN render t=2304000000
+OUT! en=1 route=2
+OUT~1 s=-36,-41,-12,33,42,17,-28,-42
+IN pos l=26 r=26
+IN render t=2312000000
+OUT! en=1 route=2
+OUT~1 s=-23,23,42,28,-17,-42,-33,12
+IN pos l=13 r=13
+IN render t=2320000000
+OUT! en=1 route=2
+OUT~1 s=41,36,-6,-40,-38,0,38,40
+IN pos l=0 r=0
+IN render t=2328000000
+OUT! en=1 route=2
+OUT~1 s=5,-27,-28,-6,12,12,2,0
+IN pos l=0 r=0
+IN render t=2336000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN pos l=12 r=12
+IN render t=2344000000
+OUT! en=1 route=2
+OUT~1 s=1,11,13,-3,-27,-30,0,38
+IN pos l=25 r=25
+IN render t=2352000000
+OUT! en=1 route=2
+OUT~1 s=40,6,-36,-41,-12,33,42,17
+IN pos l=38 r=38
+IN render t=2360000000
+OUT! en=1 route=2
+OUT~1 s=-28,-42,-23,23,42,28,-17,-42
+IN pos l=51 r=51
+IN render t=2368000000
+OUT! en=1 route=2
+OUT~1 s=-33,12,41,36,-6,-40,-38,0
+IN pos l=63 r=63
+IN render t=2376000000
+OUT! en=1 route=2
+OUT~1 s=38,40,6,-36,-41,-12,33,42
+IN pos l=76 r=76
+IN render t=2384000000
+OUT! en=1 route=2
+OUT~1 s=17,-28,-42,-23,23,42,28,-17
+IN pos l=89 r=89
+IN render t=2392000000
+OUT! en=1 route=2
+OUT~1 s=-42,-33,12,41,36,-6,-40,-38
+IN pos l=102 r=102
+IN render t=2400000000
+OUT! en=1 route=2
+OUT~1 s=0,38,40,6,-36,-41,-12,33
+IN pos l=114 r=114
+IN render t=2408000000
+OUT! en=1 route=2
+OUT~1 s=42,17,-28,-42,-23,23,42,28
+IN pos l=127 r=127
+IN render t=2416000000
+OUT! en=1 route=2
+OUT~1 s=-17,-42,-33,12,41,36,-6,-40
+IN pos l=140 r=140
+IN render t=2424000000
+OUT! en=1 route=2
+OUT~1 s=-38,39,87,90,50,-24,-73,-60
+IN pos l=153 r=153
+IN render t=2432000000
+OUT! en=1 route=2
+OUT~1 s=-17,-5,-6,-7,4,27,71,76
+IN pos l=165 r=165
+IN render t=2440000000
+OUT! en=1 route=2
+OUT~1 s=19,-60,-92,-82,-29,39,74,43
+IN pos l=178 r=178
+IN render t=2448000000
+OUT! en=1 route=2
+OUT~1 s=10,7,14,8,-8,-44,-83,-66
+IN pos l=191 r=191
+IN render t=2456000000
+OUT! en=1 route=2
+OUT~1 s=7,79,92,65,7,-49,-65,-27
+IN pos l=204 r=204
+IN render t=2464000000
+OUT! en=1 route=2
+OUT~1 s=-7,-11,-20,-15,6,48,63,40
+IN pos l=216 r=216
+IN render t=2472000000
+OUT! en=1 route=2
+OUT~1 s=-11,-46,-38,0,38,40,6,-36
+IN pos l=229 r=229
+IN render t=2480000000
+OUT! en=1 route=2
+OUT~1 s=-41,-12,33,42,17,-28,-42,-23
+IN pos l=242 r=242
+IN render t=2488000000
+OUT! en=1 route=2
+OUT~1 s=23,42,28,-17,-42,-33,12,41
+IN pos l=255 r=255
+IN render t=2496000000
+OUT! en=1 route=2
+OUT~1 s=36,-6,-40,-38,0,38,40,6
+IN pos l=255 r=255
+IN render t=2504000000
+OUT! en=1 route=2
+OUT~1 s=-36,-41,-12,33,42,17,-28,-42
+IN pos l=243 r=243
+IN render t=2512000000
+OUT! en=1 route=2
+OUT~1 s=-23,23,42,28,-17,-42,-33,12
+IN pos l=230 r=230
+IN render t=2520000000
+OUT! en=1 route=2
+OUT~1 s=41,36,-6,-40,-38,0,38,40
+IN pos l=217 r=217
+IN render t=2528000000
+OUT! en=1 route=2
+OUT~1 s=6,-36,-41,-12,33,42,17,-28
+IN pos l=204 r=204
+IN render t=2536000000
+OUT! en=1 route=2
+OUT~1 s=-42,-23,23,42,28,-17,-42,-33
+IN pos l=192 r=192
+IN render t=2544000000
+OUT! en=1 route=2
+OUT~1 s=12,41,36,-6,-40,-38,0,38
+IN pos l=179 r=179
+IN render t=2552000000
+OUT! en=1 route=2
+OUT~1 s=40,6,-36,-41,-12,33,42,17
+IN pos l=166 r=166
+IN render t=2560000000
+OUT! en=1 route=2
+OUT~1 s=-28,-42,-23,23,42,28,-17,-42
+IN pos l=153 r=153
+IN render t=2568000000
+OUT! en=1 route=2
+OUT~1 s=-33,12,41,36,-6,-40,-38,0
+IN pos l=141 r=141
+IN render t=2576000000
+OUT! en=1 route=2
+OUT~1 s=38,40,6,-36,-41,-12,33,42
+IN pos l=128 r=128
+IN render t=2584000000
+OUT! en=1 route=2
+OUT~1 s=17,-28,-42,-23,23,42,28,-17
+IN pos l=115 r=115
+IN render t=2592000000
+OUT! en=1 route=2
+OUT~1 s=-42,-33,12,41,36,-6,-40,-38
+IN pos l=102 r=102
+IN render t=2600000000
+OUT! en=1 route=2
+OUT~1 s=0,38,40,6,-36,-41,-12,33
+IN pos l=90 r=90
+IN render t=2608000000
+OUT! en=1 route=2
+OUT~1 s=42,17,-28,-42,-23,23,42,28
+IN pos l=77 r=77
+IN render t=2616000000
+OUT! en=1 route=2
+OUT~1 s=-17,-42,-33,12,41,36,-6,-40
+IN pos l=64 r=64
+IN render t=2624000000
+OUT! en=1 route=2
+OUT~1 s=-38,0,38,40,6,-36,-41,-12
+IN pos l=51 r=51
+IN render t=2632000000
+OUT! en=1 route=2
+OUT~1 s=33,42,17,-28,-42,-23,23,42
+IN pos l=39 r=39
+IN render t=2640000000
+OUT! en=1 route=2
+OUT~1 s=28,-17,-42,-33,12,41,36,-6
+IN pos l=26 r=26
+IN render t=2648000000
+OUT! en=1 route=2
+OUT~1 s=-40,-38,0,38,40,6,-36,-41
+IN pos l=13 r=13
+IN render t=2656000000
+OUT! en=1 route=2
+OUT~1 s=-12,33,42,17,-28,-42,-23,23
+IN pos l=0 r=0
+IN render t=2664000000
+OUT! en=1 route=2
+OUT~1 s=39,21,-10,-23,-12,3,6,0
+IN strength p=0
+IN render t=2672000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2680000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2688000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2696000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN strength p=150
+IN ceiling p=10
+IN render t=2704000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2712000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2720000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2728000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2736000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN render t=2744000000
+OUT! en=0 route=3
+OUT~1 s=0,0,0,0,0,0,0,0
+IN stats
+OUT! v=1,1,2,0,0,0,0,0,2,0,365,10,0,0,72,38,37
+END

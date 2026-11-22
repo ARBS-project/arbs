@@ -1,0 +1,1437 @@
+#arbs-golden 1
+#source ArbsSessionStats java=f3051641fb20a5210358b5e7d47e8ff05c568b0e
+#harness IN reset t= ; add i= v= ; set i= v= ; silence ms=<double bits> ; extra ms=<double bits> ; rtt ms=<double bits> ;
+#harness    batstart v= ; batend v= ; crash ; due t= -> OUT! v=minuteDue(t) ; get -> OUT! cum=<13 longs via get(i)>
+#harness IN minute t= / session t=: line string -> TXT (not compared) ; OUT! tokens=<all numeric tokens [0-9]+(.[0-9]+)? in order>
+#harness    the C++ side formats its own line and compares the same token list; the generator asserts that every %.0f/%.1f field
+#harness    (max silence, extra-delay mean, RTT mean) is >= 1e-6 away from a rounding tie, so Java HALF_UP vs printf cannot differ
+#harness IN persec bytes= verbose=: OUT! v=perSecondAllowed(bytes,verbose). Line args: minute(session=S, apex=A), session(reason=R)
+CASE stats
+IN persec bytes=0 verbose=0
+OUT! v=1
+IN persec bytes=0 verbose=1
+OUT! v=1
+IN persec bytes=20971520 verbose=0
+OUT! v=1
+IN persec bytes=20971520 verbose=1
+OUT! v=1
+IN persec bytes=20971521 verbose=0
+OUT! v=0
+IN persec bytes=20971521 verbose=1
+OUT! v=1
+IN persec bytes=41943040 verbose=0
+OUT! v=0
+IN persec bytes=41943040 verbose=1
+OUT! v=1
+IN due t=7000000000
+OUT! v=0
+IN add i=11 v=3
+IN add i=12 v=1
+IN add i=10 v=2
+IN reset t=7000000000
+IN get
+OUT! cum=0,0,0,0,0,0,0,0,0,0,0,3,1
+IN batstart v=7
+IN add i=2 v=201
+IN add i=7 v=151
+IN add i=12 v=173
+IN set i=6 v=3
+IN set i=8 v=0
+IN silence ms=d:407ace0000000000
+IN due t=8000000000
+OUT! v=0
+IN set i=6 v=8
+IN set i=8 v=0
+IN silence ms=d:405d880000000000
+IN extra ms=d:404213d70a3d70a4
+IN due t=9000000000
+OUT! v=0
+IN add i=12 v=1
+IN set i=6 v=10
+IN set i=8 v=0
+IN silence ms=d:407ea40000000000
+IN rtt ms=d:4045200000000000
+IN due t=10000000000
+OUT! v=0
+IN set i=6 v=13
+IN set i=8 v=0
+IN silence ms=d:406a8c0000000000
+IN extra ms=d:403187ae147ae148
+IN due t=11000000000
+OUT! v=0
+IN set i=6 v=15
+IN set i=8 v=0
+IN silence ms=d:4022400000000000
+IN due t=12000000000
+OUT! v=0
+IN add i=1 v=139
+IN add i=3 v=227
+IN set i=6 v=19
+IN set i=8 v=0
+IN silence ms=d:4069540000000000
+IN extra ms=d:4046c3d70a3d70a4
+IN rtt ms=d:4031400000000000
+IN due t=13000000000
+OUT! v=0
+IN add i=1 v=113
+IN add i=10 v=69
+IN add i=11 v=152
+IN set i=6 v=23
+IN set i=8 v=1
+IN silence ms=d:404ab00000000000
+IN due t=14000000000
+OUT! v=0
+IN add i=1 v=101
+IN add i=3 v=221
+IN add i=4 v=136
+IN add i=7 v=7
+IN set i=6 v=26
+IN set i=8 v=1
+IN silence ms=d:4077000000000000
+IN extra ms=d:404033d70a3d70a4
+IN due t=15000000000
+OUT! v=0
+IN add i=3 v=256
+IN set i=6 v=28
+IN set i=8 v=1
+IN silence ms=d:4059380000000000
+IN rtt ms=d:404c200000000000
+IN due t=16000000000
+OUT! v=0
+IN add i=4 v=59
+IN add i=5 v=211
+IN set i=6 v=31
+IN set i=8 v=1
+IN silence ms=d:4060d40000000000
+IN extra ms=d:404353d70a3d70a4
+IN due t=17000000000
+OUT! v=0
+IN add i=5 v=16
+IN add i=7 v=136
+IN set i=6 v=35
+IN set i=8 v=1
+IN silence ms=d:4074a60000000000
+IN due t=18000000000
+OUT! v=0
+IN add i=2 v=89
+IN set i=6 v=36
+IN set i=8 v=1
+IN silence ms=d:407e720000000000
+IN extra ms=d:403367ae147ae148
+IN rtt ms=d:4022800000000000
+IN due t=19000000000
+OUT! v=0
+IN add i=12 v=77
+IN set i=6 v=39
+IN set i=8 v=1
+IN silence ms=d:406e6c0000000000
+IN due t=20000000000
+OUT! v=0
+IN add i=5 v=94
+IN set i=6 v=42
+IN set i=8 v=2
+IN silence ms=d:4052f00000000000
+IN extra ms=d:402d0f5c28f5c28f
+IN due t=21000000000
+OUT! v=0
+IN add i=1 v=99
+IN add i=3 v=4
+IN add i=7 v=182
+IN add i=10 v=212
+IN add i=11 v=61
+IN set i=6 v=45
+IN set i=8 v=2
+IN silence ms=d:404ac00000000000
+IN rtt ms=d:4002000000000000
+IN due t=22000000000
+OUT! v=0
+IN add i=4 v=6
+IN add i=5 v=256
+IN set i=6 v=50
+IN set i=8 v=2
+IN silence ms=d:406ac00000000000
+IN extra ms=d:403da7ae147ae148
+IN due t=23000000000
+OUT! v=0
+IN set i=6 v=52
+IN set i=8 v=2
+IN silence ms=d:4042500000000000
+IN due t=24000000000
+OUT! v=0
+IN add i=10 v=211
+IN set i=6 v=56
+IN set i=8 v=2
+IN silence ms=d:4060680000000000
+IN extra ms=d:404283d70a3d70a4
+IN rtt ms=d:401d000000000000
+IN due t=25000000000
+OUT! v=0
+IN add i=4 v=168
+IN add i=11 v=204
+IN set i=6 v=59
+IN set i=8 v=2
+IN silence ms=d:4072080000000000
+IN due t=26000000000
+OUT! v=0
+IN add i=10 v=181
+IN set i=6 v=61
+IN set i=8 v=2
+IN silence ms=d:400d000000000000
+IN extra ms=d:404843d70a3d70a4
+IN due t=27000000000
+OUT! v=0
+IN add i=1 v=274
+IN add i=5 v=291
+IN set i=6 v=64
+IN set i=8 v=3
+IN silence ms=d:40704e0000000000
+IN rtt ms=d:4045a00000000000
+IN due t=28000000000
+OUT! v=0
+IN add i=2 v=270
+IN add i=11 v=300
+IN add i=12 v=110
+IN set i=6 v=68
+IN set i=8 v=3
+IN silence ms=d:4060300000000000
+IN extra ms=d:404173d70a3d70a4
+IN due t=29000000000
+OUT! v=0
+IN add i=3 v=275
+IN add i=12 v=21
+IN set i=6 v=69
+IN set i=8 v=3
+IN silence ms=d:4077840000000000
+IN due t=30000000000
+OUT! v=0
+IN set i=6 v=74
+IN set i=8 v=3
+IN silence ms=d:4062540000000000
+IN extra ms=d:400b3d70a3d70a3d
+IN rtt ms=d:404aa00000000000
+IN due t=31000000000
+OUT! v=0
+IN add i=7 v=138
+IN add i=10 v=114
+IN set i=6 v=76
+IN set i=8 v=3
+IN silence ms=d:402ec00000000000
+IN due t=32000000000
+OUT! v=0
+IN add i=4 v=270
+IN add i=7 v=71
+IN set i=6 v=79
+IN set i=8 v=3
+IN silence ms=d:407d900000000000
+IN extra ms=d:404293d70a3d70a4
+IN due t=33000000000
+OUT! v=0
+IN set i=6 v=81
+IN set i=8 v=3
+IN silence ms=d:407bae0000000000
+IN rtt ms=d:4048200000000000
+IN due t=34000000000
+OUT! v=0
+IN add i=1 v=89
+IN add i=2 v=38
+IN set i=6 v=85
+IN set i=8 v=4
+IN silence ms=d:4072680000000000
+IN extra ms=d:403ac7ae147ae148
+IN due t=35000000000
+OUT! v=0
+IN add i=5 v=239
+IN set i=6 v=88
+IN set i=8 v=4
+IN silence ms=d:406b8c0000000000
+IN due t=36000000000
+OUT! v=0
+IN set i=6 v=92
+IN set i=8 v=4
+IN silence ms=d:4075400000000000
+IN extra ms=d:404063d70a3d70a4
+IN rtt ms=d:400a000000000000
+IN due t=37000000000
+OUT! v=0
+IN get
+OUT! cum=0,815,598,983,639,1107,92,685,4,0,787,720,383
+IN add i=2 v=218
+IN add i=4 v=204
+IN set i=6 v=94
+IN set i=8 v=4
+IN silence ms=d:407a2e0000000000
+IN due t=38000000000
+OUT! v=0
+IN add i=2 v=203
+IN add i=4 v=55
+IN add i=11 v=256
+IN set i=6 v=98
+IN set i=8 v=4
+IN silence ms=d:40638c0000000000
+IN extra ms=d:403d47ae147ae148
+IN due t=39000000000
+OUT! v=0
+IN add i=7 v=209
+IN set i=6 v=99
+IN set i=8 v=4
+IN silence ms=d:407a460000000000
+IN rtt ms=d:4040a00000000000
+IN due t=40000000000
+OUT! v=0
+IN add i=7 v=266
+IN set i=6 v=104
+IN set i=8 v=4
+IN silence ms=d:40796c0000000000
+IN extra ms=d:401b9eb851eb851f
+IN due t=41000000000
+OUT! v=0
+IN add i=2 v=49
+IN add i=5 v=112
+IN add i=7 v=226
+IN set i=6 v=106
+IN set i=8 v=5
+IN silence ms=d:4067880000000000
+IN due t=42000000000
+OUT! v=0
+IN add i=3 v=185
+IN set i=6 v=108
+IN set i=8 v=5
+IN silence ms=d:4067140000000000
+IN extra ms=d:403a87ae147ae148
+IN rtt ms=d:4042200000000000
+IN due t=43000000000
+OUT! v=0
+IN add i=0 v=139
+IN add i=7 v=288
+IN add i=12 v=12
+IN set i=6 v=112
+IN set i=8 v=5
+IN silence ms=d:407e820000000000
+IN due t=44000000000
+OUT! v=0
+IN set i=6 v=114
+IN set i=8 v=5
+IN silence ms=d:40779e0000000000
+IN extra ms=d:40093d70a3d70a3d
+IN due t=45000000000
+OUT! v=0
+IN add i=3 v=217
+IN add i=5 v=12
+IN add i=11 v=146
+IN add i=12 v=127
+IN set i=6 v=117
+IN set i=8 v=5
+IN silence ms=d:4035400000000000
+IN rtt ms=d:4028800000000000
+IN due t=46000000000
+OUT! v=0
+IN add i=11 v=228
+IN set i=6 v=120
+IN set i=8 v=5
+IN silence ms=d:406b700000000000
+IN extra ms=d:401f1eb851eb851f
+IN due t=47000000000
+OUT! v=0
+IN add i=1 v=107
+IN add i=7 v=252
+IN set i=6 v=124
+IN set i=8 v=5
+IN silence ms=d:4048100000000000
+IN due t=48000000000
+OUT! v=0
+IN add i=5 v=176
+IN add i=12 v=270
+IN set i=6 v=128
+IN set i=8 v=6
+IN silence ms=d:406ca40000000000
+IN extra ms=d:404603d70a3d70a4
+IN rtt ms=d:4045200000000000
+IN due t=49000000000
+OUT! v=0
+IN add i=5 v=85
+IN set i=6 v=131
+IN set i=8 v=6
+IN silence ms=d:4076ca0000000000
+IN due t=50000000000
+OUT! v=0
+IN add i=0 v=6
+IN add i=12 v=243
+IN set i=6 v=134
+IN set i=8 v=6
+IN silence ms=d:406a8c0000000000
+IN extra ms=d:4047c3d70a3d70a4
+IN due t=51000000000
+OUT! v=0
+IN add i=3 v=182
+IN add i=10 v=58
+IN add i=12 v=237
+IN set i=6 v=136
+IN set i=8 v=6
+IN silence ms=d:4072b60000000000
+IN rtt ms=d:3ff4000000000000
+IN due t=52000000000
+OUT! v=0
+IN add i=0 v=40
+IN add i=11 v=76
+IN set i=6 v=140
+IN set i=8 v=6
+IN silence ms=d:406a440000000000
+IN extra ms=d:404473d70a3d70a4
+IN due t=53000000000
+OUT! v=0
+IN add i=5 v=156
+IN set i=6 v=142
+IN set i=8 v=6
+IN silence ms=d:407a9e0000000000
+IN due t=54000000000
+OUT! v=0
+IN add i=11 v=151
+IN set i=6 v=144
+IN set i=8 v=6
+IN silence ms=d:406e180000000000
+IN extra ms=d:404773d70a3d70a4
+IN rtt ms=d:404e200000000000
+IN due t=55000000000
+OUT! v=0
+IN add i=1 v=184
+IN add i=10 v=131
+IN add i=11 v=274
+IN set i=6 v=149
+IN set i=8 v=7
+IN silence ms=d:4046700000000000
+IN due t=56000000000
+OUT! v=0
+IN add i=0 v=211
+IN add i=1 v=254
+IN add i=4 v=115
+IN add i=7 v=280
+IN set i=6 v=151
+IN set i=8 v=7
+IN silence ms=d:4046f00000000000
+IN extra ms=d:4043c3d70a3d70a4
+IN due t=57000000000
+OUT! v=0
+IN add i=5 v=201
+IN add i=12 v=57
+IN set i=6 v=155
+IN set i=8 v=7
+IN silence ms=d:404cd00000000000
+IN rtt ms=d:4034400000000000
+IN due t=58000000000
+OUT! v=0
+IN add i=4 v=261
+IN add i=7 v=125
+IN set i=6 v=158
+IN set i=8 v=7
+IN silence ms=d:4074e00000000000
+IN extra ms=d:404663d70a3d70a4
+IN due t=59000000000
+OUT! v=0
+IN add i=4 v=180
+IN set i=6 v=161
+IN set i=8 v=7
+IN silence ms=d:4065a00000000000
+IN due t=60000000000
+OUT! v=0
+IN add i=0 v=278
+IN set i=6 v=162
+IN set i=8 v=7
+IN silence ms=d:406efc0000000000
+IN extra ms=d:40033d70a3d70a3d
+IN rtt ms=d:403a400000000000
+IN due t=61000000000
+OUT! v=0
+IN set i=6 v=167
+IN set i=8 v=7
+IN silence ms=d:4068800000000000
+IN due t=62000000000
+OUT! v=0
+IN add i=7 v=92
+IN set i=6 v=168
+IN set i=8 v=8
+IN silence ms=d:4069400000000000
+IN extra ms=d:403a87ae147ae148
+IN due t=63000000000
+OUT! v=0
+IN add i=4 v=156
+IN set i=6 v=173
+IN set i=8 v=8
+IN silence ms=d:407c920000000000
+IN rtt ms=d:4046a00000000000
+IN due t=64000000000
+OUT! v=0
+IN add i=7 v=112
+IN set i=6 v=174
+IN set i=8 v=8
+IN silence ms=d:4065f40000000000
+IN extra ms=d:4031e7ae147ae148
+IN due t=65000000000
+OUT! v=0
+IN add i=1 v=17
+IN add i=3 v=149
+IN set i=6 v=178
+IN set i=8 v=8
+IN silence ms=d:40795e0000000000
+IN due t=66000000000
+OUT! v=0
+IN add i=4 v=106
+IN add i=5 v=263
+IN set i=6 v=182
+IN set i=8 v=8
+IN silence ms=d:40701c0000000000
+IN extra ms=d:403a07ae147ae148
+IN rtt ms=d:4035400000000000
+IN due t=67000000000
+OUT! v=1
+IN minute t=67000000000
+TXT ARBS 1\ubd84 \uc694\uc57d: \uacbd\uacfc 00:01:00 \uc138\uc158=S APEX=A | PCM \ud328\ud0b7 674 \uac2d 1377 | \uc1a1\uc2e0 \uadf8\ub9bd 1716 \ud2b8\ub9ac\uac70 2112 \ud504\ub808\uc784 | \ud3d0\uae30 1068 \uc5b8\ub354\ub7f0 1716 | rumble \ud638\ucd9c 182 \ud0c0\uc784\uc544\uc6c3 2535 | \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9 8 \ud574\uc81c 0 | ARBS\ucd94\uac00\uc9c0\uc5f0 \ud3c9\uade0 28.8ms | Moonlight RTT \ud3c9\uade0 29ms | USB\uc624\ub958 976 (\ucd5c\uadfc 1\ubd84 \uad6c\uac04)
+OUT! tokens=1,00,01,00,674,1377,1716,2112,1068,1716,182,2535,8,0,28.8,29,976,1
+IN get
+OUT! cum=674,1377,1068,1716,1716,2112,182,2535,8,0,976,1851,1329
+IN set i=6 v=184
+IN set i=8 v=8
+IN silence ms=d:4079440000000000
+IN due t=68000000000
+OUT! v=0
+IN set i=6 v=188
+IN set i=8 v=8
+IN silence ms=d:406e6c0000000000
+IN extra ms=d:403fc7ae147ae148
+IN due t=69000000000
+OUT! v=0
+IN add i=11 v=82
+IN set i=6 v=191
+IN set i=8 v=9
+IN silence ms=d:40744c0000000000
+IN rtt ms=d:404ca00000000000
+IN due t=70000000000
+OUT! v=0
+IN add i=0 v=102
+IN add i=2 v=26
+IN add i=11 v=126
+IN set i=6 v=192
+IN set i=8 v=9
+IN silence ms=d:4053600000000000
+IN extra ms=d:40003d70a3d70a3d
+IN due t=71000000000
+OUT! v=0
+IN add i=2 v=67
+IN set i=6 v=197
+IN set i=8 v=9
+IN silence ms=d:4046200000000000
+IN due t=72000000000
+OUT! v=0
+IN add i=3 v=69
+IN set i=6 v=199
+IN set i=8 v=9
+IN silence ms=d:406bd00000000000
+IN extra ms=d:4046e3d70a3d70a4
+IN rtt ms=d:4028800000000000
+IN due t=73000000000
+OUT! v=0
+IN add i=3 v=104
+IN set i=6 v=201
+IN set i=8 v=9
+IN silence ms=d:407b2e0000000000
+IN due t=74000000000
+OUT! v=0
+IN add i=5 v=251
+IN add i=7 v=153
+IN set i=6 v=204
+IN set i=8 v=9
+IN silence ms=d:4078b00000000000
+IN extra ms=d:404413d70a3d70a4
+IN due t=75000000000
+OUT! v=0
+IN add i=2 v=44
+IN add i=10 v=132
+IN set i=6 v=208
+IN set i=8 v=9
+IN silence ms=d:407d520000000000
+IN rtt ms=d:401d000000000000
+IN due t=76000000000
+OUT! v=0
+IN add i=2 v=99
+IN add i=10 v=3
+IN add i=11 v=276
+IN add i=12 v=215
+IN set i=6 v=210
+IN set i=8 v=10
+IN silence ms=d:40722e0000000000
+IN extra ms=d:403887ae147ae148
+IN due t=77000000000
+OUT! v=0
+IN add i=10 v=72
+IN set i=6 v=215
+IN set i=8 v=10
+IN silence ms=d:4056b80000000000
+IN due t=78000000000
+OUT! v=0
+IN add i=4 v=104
+IN set i=6 v=217
+IN set i=8 v=10
+IN silence ms=d:407d700000000000
+IN extra ms=d:40280f5c28f5c28f
+IN rtt ms=d:4019000000000000
+IN due t=79000000000
+OUT! v=0
+IN add i=0 v=280
+IN add i=10 v=205
+IN set i=6 v=219
+IN set i=8 v=10
+IN silence ms=d:407d060000000000
+IN due t=80000000000
+OUT! v=0
+IN add i=4 v=158
+IN add i=12 v=107
+IN set i=6 v=223
+IN set i=8 v=10
+IN silence ms=d:4076480000000000
+IN extra ms=d:404153d70a3d70a4
+IN due t=81000000000
+OUT! v=0
+IN add i=3 v=125
+IN add i=7 v=181
+IN add i=12 v=111
+IN set i=6 v=227
+IN set i=8 v=10
+IN silence ms=d:406c740000000000
+IN rtt ms=d:4044200000000000
+IN due t=82000000000
+OUT! v=0
+IN add i=0 v=180
+IN set i=6 v=228
+IN set i=8 v=10
+IN silence ms=d:406c300000000000
+IN extra ms=d:403927ae147ae148
+IN due t=83000000000
+OUT! v=0
+IN add i=4 v=195
+IN set i=6 v=232
+IN set i=8 v=11
+IN silence ms=d:4075c80000000000
+IN due t=84000000000
+OUT! v=0
+IN add i=0 v=27
+IN add i=2 v=177
+IN set i=6 v=234
+IN set i=8 v=11
+IN silence ms=d:4035a00000000000
+IN extra ms=d:403aa7ae147ae148
+IN rtt ms=d:bffc000000000000
+IN due t=85000000000
+OUT! v=0
+IN set i=6 v=239
+IN set i=8 v=11
+IN silence ms=d:4078f00000000000
+IN due t=86000000000
+OUT! v=0
+IN add i=0 v=75
+IN add i=10 v=9
+IN set i=6 v=242
+IN set i=8 v=11
+IN silence ms=d:406b440000000000
+IN extra ms=d:403647ae147ae148
+IN due t=87000000000
+OUT! v=0
+IN set i=6 v=243
+IN set i=8 v=11
+IN silence ms=d:407a3a0000000000
+IN rtt ms=d:4036400000000000
+IN due t=88000000000
+OUT! v=0
+IN add i=1 v=281
+IN set i=6 v=246
+IN set i=8 v=11
+IN silence ms=d:407ada0000000000
+IN extra ms=d:3ff87ae147ae147b
+IN due t=89000000000
+OUT! v=0
+IN add i=10 v=158
+IN set i=6 v=249
+IN set i=8 v=11
+IN silence ms=d:4069300000000000
+IN due t=90000000000
+OUT! v=0
+IN add i=0 v=254
+IN set i=6 v=253
+IN set i=8 v=12
+IN silence ms=d:4046000000000000
+IN extra ms=d:403b67ae147ae148
+IN rtt ms=d:4030400000000000
+IN due t=91000000000
+OUT! v=0
+IN add i=4 v=253
+IN set i=6 v=256
+IN set i=8 v=12
+IN silence ms=d:4054980000000000
+IN due t=92000000000
+OUT! v=0
+IN set i=6 v=258
+IN set i=8 v=12
+IN silence ms=d:4057a00000000000
+IN extra ms=d:404723d70a3d70a4
+IN due t=93000000000
+OUT! v=0
+IN add i=0 v=195
+IN add i=4 v=180
+IN add i=10 v=286
+IN set i=6 v=262
+IN set i=8 v=12
+IN silence ms=d:4075a20000000000
+IN rtt ms=d:403e400000000000
+IN due t=94000000000
+OUT! v=0
+IN add i=3 v=128
+IN add i=10 v=229
+IN set i=6 v=264
+IN set i=8 v=12
+IN silence ms=d:4068b80000000000
+IN extra ms=d:4027cf5c28f5c28f
+IN due t=95000000000
+OUT! v=0
+IN set i=6 v=269
+IN set i=8 v=12
+IN silence ms=d:406ab00000000000
+IN due t=96000000000
+OUT! v=0
+IN add i=0 v=109
+IN add i=5 v=285
+IN set i=6 v=271
+IN set i=8 v=12
+IN silence ms=d:407c4c0000000000
+IN extra ms=d:404713d70a3d70a4
+IN rtt ms=d:3ff4000000000000
+IN due t=97000000000
+OUT! v=0
+IN get
+OUT! cum=1896,1658,1481,2142,2606,2648,271,2869,12,0,2070,2335,1762
+IN add i=3 v=131
+IN add i=12 v=166
+IN set i=6 v=275
+IN set i=8 v=13
+IN silence ms=d:406dd80000000000
+IN due t=98000000000
+OUT! v=0
+IN set i=6 v=276
+IN set i=8 v=13
+IN silence ms=d:4070540000000000
+IN extra ms=d:40181eb851eb851f
+IN due t=99000000000
+OUT! v=0
+IN add i=11 v=120
+IN add i=12 v=287
+IN set i=6 v=279
+IN set i=8 v=13
+IN silence ms=d:40636c0000000000
+IN rtt ms=d:4045a00000000000
+IN due t=100000000000
+OUT! v=0
+IN add i=11 v=51
+IN set i=6 v=282
+IN set i=8 v=13
+IN silence ms=d:406c680000000000
+IN extra ms=d:402acf5c28f5c28f
+IN due t=101000000000
+OUT! v=0
+IN add i=1 v=242
+IN add i=10 v=83
+IN set i=6 v=287
+IN set i=8 v=13
+IN silence ms=d:4075940000000000
+IN due t=102000000000
+OUT! v=0
+IN add i=10 v=271
+IN set i=6 v=288
+IN set i=8 v=13
+IN silence ms=d:407ade0000000000
+IN extra ms=d:404313d70a3d70a4
+IN rtt ms=d:404a200000000000
+IN due t=103000000000
+OUT! v=0
+IN add i=4 v=34
+IN set i=6 v=293
+IN set i=8 v=13
+IN silence ms=d:406d3c0000000000
+IN due t=104000000000
+OUT! v=0
+IN add i=2 v=217
+IN add i=10 v=151
+IN set i=6 v=294
+IN set i=8 v=14
+IN silence ms=d:407ce80000000000
+IN extra ms=d:401d9eb851eb851f
+IN due t=105000000000
+OUT! v=0
+IN add i=1 v=137
+IN add i=2 v=75
+IN add i=12 v=105
+IN set i=6 v=299
+IN set i=8 v=14
+IN silence ms=d:40710a0000000000
+IN rtt ms=d:4046a00000000000
+IN due t=106000000000
+OUT! v=0
+IN add i=2 v=79
+IN add i=12 v=210
+IN set i=6 v=300
+IN set i=8 v=14
+IN silence ms=d:4059f80000000000
+IN extra ms=d:404273d70a3d70a4
+IN due t=107000000000
+OUT! v=0
+IN add i=12 v=233
+IN set i=6 v=303
+IN set i=8 v=14
+IN silence ms=d:406aec0000000000
+IN due t=108000000000
+OUT! v=0
+IN add i=1 v=21
+IN add i=7 v=197
+IN set i=6 v=306
+IN set i=8 v=14
+IN silence ms=d:407aac0000000000
+IN extra ms=d:401c1eb851eb851f
+IN rtt ms=d:404e200000000000
+IN due t=109000000000
+OUT! v=0
+IN set i=6 v=310
+IN set i=8 v=14
+IN silence ms=d:40647c0000000000
+IN due t=110000000000
+OUT! v=0
+IN add i=3 v=7
+IN add i=11 v=98
+IN set i=6 v=314
+IN set i=8 v=14
+IN silence ms=d:4067d00000000000
+IN extra ms=d:404133d70a3d70a4
+IN due t=111000000000
+OUT! v=0
+IN add i=3 v=43
+IN add i=5 v=217
+IN add i=11 v=121
+IN set i=6 v=315
+IN set i=8 v=15
+IN silence ms=d:407b920000000000
+IN rtt ms=d:4049200000000000
+IN due t=112000000000
+OUT! v=0
+IN set i=6 v=318
+IN set i=8 v=15
+IN silence ms=d:4072480000000000
+IN extra ms=d:402ecf5c28f5c28f
+IN due t=113000000000
+OUT! v=0
+IN add i=0 v=44
+IN add i=7 v=277
+IN set i=6 v=321
+IN set i=8 v=15
+IN silence ms=d:4069dc0000000000
+IN due t=114000000000
+OUT! v=0
+IN add i=3 v=143
+IN add i=5 v=195
+IN set i=6 v=324
+IN set i=8 v=15
+IN silence ms=d:407d780000000000
+IN extra ms=d:403747ae147ae148
+IN rtt ms=d:4037400000000000
+IN due t=115000000000
+OUT! v=0
+IN add i=7 v=117
+IN set i=6 v=329
+IN set i=8 v=15
+IN silence ms=d:407f260000000000
+IN due t=116000000000
+OUT! v=0
+IN set i=6 v=331
+IN set i=8 v=15
+IN silence ms=d:40754e0000000000
+IN extra ms=d:403967ae147ae148
+IN due t=117000000000
+OUT! v=0
+IN add i=4 v=102
+IN add i=11 v=78
+IN set i=6 v=333
+IN set i=8 v=15
+IN silence ms=d:402d400000000000
+IN rtt ms=d:4043a00000000000
+IN due t=118000000000
+OUT! v=0
+IN add i=4 v=53
+IN set i=6 v=338
+IN set i=8 v=16
+IN silence ms=d:4026400000000000
+IN extra ms=d:3fc3d70a3d70a3d7
+IN due t=119000000000
+OUT! v=0
+IN set i=6 v=341
+IN set i=8 v=16
+IN silence ms=d:407b360000000000
+IN due t=120000000000
+OUT! v=0
+IN add i=11 v=2
+IN add i=12 v=292
+IN set i=6 v=342
+IN set i=8 v=16
+IN silence ms=d:406c580000000000
+IN extra ms=d:403e07ae147ae148
+IN rtt ms=d:bfe8000000000000
+IN due t=121000000000
+OUT! v=0
+IN add i=1 v=182
+IN add i=11 v=300
+IN set i=6 v=346
+IN set i=8 v=16
+IN silence ms=d:40748e0000000000
+IN due t=122000000000
+OUT! v=0
+IN add i=5 v=145
+IN set i=6 v=348
+IN set i=8 v=16
+IN silence ms=d:4068a00000000000
+IN extra ms=d:40169eb851eb851f
+IN due t=123000000000
+OUT! v=0
+IN add i=2 v=114
+IN set i=6 v=351
+IN set i=8 v=16
+IN silence ms=d:407ba60000000000
+IN rtt ms=d:4047200000000000
+IN due t=124000000000
+OUT! v=0
+IN add i=3 v=167
+IN add i=5 v=144
+IN add i=10 v=77
+IN set i=6 v=356
+IN set i=8 v=16
+IN silence ms=d:4060e80000000000
+IN extra ms=d:404693d70a3d70a4
+IN due t=125000000000
+OUT! v=0
+IN add i=10 v=104
+IN set i=6 v=357
+IN set i=8 v=17
+IN silence ms=d:4047100000000000
+IN due t=126000000000
+OUT! v=0
+IN add i=3 v=255
+IN add i=5 v=186
+IN set i=6 v=360
+IN set i=8 v=17
+IN silence ms=d:4070ec0000000000
+IN extra ms=d:401c1eb851eb851f
+IN rtt ms=d:4046a00000000000
+IN due t=127000000000
+OUT! v=1
+IN minute t=127000000000
+TXT ARBS 1\ubd84 \uc694\uc57d: \uacbd\uacfc 00:02:00 \uc138\uc158=S APEX=A | PCM \ud328\ud0b7 1266 \uac2d 863 | \uc1a1\uc2e0 \uadf8\ub9bd 1079 \ud2b8\ub9ac\uac70 1423 \ud504\ub808\uc784 | \ud3d0\uae30 898 \uc5b8\ub354\ub7f0 1172 | rumble \ud638\ucd9c 178 \ud0c0\uc784\uc544\uc6c3 925 | \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9 9 \ud574\uc81c 0 | ARBS\ucd94\uac00\uc9c0\uc5f0 \ud3c9\uade0 23.1ms | Moonlight RTT \ud3c9\uade0 33ms | USB\uc624\ub958 1780 (\ucd5c\uadfc 1\ubd84 \uad6c\uac04)
+OUT! tokens=1,00,02,00,1266,863,1079,1423,898,1172,178,925,9,0,23.1,33,1780,1
+IN get
+OUT! cum=1940,2240,1966,2888,2795,3535,360,3460,17,0,2756,3105,3055
+IN add i=2 v=185
+IN add i=12 v=296
+IN set i=6 v=365
+IN set i=8 v=17
+IN silence ms=d:40676c0000000000
+IN due t=128000000000
+OUT! v=0
+IN add i=11 v=156
+IN set i=6 v=368
+IN set i=8 v=17
+IN silence ms=d:407a1c0000000000
+IN extra ms=d:402e4f5c28f5c28f
+IN due t=129000000000
+OUT! v=0
+IN add i=7 v=19
+IN add i=11 v=167
+IN add i=12 v=25
+IN set i=6 v=371
+IN set i=8 v=17
+IN silence ms=d:4067600000000000
+IN rtt ms=d:3fd0000000000000
+IN due t=130000000000
+OUT! v=0
+IN add i=2 v=12
+IN add i=3 v=34
+IN set i=6 v=372
+IN set i=8 v=17
+IN silence ms=d:4079800000000000
+IN extra ms=d:401b9eb851eb851f
+IN due t=131000000000
+OUT! v=0
+IN add i=1 v=151
+IN add i=2 v=280
+IN set i=6 v=377
+IN set i=8 v=17
+IN silence ms=d:4078260000000000
+IN due t=132000000000
+OUT! v=0
+IN add i=12 v=18
+IN set i=6 v=378
+IN set i=8 v=18
+IN silence ms=d:4073800000000000
+IN extra ms=d:404593d70a3d70a4
+IN rtt ms=d:404b200000000000
+IN due t=133000000000
+OUT! v=0
+IN add i=5 v=172
+IN set i=6 v=381
+IN set i=8 v=18
+IN silence ms=d:4076ac0000000000
+IN due t=134000000000
+OUT! v=0
+IN add i=0 v=286
+IN add i=2 v=44
+IN add i=4 v=41
+IN set i=6 v=386
+IN set i=8 v=18
+IN silence ms=d:4065d00000000000
+IN extra ms=d:40294f5c28f5c28f
+IN due t=135000000000
+OUT! v=0
+IN add i=2 v=19
+IN add i=11 v=265
+IN add i=12 v=91
+IN set i=6 v=387
+IN set i=8 v=18
+IN silence ms=d:406ac00000000000
+IN rtt ms=d:4046a00000000000
+IN due t=136000000000
+OUT! v=0
+IN add i=3 v=221
+IN add i=7 v=74
+IN set i=6 v=391
+IN set i=8 v=18
+IN silence ms=d:40751c0000000000
+IN extra ms=d:4041b3d70a3d70a4
+IN due t=137000000000
+OUT! v=0
+IN set i=6 v=393
+IN set i=8 v=18
+IN silence ms=d:4072d80000000000
+IN due t=138000000000
+OUT! v=0
+IN set i=6 v=396
+IN set i=8 v=18
+IN silence ms=d:4043300000000000
+IN extra ms=d:40214f5c28f5c28f
+IN rtt ms=d:402a800000000000
+IN due t=139000000000
+OUT! v=0
+IN add i=5 v=205
+IN add i=7 v=178
+IN set i=6 v=401
+IN set i=8 v=19
+IN silence ms=d:407d320000000000
+IN due t=140000000000
+OUT! v=0
+IN add i=2 v=116
+IN add i=3 v=159
+IN set i=6 v=404
+IN set i=8 v=19
+IN silence ms=d:405ec80000000000
+IN extra ms=d:403027ae147ae148
+IN due t=141000000000
+OUT! v=0
+IN add i=7 v=17
+IN add i=11 v=158
+IN set i=6 v=405
+IN set i=8 v=19
+IN silence ms=d:4074d60000000000
+IN rtt ms=d:4044200000000000
+IN due t=142000000000
+OUT! v=0
+IN add i=2 v=275
+IN set i=6 v=410
+IN set i=8 v=19
+IN silence ms=d:4028400000000000
+IN extra ms=d:40043d70a3d70a3d
+IN due t=143000000000
+OUT! v=0
+IN add i=10 v=161
+IN set i=6 v=412
+IN set i=8 v=19
+IN silence ms=d:403a400000000000
+IN due t=144000000000
+OUT! v=0
+IN add i=0 v=195
+IN add i=2 v=112
+IN set i=6 v=415
+IN set i=8 v=19
+IN silence ms=d:40697c0000000000
+IN extra ms=d:4045b3d70a3d70a4
+IN rtt ms=d:4043a00000000000
+IN due t=145000000000
+OUT! v=0
+IN add i=2 v=255
+IN add i=7 v=235
+IN set i=6 v=418
+IN set i=8 v=19
+IN silence ms=d:4069ac0000000000
+IN due t=146000000000
+OUT! v=0
+IN set i=6 v=422
+IN set i=8 v=20
+IN silence ms=d:406ccc0000000000
+IN extra ms=d:404113d70a3d70a4
+IN due t=147000000000
+OUT! v=0
+IN add i=0 v=72
+IN add i=5 v=106
+IN add i=10 v=261
+IN set i=6 v=425
+IN set i=8 v=20
+IN silence ms=d:4062f00000000000
+IN rtt ms=d:4045200000000000
+IN due t=148000000000
+OUT! v=0
+IN add i=4 v=106
+IN set i=6 v=428
+IN set i=8 v=20
+IN silence ms=d:4077e80000000000
+IN extra ms=d:404663d70a3d70a4
+IN due t=149000000000
+OUT! v=0
+IN add i=7 v=158
+IN add i=12 v=211
+IN set i=6 v=430
+IN set i=8 v=20
+IN silence ms=d:406f200000000000
+IN due t=150000000000
+OUT! v=0
+IN add i=12 v=286
+IN set i=6 v=433
+IN set i=8 v=20
+IN silence ms=d:405fc80000000000
+IN extra ms=d:403187ae147ae148
+IN rtt ms=d:404e200000000000
+IN due t=151000000000
+OUT! v=0
+IN add i=2 v=55
+IN set i=6 v=437
+IN set i=8 v=20
+IN silence ms=d:4071460000000000
+IN due t=152000000000
+OUT! v=0
+IN add i=1 v=267
+IN set i=6 v=440
+IN set i=8 v=20
+IN silence ms=d:40799a0000000000
+IN extra ms=d:404463d70a3d70a4
+IN due t=153000000000
+OUT! v=0
+IN add i=1 v=146
+IN add i=4 v=116
+IN add i=5 v=105
+IN set i=6 v=443
+IN set i=8 v=21
+IN silence ms=d:407d3c0000000000
+IN rtt ms=d:4037400000000000
+IN due t=154000000000
+OUT! v=0
+IN add i=2 v=51
+IN add i=5 v=26
+IN add i=7 v=4
+IN set i=6 v=445
+IN set i=8 v=21
+IN silence ms=d:4062700000000000
+IN extra ms=d:40023d70a3d70a3d
+IN due t=155000000000
+OUT! v=0
+IN add i=7 v=89
+IN set i=6 v=449
+IN set i=8 v=21
+IN silence ms=d:407d4a0000000000
+IN due t=156000000000
+OUT! v=0
+IN add i=5 v=257
+IN set i=6 v=452
+IN set i=8 v=21
+IN silence ms=d:4060980000000000
+IN extra ms=d:4026cf5c28f5c28f
+IN rtt ms=d:4040200000000000
+IN due t=157000000000
+OUT! v=0
+IN get
+OUT! cum=2493,2804,3370,3302,3058,4406,452,4234,21,0,3178,3851,3982
+IN add i=2 v=288
+IN set i=6 v=455
+IN set i=8 v=21
+IN silence ms=d:4079d60000000000
+IN due t=158000000000
+OUT! v=0
+IN add i=11 v=228
+IN set i=6 v=457
+IN set i=8 v=21
+IN silence ms=d:4053b00000000000
+IN extra ms=d:403b07ae147ae148
+IN due t=159000000000
+OUT! v=0
+IN add i=3 v=45
+IN set i=6 v=459
+IN set i=8 v=21
+IN silence ms=d:4076900000000000
+IN rtt ms=d:404b200000000000
+IN due t=160000000000
+OUT! v=0
+IN add i=3 v=274
+IN add i=12 v=22
+IN set i=6 v=464
+IN set i=8 v=22
+IN silence ms=d:407eaa0000000000
+IN extra ms=d:400f3d70a3d70a3d
+IN due t=161000000000
+OUT! v=0
+IN set i=6 v=466
+IN set i=8 v=22
+IN silence ms=d:407a120000000000
+IN due t=162000000000
+OUT! v=0
+IN add i=0 v=133
+IN add i=7 v=142
+IN add i=11 v=43
+IN add i=12 v=239
+IN set i=6 v=469
+IN set i=8 v=22
+IN silence ms=d:4071120000000000
+IN extra ms=d:4048e3d70a3d70a4
+IN rtt ms=d:403c400000000000
+IN due t=163000000000
+OUT! v=0
+IN add i=3 v=82
+IN set i=6 v=473
+IN set i=8 v=22
+IN silence ms=d:406e840000000000
+IN due t=164000000000
+OUT! v=0
+IN set i=6 v=475
+IN set i=8 v=22
+IN silence ms=d:4061d80000000000
+IN extra ms=d:401c1eb851eb851f
+IN due t=165000000000
+OUT! v=0
+IN add i=2 v=61
+IN add i=7 v=101
+IN add i=11 v=22
+IN set i=6 v=479
+IN set i=8 v=22
+IN silence ms=d:4077300000000000
+IN rtt ms=d:4032400000000000
+IN due t=166000000000
+OUT! v=0
+IN add i=12 v=133
+IN set i=6 v=482
+IN set i=8 v=22
+IN silence ms=d:407a6a0000000000
+IN extra ms=d:40043d70a3d70a3d
+IN due t=167000000000
+OUT! v=0
+IN set i=6 v=483
+IN set i=8 v=23
+IN silence ms=d:4020000000000000
+IN due t=168000000000
+OUT! v=0
+IN add i=2 v=243
+IN set i=6 v=486
+IN set i=8 v=23
+IN silence ms=d:4036000000000000
+IN extra ms=d:400c3d70a3d70a3d
+IN rtt ms=d:4044200000000000
+IN due t=169000000000
+OUT! v=0
+IN add i=10 v=141
+IN set i=6 v=489
+IN set i=8 v=23
+IN silence ms=d:40771c0000000000
+IN due t=170000000000
+OUT! v=0
+IN add i=0 v=162
+IN add i=5 v=95
+IN add i=11 v=41
+IN set i=6 v=492
+IN set i=8 v=23
+IN silence ms=d:40620c0000000000
+IN extra ms=d:40151eb851eb851f
+IN due t=171000000000
+OUT! v=0
+IN add i=1 v=14
+IN add i=3 v=222
+IN add i=11 v=29
+IN set i=6 v=495
+IN set i=8 v=23
+IN silence ms=d:4073540000000000
+IN rtt ms=d:4044a00000000000
+IN due t=172000000000
+OUT! v=0
+IN add i=5 v=97
+IN add i=10 v=115
+IN set i=6 v=498
+IN set i=8 v=23
+IN silence ms=d:4028c00000000000
+IN extra ms=d:403387ae147ae148
+IN due t=173000000000
+OUT! v=0
+IN add i=0 v=67
+IN add i=3 v=13
+IN add i=10 v=214
+IN add i=11 v=261
+IN add i=12 v=43
+IN set i=6 v=501
+IN set i=8 v=23
+IN silence ms=d:4025400000000000
+IN due t=174000000000
+OUT! v=0
+IN add i=4 v=264
+IN add i=10 v=150
+IN set i=6 v=506
+IN set i=8 v=24
+IN silence ms=d:4072e80000000000
+IN extra ms=d:4047f3d70a3d70a4
+IN rtt ms=d:4031400000000000
+IN due t=175000000000
+OUT! v=0
+IN set i=6 v=509
+IN set i=8 v=24
+IN silence ms=d:40714e0000000000
+IN due t=176000000000
+OUT! v=0
+IN add i=2 v=49
+IN add i=4 v=24
+IN set i=6 v=512
+IN set i=8 v=24
+IN silence ms=d:4071e80000000000
+IN extra ms=d:4041a3d70a3d70a4
+IN due t=177000000000
+OUT! v=0
+IN add i=1 v=56
+IN add i=2 v=279
+IN add i=3 v=66
+IN add i=11 v=82
+IN set i=6 v=515
+IN set i=8 v=24
+IN silence ms=d:406d3c0000000000
+IN rtt ms=d:4033400000000000
+IN due t=178000000000
+OUT! v=0
+IN add i=2 v=25
+IN set i=6 v=516
+IN set i=8 v=24
+IN silence ms=d:406e6c0000000000
+IN extra ms=d:40121eb851eb851f
+IN due t=179000000000
+OUT! v=0
+IN set i=6 v=521
+IN set i=8 v=24
+IN silence ms=d:40630c0000000000
+IN due t=180000000000
+OUT! v=0
+IN add i=1 v=34
+IN add i=4 v=77
+IN set i=6 v=524
+IN set i=8 v=24
+IN silence ms=d:4050700000000000
+IN extra ms=d:4033e7ae147ae148
+IN rtt ms=d:4032400000000000
+IN due t=181000000000
+OUT! v=0
+IN add i=2 v=131
+IN add i=4 v=173
+IN add i=5 v=239
+IN add i=10 v=264
+IN add i=11 v=228
+IN set i=6 v=526
+IN set i=8 v=25
+IN silence ms=d:407a5c0000000000
+IN due t=182000000000
+OUT! v=0
+IN add i=3 v=42
+IN set i=6 v=528
+IN set i=8 v=25
+IN silence ms=d:406d9c0000000000
+IN extra ms=d:3fecf5c28f5c28f6
+IN due t=183000000000
+OUT! v=0
+IN set i=6 v=532
+IN set i=8 v=25
+IN silence ms=d:4058e00000000000
+IN rtt ms=d:4042200000000000
+IN due t=184000000000
+OUT! v=0
+IN add i=10 v=19
+IN set i=6 v=534
+IN set i=8 v=25
+IN silence ms=d:406b000000000000
+IN extra ms=d:404543d70a3d70a4
+IN due t=185000000000
+OUT! v=0
+IN add i=7 v=44
+IN set i=6 v=538
+IN set i=8 v=25
+IN silence ms=d:40640c0000000000
+IN due t=186000000000
+OUT! v=0
+IN add i=0 v=222
+IN add i=1 v=22
+IN add i=12 v=123
+IN set i=6 v=542
+IN set i=8 v=25
+IN silence ms=d:4072fe0000000000
+IN extra ms=d:40230f5c28f5c28f
+IN rtt ms=d:4048200000000000
+IN due t=187000000000
+OUT! v=1
+IN minute t=187000000000
+TXT ARBS 1\ubd84 \uc694\uc57d: \uacbd\uacfc 00:03:00 \uc138\uc158=S APEX=A | PCM \ud328\ud0b7 1137 \uac2d 690 | \uc1a1\uc2e0 \uadf8\ub9bd 801 \ud2b8\ub9ac\uac70 1302 \ud504\ub808\uc784 | \ud3d0\uae30 2480 \uc5b8\ub354\ub7f0 1158 | rumble \ud638\ucd9c 182 \ud0c0\uc784\uc544\uc6c3 1061 | \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9 8 \ud574\uc81c 0 | ARBS\ucd94\uac00\uc9c0\uc5f0 \ud3c9\uade0 20.5ms | Moonlight RTT \ud3c9\uade0 34ms | USB\uc624\ub958 1325 (\ucd5c\uadfc 1\ubd84 \uad6c\uac04)
+OUT! tokens=1,00,03,00,1137,690,801,1302,2480,1158,182,1061,8,0,20.5,34,1325,1
+IN get
+OUT! cum=3077,2930,4446,4046,3596,4837,542,4521,25,0,4081,4785,4542
+IN add i=2 v=252
+IN add i=4 v=204
+IN add i=7 v=92
+IN set i=6 v=544
+IN set i=8 v=25
+IN silence ms=d:406d340000000000
+IN due t=188000000000
+OUT! v=0
+IN add i=0 v=201
+IN add i=2 v=64
+IN add i=10 v=111
+IN set i=6 v=548
+IN set i=8 v=26
+IN silence ms=d:4049a00000000000
+IN extra ms=d:404333d70a3d70a4
+IN due t=189000000000
+OUT! v=0
+IN add i=1 v=201
+IN add i=2 v=25
+IN set i=6 v=549
+IN set i=8 v=26
+IN silence ms=d:407d180000000000
+IN rtt ms=d:403a400000000000
+IN due t=190000000000
+OUT! v=0
+IN add i=2 v=160
+IN add i=10 v=156
+IN add i=12 v=207
+IN set i=6 v=554
+IN set i=8 v=26
+IN silence ms=d:4076a40000000000
+IN extra ms=d:4045a3d70a3d70a4
+IN due t=191000000000
+OUT! v=0
+IN add i=7 v=277
+IN set i=6 v=556
+IN set i=8 v=26
+IN silence ms=d:406af80000000000
+IN due t=192000000000
+OUT! v=0
+IN batend v=5
+IN crash
+IN session t=192000000000
+TXT ARBS \uc138\uc158 \uc694\uc57d: \ucd1d \uc2dc\uac04 00:03:05 (R) | PCM \ud328\ud0b7 3278 \uac2d 3131 \ucd5c\ub300\ubb34\uc218\uc2e0 498ms | \uc1a1\uc2e0 \uadf8\ub9bd 3800 \ud2b8\ub9ac\uac70 4837 \ud504\ub808\uc784 | \ud3d0\uae30 4947 \uc5b8\ub354\ub7f0 4046 | rumble \ud638\ucd9c 556 \ud0c0\uc784\uc544\uc6c3 4890 | \ud2b8\ub9ac\uac70 \ud6a8\uacfc \uc801\uc6a9 26 \ud574\uc81c 0 | ARBS\ucd94\uac00\uc9c0\uc5f0 \ud3c9\uade0 24.5ms | Moonlight RTT \ud3c9\uade0 32ms | USB\uc624\ub958 4348 | \uc7ac\uc2dc\ub3c4 4785 \uc7ac\uc5f0\uacb0 4749 | APEX \ubc30\ud130\ub9ac(GetInfo \uc6d0\uac12) \uc2dc\uc791 7 \uc885\ub8cc 5 | \ud06c\ub798\uc2dc 1
+OUT! tokens=00,03,05,3278,3131,498,3800,4837,4947,4046,556,4890,26,0,24.5,32,4348,4785,4749,7,5,1
+IN get
+OUT! cum=3278,3131,4947,4046,3800,4837,556,4890,26,0,4348,4785,4749
+END

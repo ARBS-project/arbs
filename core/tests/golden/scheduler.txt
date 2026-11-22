@@ -1,0 +1,1835 @@
+#arbs-golden 1
+#source ApexScheduler java=f3051641fb20a5210358b5e7d47e8ff05c568b0e
+#harness IN start t=: start(t) -> OUT! target=
+#harness IN poll t=: poll(t,d) -> OUT! wait= skipped= catch= target= ; IN consume: consume() -> OUT! target=
+#harness IN counters: OUT! missed= resyncs= catchups= (getAndReset*)
+CASE engine_like
+IN start t=5000000000
+OUT! target=5000000000
+IN poll t=5005049159
+OUT! wait=0 skipped=0 catch=0 target=5000000000
+IN consume
+OUT! target=5008000000
+IN poll t=5013104002
+OUT! wait=0 skipped=0 catch=0 target=5008000000
+IN consume
+OUT! target=5016000000
+IN poll t=5016134954
+OUT! wait=0 skipped=0 catch=0 target=5016000000
+IN consume
+OUT! target=5024000000
+IN poll t=5016902485
+OUT! wait=7097515 skipped=0 catch=0 target=5024000000
+IN poll t=5041871970
+OUT! wait=0 skipped=0 catch=1 target=5024000000
+IN consume
+OUT! target=5032000000
+IN poll t=5044764863
+OUT! wait=0 skipped=0 catch=1 target=5032000000
+IN consume
+OUT! target=5040000000
+IN poll t=5051447921
+OUT! wait=0 skipped=0 catch=1 target=5040000000
+IN consume
+OUT! target=5048000000
+IN poll t=5075502877
+OUT! wait=0 skipped=0 catch=1 target=5048000000
+IN consume
+OUT! target=5056000000
+IN poll t=5101148962
+OUT! wait=0 skipped=5 catch=0 target=5101148962
+IN consume
+OUT! target=5109148962
+IN poll t=5103926749
+OUT! wait=5222213 skipped=0 catch=0 target=5109148962
+IN poll t=5107457197
+OUT! wait=1691765 skipped=0 catch=0 target=5109148962
+IN poll t=5112442532
+OUT! wait=0 skipped=0 catch=0 target=5109148962
+IN consume
+OUT! target=5117148962
+IN poll t=5118434882
+OUT! wait=0 skipped=0 catch=0 target=5117148962
+IN consume
+OUT! target=5125148962
+IN poll t=5121478197
+OUT! wait=3670765 skipped=0 catch=0 target=5125148962
+IN poll t=5123282201
+OUT! wait=1866761 skipped=0 catch=0 target=5125148962
+IN poll t=5125877595
+OUT! wait=0 skipped=0 catch=0 target=5125148962
+IN consume
+OUT! target=5133148962
+IN poll t=5135011856
+OUT! wait=0 skipped=0 catch=0 target=5133148962
+IN consume
+OUT! target=5141148962
+IN poll t=5143121021
+OUT! wait=0 skipped=0 catch=0 target=5141148962
+IN consume
+OUT! target=5149148962
+IN poll t=5158094982
+OUT! wait=0 skipped=0 catch=1 target=5149148962
+IN consume
+OUT! target=5157148962
+IN poll t=5159804898
+OUT! wait=0 skipped=0 catch=0 target=5157148962
+IN consume
+OUT! target=5165148962
+IN poll t=5161311810
+OUT! wait=3837152 skipped=0 catch=0 target=5165148962
+IN poll t=5163112131
+OUT! wait=2036831 skipped=0 catch=0 target=5165148962
+IN poll t=5168196276
+OUT! wait=0 skipped=0 catch=0 target=5165148962
+IN consume
+OUT! target=5173148962
+IN poll t=5175930297
+OUT! wait=0 skipped=0 catch=0 target=5173148962
+IN consume
+OUT! target=5181148962
+IN poll t=5188278869
+OUT! wait=0 skipped=0 catch=0 target=5181148962
+IN consume
+OUT! target=5189148962
+IN poll t=5189402545
+OUT! wait=0 skipped=0 catch=0 target=5189148962
+IN consume
+OUT! target=5197148962
+IN poll t=5189567169
+OUT! wait=7581793 skipped=0 catch=0 target=5197148962
+IN poll t=5190396046
+OUT! wait=6752916 skipped=0 catch=0 target=5197148962
+IN poll t=5197332417
+OUT! wait=0 skipped=0 catch=0 target=5197148962
+IN consume
+OUT! target=5205148962
+IN poll t=5199800272
+OUT! wait=5348690 skipped=0 catch=0 target=5205148962
+IN poll t=5201275260
+OUT! wait=3873702 skipped=0 catch=0 target=5205148962
+IN poll t=5212782869
+OUT! wait=0 skipped=0 catch=0 target=5205148962
+IN consume
+OUT! target=5213148962
+IN poll t=5219330166
+OUT! wait=0 skipped=0 catch=0 target=5213148962
+IN consume
+OUT! target=5221148962
+IN poll t=5224317218
+OUT! wait=0 skipped=0 catch=0 target=5221148962
+IN consume
+OUT! target=5229148962
+IN poll t=5224776259
+OUT! wait=4372703 skipped=0 catch=0 target=5229148962
+IN poll t=5228031158
+OUT! wait=1117804 skipped=0 catch=0 target=5229148962
+IN poll t=5234344493
+OUT! wait=0 skipped=0 catch=0 target=5229148962
+IN consume
+OUT! target=5237148962
+IN poll t=5249667643
+OUT! wait=0 skipped=0 catch=1 target=5237148962
+IN consume
+OUT! target=5245148962
+IN poll t=5252463747
+OUT! wait=0 skipped=0 catch=0 target=5245148962
+IN consume
+OUT! target=5253148962
+IN poll t=5344485709
+OUT! wait=0 skipped=11 catch=0 target=5344485709
+IN consume
+OUT! target=5352485709
+IN poll t=5352481657
+OUT! wait=4052 skipped=0 catch=0 target=5352485709
+IN poll t=5356182819
+OUT! wait=0 skipped=0 catch=0 target=5352485709
+IN consume
+OUT! target=5360485709
+IN poll t=5384344241
+OUT! wait=0 skipped=0 catch=1 target=5360485709
+IN consume
+OUT! target=5368485709
+IN poll t=5385280950
+OUT! wait=0 skipped=0 catch=1 target=5368485709
+IN consume
+OUT! target=5376485709
+IN poll t=5409466858
+OUT! wait=0 skipped=4 catch=0 target=5409466858
+IN consume
+OUT! target=5417466858
+IN poll t=5427079656
+OUT! wait=0 skipped=0 catch=1 target=5417466858
+IN consume
+OUT! target=5425466858
+IN poll t=5428777321
+OUT! wait=0 skipped=0 catch=0 target=5425466858
+IN consume
+OUT! target=5433466858
+IN poll t=5435528262
+OUT! wait=0 skipped=0 catch=0 target=5433466858
+IN consume
+OUT! target=5441466858
+IN poll t=5443046625
+OUT! wait=0 skipped=0 catch=0 target=5441466858
+IN consume
+OUT! target=5449466858
+IN poll t=5451319158
+OUT! wait=0 skipped=0 catch=0 target=5449466858
+IN consume
+OUT! target=5457466858
+IN poll t=5460140423
+OUT! wait=0 skipped=0 catch=0 target=5457466858
+IN consume
+OUT! target=5465466858
+IN poll t=5467227845
+OUT! wait=0 skipped=0 catch=0 target=5465466858
+IN consume
+OUT! target=5473466858
+IN poll t=5480560404
+OUT! wait=0 skipped=0 catch=0 target=5473466858
+IN consume
+OUT! target=5481466858
+IN poll t=5487463034
+OUT! wait=0 skipped=0 catch=0 target=5481466858
+IN consume
+OUT! target=5489466858
+IN poll t=5491223417
+OUT! wait=0 skipped=0 catch=0 target=5489466858
+IN consume
+OUT! target=5497466858
+IN poll t=5492326317
+OUT! wait=5140541 skipped=0 catch=0 target=5497466858
+IN poll t=5495619982
+OUT! wait=1846876 skipped=0 catch=0 target=5497466858
+IN poll t=5520957220
+OUT! wait=0 skipped=0 catch=1 target=5497466858
+IN consume
+OUT! target=5505466858
+IN poll t=5534365964
+OUT! wait=0 skipped=0 catch=1 target=5505466858
+IN consume
+OUT! target=5513466858
+IN poll t=5536462412
+OUT! wait=0 skipped=0 catch=1 target=5513466858
+IN consume
+OUT! target=5521466858
+IN poll t=5564363039
+OUT! wait=0 skipped=5 catch=0 target=5564363039
+IN consume
+OUT! target=5572363039
+IN poll t=5571806917
+OUT! wait=556122 skipped=0 catch=0 target=5572363039
+IN poll t=5578449408
+OUT! wait=0 skipped=0 catch=0 target=5572363039
+IN consume
+OUT! target=5580363039
+IN poll t=5586615445
+OUT! wait=0 skipped=0 catch=0 target=5580363039
+IN consume
+OUT! target=5588363039
+IN poll t=5594694734
+OUT! wait=0 skipped=0 catch=0 target=5588363039
+IN consume
+OUT! target=5596363039
+IN poll t=5598920192
+OUT! wait=0 skipped=0 catch=0 target=5596363039
+IN consume
+OUT! target=5604363039
+IN poll t=5603058416
+OUT! wait=1304623 skipped=0 catch=0 target=5604363039
+IN poll t=5605676728
+OUT! wait=0 skipped=0 catch=0 target=5604363039
+IN consume
+OUT! target=5612363039
+IN poll t=5610527229
+OUT! wait=1835810 skipped=0 catch=0 target=5612363039
+IN poll t=5617438137
+OUT! wait=0 skipped=0 catch=0 target=5612363039
+IN consume
+OUT! target=5620363039
+IN poll t=5646969085
+OUT! wait=0 skipped=0 catch=1 target=5620363039
+IN consume
+OUT! target=5628363039
+IN poll t=5730871390
+OUT! wait=0 skipped=12 catch=0 target=5730871390
+IN consume
+OUT! target=5738871390
+IN poll t=5733859828
+OUT! wait=5011562 skipped=0 catch=0 target=5738871390
+IN poll t=5734260190
+OUT! wait=4611200 skipped=0 catch=0 target=5738871390
+IN poll t=5735058656
+OUT! wait=3812734 skipped=0 catch=0 target=5738871390
+IN poll t=5736223578
+OUT! wait=2647812 skipped=0 catch=0 target=5738871390
+IN poll t=5736223578
+OUT! wait=2647812 skipped=0 catch=0 target=5738871390
+IN poll t=5737859929
+OUT! wait=1011461 skipped=0 catch=0 target=5738871390
+IN poll t=5756909184
+OUT! wait=0 skipped=0 catch=1 target=5738871390
+IN consume
+OUT! target=5746871390
+IN poll t=5760064399
+OUT! wait=0 skipped=0 catch=1 target=5746871390
+IN consume
+OUT! target=5754871390
+IN poll t=5763891661
+OUT! wait=0 skipped=0 catch=1 target=5754871390
+IN consume
+OUT! target=5762871390
+IN poll t=5768625010
+OUT! wait=0 skipped=0 catch=0 target=5762871390
+IN consume
+OUT! target=5770871390
+IN poll t=5770392242
+OUT! wait=479148 skipped=0 catch=0 target=5770871390
+IN poll t=5774846022
+OUT! wait=0 skipped=0 catch=0 target=5770871390
+IN consume
+OUT! target=5778871390
+IN poll t=5798992000
+OUT! wait=0 skipped=0 catch=1 target=5778871390
+IN consume
+OUT! target=5786871390
+IN poll t=5803006737
+OUT! wait=0 skipped=0 catch=1 target=5786871390
+IN consume
+OUT! target=5794871390
+IN poll t=5826891495
+OUT! wait=0 skipped=4 catch=0 target=5826891495
+IN consume
+OUT! target=5834891495
+IN poll t=5835290632
+OUT! wait=0 skipped=0 catch=0 target=5834891495
+IN consume
+OUT! target=5842891495
+IN poll t=5857402976
+OUT! wait=0 skipped=0 catch=1 target=5842891495
+IN consume
+OUT! target=5850891495
+IN poll t=5860096568
+OUT! wait=0 skipped=0 catch=1 target=5850891495
+IN consume
+OUT! target=5858891495
+IN poll t=5866636977
+OUT! wait=0 skipped=0 catch=0 target=5858891495
+IN consume
+OUT! target=5866891495
+IN poll t=5867956730
+OUT! wait=0 skipped=0 catch=0 target=5866891495
+IN consume
+OUT! target=5874891495
+IN poll t=5896696967
+OUT! wait=0 skipped=0 catch=1 target=5874891495
+IN consume
+OUT! target=5882891495
+IN poll t=5905063527
+OUT! wait=0 skipped=0 catch=1 target=5882891495
+IN consume
+OUT! target=5890891495
+IN poll t=5913411783
+OUT! wait=0 skipped=0 catch=1 target=5890891495
+IN consume
+OUT! target=5898891495
+IN poll t=5914762785
+OUT! wait=0 skipped=0 catch=1 target=5898891495
+IN consume
+OUT! target=5906891495
+IN poll t=5917756336
+OUT! wait=0 skipped=0 catch=1 target=5906891495
+IN consume
+OUT! target=5914891495
+IN poll t=5925994812
+OUT! wait=0 skipped=0 catch=1 target=5914891495
+IN consume
+OUT! target=5922891495
+IN poll t=5934840186
+OUT! wait=0 skipped=0 catch=1 target=5922891495
+IN consume
+OUT! target=5930891495
+IN poll t=5941763859
+OUT! wait=0 skipped=0 catch=1 target=5930891495
+IN consume
+OUT! target=5938891495
+IN counters
+OUT! missed=41 resyncs=6 catchups=28
+IN poll t=5943550836
+OUT! wait=0 skipped=0 catch=0 target=5938891495
+IN consume
+OUT! target=5946891495
+IN poll t=5948626066
+OUT! wait=0 skipped=0 catch=0 target=5946891495
+IN consume
+OUT! target=5954891495
+IN poll t=5958431324
+OUT! wait=0 skipped=0 catch=0 target=5954891495
+IN consume
+OUT! target=5962891495
+IN poll t=5963220039
+OUT! wait=0 skipped=0 catch=0 target=5962891495
+IN consume
+OUT! target=5970891495
+IN poll t=5976665602
+OUT! wait=0 skipped=0 catch=0 target=5970891495
+IN consume
+OUT! target=5978891495
+IN poll t=5985026416
+OUT! wait=0 skipped=0 catch=0 target=5978891495
+IN consume
+OUT! target=5986891495
+IN poll t=5987336795
+OUT! wait=0 skipped=0 catch=0 target=5986891495
+IN consume
+OUT! target=5994891495
+IN poll t=5999137777
+OUT! wait=0 skipped=0 catch=0 target=5994891495
+IN consume
+OUT! target=6002891495
+IN poll t=6003486193
+OUT! wait=0 skipped=0 catch=0 target=6002891495
+IN consume
+OUT! target=6010891495
+IN poll t=6004611620
+OUT! wait=6279875 skipped=0 catch=0 target=6010891495
+IN poll t=6026488452
+OUT! wait=0 skipped=0 catch=1 target=6010891495
+IN consume
+OUT! target=6018891495
+IN poll t=6026509402
+OUT! wait=0 skipped=0 catch=0 target=6018891495
+IN consume
+OUT! target=6026891495
+IN poll t=6051279036
+OUT! wait=0 skipped=0 catch=1 target=6026891495
+IN consume
+OUT! target=6034891495
+IN poll t=6053266120
+OUT! wait=0 skipped=0 catch=1 target=6034891495
+IN consume
+OUT! target=6042891495
+IN poll t=6075940594
+OUT! wait=0 skipped=4 catch=0 target=6075940594
+IN consume
+OUT! target=6083940594
+IN poll t=6089152071
+OUT! wait=0 skipped=0 catch=0 target=6083940594
+IN consume
+OUT! target=6091940594
+IN poll t=6096809009
+OUT! wait=0 skipped=0 catch=0 target=6091940594
+IN consume
+OUT! target=6099940594
+IN poll t=6097300413
+OUT! wait=2640181 skipped=0 catch=0 target=6099940594
+IN poll t=6117558220
+OUT! wait=0 skipped=0 catch=1 target=6099940594
+IN consume
+OUT! target=6107940594
+IN poll t=6120382059
+OUT! wait=0 skipped=0 catch=1 target=6107940594
+IN consume
+OUT! target=6115940594
+IN poll t=6125847819
+OUT! wait=0 skipped=0 catch=1 target=6115940594
+IN consume
+OUT! target=6123940594
+IN poll t=6132773802
+OUT! wait=0 skipped=0 catch=1 target=6123940594
+IN consume
+OUT! target=6131940594
+IN poll t=6136981203
+OUT! wait=0 skipped=0 catch=0 target=6131940594
+IN consume
+OUT! target=6139940594
+IN poll t=6142140925
+OUT! wait=0 skipped=0 catch=0 target=6139940594
+IN consume
+OUT! target=6147940594
+IN poll t=6143764339
+OUT! wait=4176255 skipped=0 catch=0 target=6147940594
+IN poll t=6150300830
+OUT! wait=0 skipped=0 catch=0 target=6147940594
+IN consume
+OUT! target=6155940594
+IN poll t=6255312094
+OUT! wait=0 skipped=12 catch=0 target=6255312094
+IN consume
+OUT! target=6263312094
+IN poll t=6259897634
+OUT! wait=3414460 skipped=0 catch=0 target=6263312094
+IN poll t=6264299737
+OUT! wait=0 skipped=0 catch=0 target=6263312094
+IN consume
+OUT! target=6271312094
+IN poll t=6269161665
+OUT! wait=2150429 skipped=0 catch=0 target=6271312094
+IN poll t=6269938101
+OUT! wait=1373993 skipped=0 catch=0 target=6271312094
+IN poll t=6273503812
+OUT! wait=0 skipped=0 catch=0 target=6271312094
+IN consume
+OUT! target=6279312094
+IN poll t=6288055780
+OUT! wait=0 skipped=0 catch=1 target=6279312094
+IN consume
+OUT! target=6287312094
+IN poll t=6295357384
+OUT! wait=0 skipped=0 catch=1 target=6287312094
+IN consume
+OUT! target=6295312094
+IN poll t=6299242448
+OUT! wait=0 skipped=0 catch=0 target=6295312094
+IN consume
+OUT! target=6303312094
+IN poll t=6303371293
+OUT! wait=0 skipped=0 catch=0 target=6303312094
+IN consume
+OUT! target=6311312094
+IN poll t=6320194138
+OUT! wait=0 skipped=0 catch=1 target=6311312094
+IN consume
+OUT! target=6319312094
+IN poll t=6328148747
+OUT! wait=0 skipped=0 catch=1 target=6319312094
+IN consume
+OUT! target=6327312094
+IN poll t=6337020022
+OUT! wait=0 skipped=0 catch=1 target=6327312094
+IN consume
+OUT! target=6335312094
+IN poll t=6342614103
+OUT! wait=0 skipped=0 catch=0 target=6335312094
+IN consume
+OUT! target=6343312094
+IN poll t=6349663291
+OUT! wait=0 skipped=0 catch=0 target=6343312094
+IN consume
+OUT! target=6351312094
+IN poll t=6356058624
+OUT! wait=0 skipped=0 catch=0 target=6351312094
+IN consume
+OUT! target=6359312094
+IN poll t=6363552994
+OUT! wait=0 skipped=0 catch=0 target=6359312094
+IN consume
+OUT! target=6367312094
+IN poll t=6365405591
+OUT! wait=1906503 skipped=0 catch=0 target=6367312094
+IN poll t=6383814041
+OUT! wait=0 skipped=0 catch=1 target=6367312094
+IN consume
+OUT! target=6375312094
+IN poll t=6387881853
+OUT! wait=0 skipped=0 catch=1 target=6375312094
+IN consume
+OUT! target=6383312094
+IN poll t=6390776335
+OUT! wait=0 skipped=0 catch=0 target=6383312094
+IN consume
+OUT! target=6391312094
+IN poll t=6390983669
+OUT! wait=328425 skipped=0 catch=0 target=6391312094
+IN poll t=6398898803
+OUT! wait=0 skipped=0 catch=0 target=6391312094
+IN consume
+OUT! target=6399312094
+IN poll t=6398981769
+OUT! wait=330325 skipped=0 catch=0 target=6399312094
+IN poll t=6402819168
+OUT! wait=0 skipped=0 catch=0 target=6399312094
+IN consume
+OUT! target=6407312094
+IN poll t=6430156662
+OUT! wait=0 skipped=0 catch=1 target=6407312094
+IN consume
+OUT! target=6415312094
+IN poll t=6448920751
+OUT! wait=0 skipped=4 catch=0 target=6448920751
+IN consume
+OUT! target=6456920751
+IN poll t=6453235235
+OUT! wait=3685516 skipped=0 catch=0 target=6456920751
+IN poll t=6477447057
+OUT! wait=0 skipped=0 catch=1 target=6456920751
+IN consume
+OUT! target=6464920751
+IN poll t=6481686801
+OUT! wait=0 skipped=0 catch=1 target=6464920751
+IN consume
+OUT! target=6472920751
+IN poll t=6503705981
+OUT! wait=0 skipped=0 catch=1 target=6472920751
+IN consume
+OUT! target=6480920751
+IN poll t=6505853843
+OUT! wait=0 skipped=0 catch=1 target=6480920751
+IN consume
+OUT! target=6488920751
+IN poll t=6523440585
+OUT! wait=0 skipped=4 catch=0 target=6523440585
+IN consume
+OUT! target=6531440585
+IN poll t=6526202424
+OUT! wait=5238161 skipped=0 catch=0 target=6531440585
+IN poll t=6540825926
+OUT! wait=0 skipped=0 catch=1 target=6531440585
+IN consume
+OUT! target=6539440585
+IN poll t=6551297219
+OUT! wait=0 skipped=0 catch=1 target=6539440585
+IN consume
+OUT! target=6547440585
+IN poll t=6580554256
+OUT! wait=0 skipped=4 catch=0 target=6580554256
+IN consume
+OUT! target=6588554256
+IN poll t=6582114607
+OUT! wait=6439649 skipped=0 catch=0 target=6588554256
+IN poll t=6586820972
+OUT! wait=1733284 skipped=0 catch=0 target=6588554256
+IN poll t=6591847855
+OUT! wait=0 skipped=0 catch=0 target=6588554256
+IN consume
+OUT! target=6596554256
+IN poll t=6619387098
+OUT! wait=0 skipped=0 catch=1 target=6596554256
+IN consume
+OUT! target=6604554256
+IN poll t=6620449096
+OUT! wait=0 skipped=0 catch=1 target=6604554256
+IN consume
+OUT! target=6612554256
+IN poll t=6628481190
+OUT! wait=0 skipped=0 catch=1 target=6612554256
+IN consume
+OUT! target=6620554256
+IN poll t=6631266194
+OUT! wait=0 skipped=0 catch=1 target=6620554256
+IN consume
+OUT! target=6628554256
+IN poll t=6694403853
+OUT! wait=0 skipped=8 catch=0 target=6694403853
+IN consume
+OUT! target=6702403853
+IN poll t=6797361817
+OUT! wait=0 skipped=11 catch=0 target=6797361817
+IN consume
+OUT! target=6805361817
+IN poll t=6801991311
+OUT! wait=3370506 skipped=0 catch=0 target=6805361817
+IN poll t=6808250650
+OUT! wait=0 skipped=0 catch=0 target=6805361817
+IN consume
+OUT! target=6813361817
+IN poll t=6824959064
+OUT! wait=0 skipped=0 catch=1 target=6813361817
+IN consume
+OUT! target=6821361817
+IN poll t=6828329125
+OUT! wait=0 skipped=0 catch=0 target=6821361817
+IN consume
+OUT! target=6829361817
+IN poll t=6838030556
+OUT! wait=0 skipped=0 catch=1 target=6829361817
+IN consume
+OUT! target=6837361817
+IN poll t=6838720279
+OUT! wait=0 skipped=0 catch=0 target=6837361817
+IN consume
+OUT! target=6845361817
+IN poll t=6847399290
+OUT! wait=0 skipped=0 catch=0 target=6845361817
+IN consume
+OUT! target=6853361817
+IN poll t=6847399290
+OUT! wait=5962527 skipped=0 catch=0 target=6853361817
+IN poll t=6850420745
+OUT! wait=2941072 skipped=0 catch=0 target=6853361817
+IN poll t=6899950877
+OUT! wait=0 skipped=5 catch=0 target=6899950877
+IN consume
+OUT! target=6907950877
+IN poll t=6908183676
+OUT! wait=0 skipped=0 catch=0 target=6907950877
+IN consume
+OUT! target=6915950877
+IN poll t=6958429463
+OUT! wait=0 skipped=5 catch=0 target=6958429463
+IN consume
+OUT! target=6966429463
+IN poll t=6966686524
+OUT! wait=0 skipped=0 catch=0 target=6966429463
+IN consume
+OUT! target=6974429463
+IN poll t=6968991119
+OUT! wait=5438344 skipped=0 catch=0 target=6974429463
+IN poll t=6971641381
+OUT! wait=2788082 skipped=0 catch=0 target=6974429463
+IN poll t=6971701536
+OUT! wait=2727927 skipped=0 catch=0 target=6974429463
+IN poll t=6979349979
+OUT! wait=0 skipped=0 catch=0 target=6974429463
+IN consume
+OUT! target=6982429463
+IN poll t=7004994806
+OUT! wait=0 skipped=0 catch=1 target=6982429463
+IN consume
+OUT! target=6990429463
+IN poll t=7101769998
+OUT! wait=0 skipped=13 catch=0 target=7101769998
+IN consume
+OUT! target=7109769998
+IN poll t=7101842079
+OUT! wait=7927919 skipped=0 catch=0 target=7109769998
+IN poll t=7176670329
+OUT! wait=0 skipped=8 catch=0 target=7176670329
+IN consume
+OUT! target=7184670329
+IN poll t=7184784890
+OUT! wait=0 skipped=0 catch=0 target=7184670329
+IN consume
+OUT! target=7192670329
+IN poll t=7189721077
+OUT! wait=2949252 skipped=0 catch=0 target=7192670329
+IN poll t=7198802617
+OUT! wait=0 skipped=0 catch=0 target=7192670329
+IN consume
+OUT! target=7200670329
+IN poll t=7207637002
+OUT! wait=0 skipped=0 catch=0 target=7200670329
+IN consume
+OUT! target=7208670329
+IN poll t=7291506194
+OUT! wait=0 skipped=10 catch=0 target=7291506194
+IN consume
+OUT! target=7299506194
+IN poll t=7298769350
+OUT! wait=736844 skipped=0 catch=0 target=7299506194
+IN poll t=7301482380
+OUT! wait=0 skipped=0 catch=0 target=7299506194
+IN consume
+OUT! target=7307506194
+IN counters
+OUT! missed=88 resyncs=12 catchups=28
+IN poll t=7308205182
+OUT! wait=0 skipped=0 catch=0 target=7307506194
+IN consume
+OUT! target=7315506194
+IN poll t=7336006533
+OUT! wait=0 skipped=0 catch=1 target=7315506194
+IN consume
+OUT! target=7323506194
+IN poll t=7336501893
+OUT! wait=0 skipped=0 catch=1 target=7323506194
+IN consume
+OUT! target=7331506194
+IN poll t=7339328319
+OUT! wait=0 skipped=0 catch=0 target=7331506194
+IN consume
+OUT! target=7339506194
+IN poll t=7354776852
+OUT! wait=0 skipped=0 catch=1 target=7339506194
+IN consume
+OUT! target=7347506194
+IN poll t=7362834114
+OUT! wait=0 skipped=0 catch=1 target=7347506194
+IN consume
+OUT! target=7355506194
+IN poll t=7367109172
+OUT! wait=0 skipped=0 catch=1 target=7355506194
+IN consume
+OUT! target=7363506194
+IN poll t=7373588915
+OUT! wait=0 skipped=0 catch=1 target=7363506194
+IN consume
+OUT! target=7371506194
+IN poll t=7380741579
+OUT! wait=0 skipped=0 catch=1 target=7371506194
+IN consume
+OUT! target=7379506194
+IN poll t=7386449538
+OUT! wait=0 skipped=0 catch=0 target=7379506194
+IN consume
+OUT! target=7387506194
+IN poll t=7410255161
+OUT! wait=0 skipped=0 catch=1 target=7387506194
+IN consume
+OUT! target=7395506194
+IN poll t=7411512931
+OUT! wait=0 skipped=0 catch=1 target=7395506194
+IN consume
+OUT! target=7403506194
+IN poll t=7417291707
+OUT! wait=0 skipped=0 catch=1 target=7403506194
+IN consume
+OUT! target=7411506194
+IN poll t=7424930270
+OUT! wait=0 skipped=0 catch=1 target=7411506194
+IN consume
+OUT! target=7419506194
+IN poll t=7427554776
+OUT! wait=0 skipped=0 catch=1 target=7419506194
+IN consume
+OUT! target=7427506194
+IN poll t=7500305618
+OUT! wait=0 skipped=9 catch=0 target=7500305618
+IN consume
+OUT! target=7508305618
+IN poll t=7502891600
+OUT! wait=5414018 skipped=0 catch=0 target=7508305618
+IN poll t=7515760593
+OUT! wait=0 skipped=0 catch=0 target=7508305618
+IN consume
+OUT! target=7516305618
+IN poll t=7523578297
+OUT! wait=0 skipped=0 catch=0 target=7516305618
+IN consume
+OUT! target=7524305618
+IN poll t=7526479893
+OUT! wait=0 skipped=0 catch=0 target=7524305618
+IN consume
+OUT! target=7532305618
+IN poll t=7546419567
+OUT! wait=0 skipped=0 catch=1 target=7532305618
+IN consume
+OUT! target=7540305618
+IN poll t=7554633287
+OUT! wait=0 skipped=0 catch=1 target=7540305618
+IN consume
+OUT! target=7548305618
+IN poll t=7561631051
+OUT! wait=0 skipped=0 catch=1 target=7548305618
+IN consume
+OUT! target=7556305618
+IN poll t=7589574233
+OUT! wait=0 skipped=4 catch=0 target=7589574233
+IN consume
+OUT! target=7597574233
+IN poll t=7593392133
+OUT! wait=4182100 skipped=0 catch=0 target=7597574233
+IN poll t=7601074842
+OUT! wait=0 skipped=0 catch=0 target=7597574233
+IN consume
+OUT! target=7605574233
+IN poll t=7602551456
+OUT! wait=3022777 skipped=0 catch=0 target=7605574233
+IN poll t=7607594660
+OUT! wait=0 skipped=0 catch=0 target=7605574233
+IN consume
+OUT! target=7613574233
+IN poll t=7613863179
+OUT! wait=0 skipped=0 catch=0 target=7613574233
+IN consume
+OUT! target=7621574233
+IN poll t=7613863179
+OUT! wait=7711054 skipped=0 catch=0 target=7621574233
+IN poll t=7634763270
+OUT! wait=0 skipped=0 catch=1 target=7621574233
+IN consume
+OUT! target=7629574233
+IN poll t=7636214847
+OUT! wait=0 skipped=0 catch=0 target=7629574233
+IN consume
+OUT! target=7637574233
+IN poll t=7654858663
+OUT! wait=0 skipped=0 catch=1 target=7637574233
+IN consume
+OUT! target=7645574233
+IN poll t=7663696695
+OUT! wait=0 skipped=0 catch=1 target=7645574233
+IN consume
+OUT! target=7653574233
+IN poll t=7669422386
+OUT! wait=0 skipped=0 catch=1 target=7653574233
+IN consume
+OUT! target=7661574233
+IN poll t=7691573953
+OUT! wait=0 skipped=0 catch=1 target=7661574233
+IN consume
+OUT! target=7669574233
+IN poll t=7695633420
+OUT! wait=0 skipped=0 catch=1 target=7669574233
+IN consume
+OUT! target=7677574233
+IN poll t=7699323126
+OUT! wait=0 skipped=0 catch=1 target=7677574233
+IN consume
+OUT! target=7685574233
+IN poll t=7701266795
+OUT! wait=0 skipped=0 catch=1 target=7685574233
+IN consume
+OUT! target=7693574233
+IN poll t=7701266795
+OUT! wait=0 skipped=0 catch=0 target=7693574233
+IN consume
+OUT! target=7701574233
+IN poll t=7722440271
+OUT! wait=0 skipped=0 catch=1 target=7701574233
+IN consume
+OUT! target=7709574233
+IN poll t=7725646262
+OUT! wait=0 skipped=0 catch=1 target=7709574233
+IN consume
+OUT! target=7717574233
+IN poll t=7732520901
+OUT! wait=0 skipped=0 catch=1 target=7717574233
+IN consume
+OUT! target=7725574233
+IN poll t=7737459462
+OUT! wait=0 skipped=0 catch=1 target=7725574233
+IN consume
+OUT! target=7733574233
+IN poll t=7738955223
+OUT! wait=0 skipped=0 catch=0 target=7733574233
+IN consume
+OUT! target=7741574233
+IN poll t=7739743306
+OUT! wait=1830927 skipped=0 catch=0 target=7741574233
+IN poll t=7748641654
+OUT! wait=0 skipped=0 catch=0 target=7741574233
+IN consume
+OUT! target=7749574233
+IN poll t=7756371268
+OUT! wait=0 skipped=0 catch=0 target=7749574233
+IN consume
+OUT! target=7757574233
+IN poll t=7765069588
+OUT! wait=0 skipped=0 catch=0 target=7757574233
+IN consume
+OUT! target=7765574233
+IN poll t=7769971212
+OUT! wait=0 skipped=0 catch=0 target=7765574233
+IN consume
+OUT! target=7773574233
+IN poll t=7770287903
+OUT! wait=3286330 skipped=0 catch=0 target=7773574233
+IN poll t=7776086410
+OUT! wait=0 skipped=0 catch=0 target=7773574233
+IN consume
+OUT! target=7781574233
+IN poll t=7792961309
+OUT! wait=0 skipped=0 catch=1 target=7781574233
+IN consume
+OUT! target=7789574233
+IN poll t=7822094996
+OUT! wait=0 skipped=4 catch=0 target=7822094996
+IN consume
+OUT! target=7830094996
+IN poll t=7828221965
+OUT! wait=1873031 skipped=0 catch=0 target=7830094996
+IN poll t=7840844684
+OUT! wait=0 skipped=0 catch=1 target=7830094996
+IN consume
+OUT! target=7838094996
+IN poll t=7846867790
+OUT! wait=0 skipped=0 catch=1 target=7838094996
+IN consume
+OUT! target=7846094996
+IN poll t=7854902012
+OUT! wait=0 skipped=0 catch=1 target=7846094996
+IN consume
+OUT! target=7854094996
+IN poll t=7858081750
+OUT! wait=0 skipped=0 catch=0 target=7854094996
+IN consume
+OUT! target=7862094996
+IN poll t=7858621843
+OUT! wait=3473153 skipped=0 catch=0 target=7862094996
+IN poll t=7871067333
+OUT! wait=0 skipped=0 catch=1 target=7862094996
+IN consume
+OUT! target=7870094996
+IN poll t=7872091789
+OUT! wait=0 skipped=0 catch=0 target=7870094996
+IN consume
+OUT! target=7878094996
+IN poll t=7878454243
+OUT! wait=0 skipped=0 catch=0 target=7878094996
+IN consume
+OUT! target=7886094996
+IN poll t=7890875234
+OUT! wait=0 skipped=0 catch=0 target=7886094996
+IN consume
+OUT! target=7894094996
+IN poll t=7899411431
+OUT! wait=0 skipped=0 catch=0 target=7894094996
+IN consume
+OUT! target=7902094996
+IN poll t=7907011698
+OUT! wait=0 skipped=0 catch=0 target=7902094996
+IN consume
+OUT! target=7910094996
+IN poll t=7914499161
+OUT! wait=0 skipped=0 catch=0 target=7910094996
+IN consume
+OUT! target=7918094996
+IN poll t=7918917390
+OUT! wait=0 skipped=0 catch=0 target=7918094996
+IN consume
+OUT! target=7926094996
+IN poll t=7926469359
+OUT! wait=0 skipped=0 catch=0 target=7926094996
+IN consume
+OUT! target=7934094996
+IN poll t=7930344401
+OUT! wait=3750595 skipped=0 catch=0 target=7934094996
+IN poll t=7935125583
+OUT! wait=0 skipped=0 catch=0 target=7934094996
+IN consume
+OUT! target=7942094996
+IN poll t=7939324796
+OUT! wait=2770200 skipped=0 catch=0 target=7942094996
+IN poll t=7947507041
+OUT! wait=0 skipped=0 catch=0 target=7942094996
+IN consume
+OUT! target=7950094996
+IN poll t=7955588994
+OUT! wait=0 skipped=0 catch=0 target=7950094996
+IN consume
+OUT! target=7958094996
+IN poll t=7977047583
+OUT! wait=0 skipped=0 catch=1 target=7958094996
+IN consume
+OUT! target=7966094996
+IN poll t=7977483680
+OUT! wait=0 skipped=0 catch=1 target=7966094996
+IN consume
+OUT! target=7974094996
+IN poll t=7986046512
+OUT! wait=0 skipped=0 catch=1 target=7974094996
+IN consume
+OUT! target=7982094996
+IN poll t=7997031292
+OUT! wait=0 skipped=0 catch=1 target=7982094996
+IN consume
+OUT! target=7990094996
+IN poll t=8005001027
+OUT! wait=0 skipped=0 catch=1 target=7990094996
+IN consume
+OUT! target=7998094996
+IN poll t=8012270720
+OUT! wait=0 skipped=0 catch=1 target=7998094996
+IN consume
+OUT! target=8006094996
+IN poll t=8025807377
+OUT! wait=0 skipped=0 catch=1 target=8006094996
+IN consume
+OUT! target=8014094996
+IN poll t=8033131625
+OUT! wait=0 skipped=0 catch=1 target=8014094996
+IN consume
+OUT! target=8022094996
+IN poll t=8041477701
+OUT! wait=0 skipped=0 catch=1 target=8022094996
+IN consume
+OUT! target=8030094996
+IN poll t=8049345345
+OUT! wait=0 skipped=0 catch=1 target=8030094996
+IN consume
+OUT! target=8038094996
+IN poll t=8060800820
+OUT! wait=0 skipped=0 catch=1 target=8038094996
+IN consume
+OUT! target=8046094996
+IN poll t=8072617640
+OUT! wait=0 skipped=0 catch=1 target=8046094996
+IN consume
+OUT! target=8054094996
+IN poll t=8078929802
+OUT! wait=0 skipped=0 catch=1 target=8054094996
+IN consume
+OUT! target=8062094996
+IN poll t=8079270918
+OUT! wait=0 skipped=0 catch=1 target=8062094996
+IN consume
+OUT! target=8070094996
+IN poll t=8086435700
+OUT! wait=0 skipped=0 catch=1 target=8070094996
+IN consume
+OUT! target=8078094996
+IN poll t=8103366529
+OUT! wait=0 skipped=0 catch=1 target=8078094996
+IN consume
+OUT! target=8086094996
+IN poll t=8107941552
+OUT! wait=0 skipped=0 catch=1 target=8086094996
+IN consume
+OUT! target=8094094996
+IN poll t=8115230671
+OUT! wait=0 skipped=0 catch=1 target=8094094996
+IN consume
+OUT! target=8102094996
+IN poll t=8128431137
+OUT! wait=0 skipped=0 catch=1 target=8102094996
+IN consume
+OUT! target=8110094996
+IN poll t=8129861500
+OUT! wait=0 skipped=0 catch=1 target=8110094996
+IN consume
+OUT! target=8118094996
+IN poll t=8135500150
+OUT! wait=0 skipped=0 catch=1 target=8118094996
+IN consume
+OUT! target=8126094996
+IN poll t=8137506707
+OUT! wait=0 skipped=0 catch=1 target=8126094996
+IN consume
+OUT! target=8134094996
+IN poll t=8146467541
+OUT! wait=0 skipped=0 catch=1 target=8134094996
+IN consume
+OUT! target=8142094996
+IN poll t=8153999484
+OUT! wait=0 skipped=0 catch=1 target=8142094996
+IN consume
+OUT! target=8150094996
+IN poll t=8180684711
+OUT! wait=0 skipped=0 catch=1 target=8150094996
+IN consume
+OUT! target=8158094996
+IN poll t=8181394115
+OUT! wait=0 skipped=0 catch=1 target=8158094996
+IN consume
+OUT! target=8166094996
+IN counters
+OUT! missed=17 resyncs=3 catchups=58
+IN poll t=8188012119
+OUT! wait=0 skipped=0 catch=1 target=8166094996
+IN consume
+OUT! target=8174094996
+IN poll t=8191784355
+OUT! wait=0 skipped=0 catch=1 target=8174094996
+IN consume
+OUT! target=8182094996
+IN poll t=8198798068
+OUT! wait=0 skipped=0 catch=1 target=8182094996
+IN consume
+OUT! target=8190094996
+IN poll t=8212994570
+OUT! wait=0 skipped=0 catch=1 target=8190094996
+IN consume
+OUT! target=8198094996
+IN poll t=8279088581
+OUT! wait=0 skipped=10 catch=0 target=8279088581
+IN consume
+OUT! target=8287088581
+IN poll t=8279098472
+OUT! wait=7990109 skipped=0 catch=0 target=8287088581
+IN poll t=8307452349
+OUT! wait=0 skipped=0 catch=1 target=8287088581
+IN consume
+OUT! target=8295088581
+IN poll t=8315551317
+OUT! wait=0 skipped=0 catch=1 target=8295088581
+IN consume
+OUT! target=8303088581
+IN poll t=8323504500
+OUT! wait=0 skipped=0 catch=1 target=8303088581
+IN consume
+OUT! target=8311088581
+IN poll t=8324376248
+OUT! wait=0 skipped=0 catch=1 target=8311088581
+IN consume
+OUT! target=8319088581
+IN poll t=8328542859
+OUT! wait=0 skipped=0 catch=1 target=8319088581
+IN consume
+OUT! target=8327088581
+IN poll t=8388672676
+OUT! wait=0 skipped=7 catch=0 target=8388672676
+IN consume
+OUT! target=8396672676
+IN poll t=8441581217
+OUT! wait=0 skipped=5 catch=0 target=8441581217
+IN consume
+OUT! target=8449581217
+IN poll t=8506404595
+OUT! wait=0 skipped=7 catch=0 target=8506404595
+IN consume
+OUT! target=8514404595
+IN poll t=8511117493
+OUT! wait=3287102 skipped=0 catch=0 target=8514404595
+IN poll t=8520700013
+OUT! wait=0 skipped=0 catch=0 target=8514404595
+IN consume
+OUT! target=8522404595
+IN poll t=8522188271
+OUT! wait=216324 skipped=0 catch=0 target=8522404595
+IN poll t=8535842172
+OUT! wait=0 skipped=0 catch=1 target=8522404595
+IN consume
+OUT! target=8530404595
+IN poll t=8539111848
+OUT! wait=0 skipped=0 catch=1 target=8530404595
+IN consume
+OUT! target=8538404595
+IN poll t=8561376902
+OUT! wait=0 skipped=0 catch=1 target=8538404595
+IN consume
+OUT! target=8546404595
+IN poll t=8566047709
+OUT! wait=0 skipped=0 catch=1 target=8546404595
+IN consume
+OUT! target=8554404595
+IN poll t=8570244761
+OUT! wait=0 skipped=0 catch=1 target=8554404595
+IN consume
+OUT! target=8562404595
+IN poll t=8597968335
+OUT! wait=0 skipped=4 catch=0 target=8597968335
+IN consume
+OUT! target=8605968335
+IN poll t=8605382524
+OUT! wait=585811 skipped=0 catch=0 target=8605968335
+IN poll t=8614206539
+OUT! wait=0 skipped=0 catch=1 target=8605968335
+IN consume
+OUT! target=8613968335
+IN poll t=8641952002
+OUT! wait=0 skipped=0 catch=1 target=8613968335
+IN consume
+OUT! target=8621968335
+IN poll t=8644014940
+OUT! wait=0 skipped=0 catch=1 target=8621968335
+IN consume
+OUT! target=8629968335
+IN poll t=8664319016
+OUT! wait=0 skipped=4 catch=0 target=8664319016
+IN consume
+OUT! target=8672319016
+IN poll t=8667661090
+OUT! wait=4657926 skipped=0 catch=0 target=8672319016
+IN poll t=8676643806
+OUT! wait=0 skipped=0 catch=0 target=8672319016
+IN consume
+OUT! target=8680319016
+IN poll t=8678934493
+OUT! wait=1384523 skipped=0 catch=0 target=8680319016
+IN poll t=8680293273
+OUT! wait=25743 skipped=0 catch=0 target=8680319016
+IN poll t=8685622899
+OUT! wait=0 skipped=0 catch=0 target=8680319016
+IN consume
+OUT! target=8688319016
+IN poll t=8692060254
+OUT! wait=0 skipped=0 catch=0 target=8688319016
+IN consume
+OUT! target=8696319016
+IN poll t=8696665819
+OUT! wait=0 skipped=0 catch=0 target=8696319016
+IN consume
+OUT! target=8704319016
+IN poll t=8701389575
+OUT! wait=2929441 skipped=0 catch=0 target=8704319016
+IN poll t=8702756397
+OUT! wait=1562619 skipped=0 catch=0 target=8704319016
+IN poll t=8712776228
+OUT! wait=0 skipped=0 catch=1 target=8704319016
+IN consume
+OUT! target=8712319016
+IN poll t=8713647803
+OUT! wait=0 skipped=0 catch=0 target=8712319016
+IN consume
+OUT! target=8720319016
+IN poll t=8722534047
+OUT! wait=0 skipped=0 catch=0 target=8720319016
+IN consume
+OUT! target=8728319016
+IN poll t=8725322521
+OUT! wait=2996495 skipped=0 catch=0 target=8728319016
+IN poll t=8733953947
+OUT! wait=0 skipped=0 catch=0 target=8728319016
+IN consume
+OUT! target=8736319016
+IN poll t=8735410698
+OUT! wait=908318 skipped=0 catch=0 target=8736319016
+IN poll t=8735901367
+OUT! wait=417649 skipped=0 catch=0 target=8736319016
+IN poll t=8736456770
+OUT! wait=0 skipped=0 catch=0 target=8736319016
+IN consume
+OUT! target=8744319016
+IN poll t=8743646035
+OUT! wait=672981 skipped=0 catch=0 target=8744319016
+IN poll t=8767119853
+OUT! wait=0 skipped=0 catch=1 target=8744319016
+IN consume
+OUT! target=8752319016
+IN poll t=8769702134
+OUT! wait=0 skipped=0 catch=1 target=8752319016
+IN consume
+OUT! target=8760319016
+IN poll t=8771193241
+OUT! wait=0 skipped=0 catch=1 target=8760319016
+IN consume
+OUT! target=8768319016
+IN poll t=8794494649
+OUT! wait=0 skipped=0 catch=1 target=8768319016
+IN consume
+OUT! target=8776319016
+IN poll t=8796619693
+OUT! wait=0 skipped=0 catch=1 target=8776319016
+IN consume
+OUT! target=8784319016
+IN poll t=8815439594
+OUT! wait=0 skipped=0 catch=1 target=8784319016
+IN consume
+OUT! target=8792319016
+IN poll t=8830163175
+OUT! wait=0 skipped=4 catch=0 target=8830163175
+IN consume
+OUT! target=8838163175
+IN poll t=8836561165
+OUT! wait=1602010 skipped=0 catch=0 target=8838163175
+IN poll t=8840873618
+OUT! wait=0 skipped=0 catch=0 target=8838163175
+IN consume
+OUT! target=8846163175
+IN poll t=8849616209
+OUT! wait=0 skipped=0 catch=0 target=8846163175
+IN consume
+OUT! target=8854163175
+IN poll t=8855713234
+OUT! wait=0 skipped=0 catch=0 target=8854163175
+IN consume
+OUT! target=8862163175
+IN poll t=8861311480
+OUT! wait=851695 skipped=0 catch=0 target=8862163175
+IN poll t=8865031381
+OUT! wait=0 skipped=0 catch=0 target=8862163175
+IN consume
+OUT! target=8870163175
+IN poll t=8866641459
+OUT! wait=3521716 skipped=0 catch=0 target=8870163175
+IN poll t=8866736117
+OUT! wait=3427058 skipped=0 catch=0 target=8870163175
+IN poll t=8879544433
+OUT! wait=0 skipped=0 catch=1 target=8870163175
+IN consume
+OUT! target=8878163175
+IN poll t=8908075826
+OUT! wait=0 skipped=0 catch=1 target=8878163175
+IN consume
+OUT! target=8886163175
+IN poll t=8920997998
+OUT! wait=0 skipped=4 catch=0 target=8920997998
+IN consume
+OUT! target=8928997998
+IN poll t=8923122513
+OUT! wait=5875485 skipped=0 catch=0 target=8928997998
+IN poll t=8923122513
+OUT! wait=5875485 skipped=0 catch=0 target=8928997998
+IN poll t=8935507948
+OUT! wait=0 skipped=0 catch=0 target=8928997998
+IN consume
+OUT! target=8936997998
+IN poll t=8936473352
+OUT! wait=524646 skipped=0 catch=0 target=8936997998
+IN poll t=8938130271
+OUT! wait=0 skipped=0 catch=0 target=8936997998
+IN consume
+OUT! target=8944997998
+IN poll t=8958364190
+OUT! wait=0 skipped=0 catch=1 target=8944997998
+IN consume
+OUT! target=8952997998
+IN poll t=8965266112
+OUT! wait=0 skipped=0 catch=1 target=8952997998
+IN consume
+OUT! target=8960997998
+IN poll t=8992370795
+OUT! wait=0 skipped=0 catch=1 target=8960997998
+IN consume
+OUT! target=8968997998
+IN poll t=8993556327
+OUT! wait=0 skipped=0 catch=1 target=8968997998
+IN consume
+OUT! target=8976997998
+IN poll t=9001497789
+OUT! wait=0 skipped=0 catch=1 target=8976997998
+IN consume
+OUT! target=8984997998
+IN poll t=9009412212
+OUT! wait=0 skipped=0 catch=1 target=8984997998
+IN consume
+OUT! target=8992997998
+IN poll t=9009412212
+OUT! wait=0 skipped=0 catch=1 target=8992997998
+IN consume
+OUT! target=9000997998
+IN poll t=9012150899
+OUT! wait=0 skipped=0 catch=1 target=9000997998
+IN consume
+OUT! target=9008997998
+IN poll t=9016301674
+OUT! wait=0 skipped=0 catch=0 target=9008997998
+IN consume
+OUT! target=9016997998
+IN poll t=9022143813
+OUT! wait=0 skipped=0 catch=0 target=9016997998
+IN consume
+OUT! target=9024997998
+IN poll t=9030834283
+OUT! wait=0 skipped=0 catch=0 target=9024997998
+IN consume
+OUT! target=9032997998
+IN poll t=9037346941
+OUT! wait=0 skipped=0 catch=0 target=9032997998
+IN consume
+OUT! target=9040997998
+IN poll t=9073690470
+OUT! wait=0 skipped=4 catch=0 target=9073690470
+IN consume
+OUT! target=9081690470
+IN poll t=9085446860
+OUT! wait=0 skipped=0 catch=0 target=9081690470
+IN consume
+OUT! target=9089690470
+IN poll t=9089011001
+OUT! wait=679469 skipped=0 catch=0 target=9089690470
+IN poll t=9097423056
+OUT! wait=0 skipped=0 catch=0 target=9089690470
+IN consume
+OUT! target=9097690470
+IN poll t=9119570394
+OUT! wait=0 skipped=0 catch=1 target=9097690470
+IN consume
+OUT! target=9105690470
+IN poll t=9145913954
+OUT! wait=0 skipped=5 catch=0 target=9145913954
+IN consume
+OUT! target=9153913954
+IN poll t=9148358408
+OUT! wait=5555546 skipped=0 catch=0 target=9153913954
+IN poll t=9148358408
+OUT! wait=5555546 skipped=0 catch=0 target=9153913954
+IN poll t=9152215761
+OUT! wait=1698193 skipped=0 catch=0 target=9153913954
+IN poll t=9157940583
+OUT! wait=0 skipped=0 catch=0 target=9153913954
+IN consume
+OUT! target=9161913954
+IN poll t=9161685607
+OUT! wait=228347 skipped=0 catch=0 target=9161913954
+IN poll t=9176750242
+OUT! wait=0 skipped=0 catch=1 target=9161913954
+IN consume
+OUT! target=9169913954
+IN poll t=9184818401
+OUT! wait=0 skipped=0 catch=1 target=9169913954
+IN consume
+OUT! target=9177913954
+IN poll t=9193786068
+OUT! wait=0 skipped=0 catch=1 target=9177913954
+IN consume
+OUT! target=9185913954
+IN poll t=9197471364
+OUT! wait=0 skipped=0 catch=1 target=9185913954
+IN consume
+OUT! target=9193913954
+IN poll t=9205838763
+OUT! wait=0 skipped=0 catch=1 target=9193913954
+IN consume
+OUT! target=9201913954
+IN poll t=9287882396
+OUT! wait=0 skipped=10 catch=0 target=9287882396
+IN consume
+OUT! target=9295882396
+IN poll t=9288996699
+OUT! wait=6885697 skipped=0 catch=0 target=9295882396
+IN poll t=9289849904
+OUT! wait=6032492 skipped=0 catch=0 target=9295882396
+IN counters
+OUT! missed=64 resyncs=11 catchups=40
+IN poll t=9298781220
+OUT! wait=0 skipped=0 catch=0 target=9295882396
+IN consume
+OUT! target=9303882396
+IN poll t=9322268235
+OUT! wait=0 skipped=0 catch=1 target=9303882396
+IN consume
+OUT! target=9311882396
+IN poll t=9326315570
+OUT! wait=0 skipped=0 catch=1 target=9311882396
+IN consume
+OUT! target=9319882396
+IN poll t=9330761214
+OUT! wait=0 skipped=0 catch=1 target=9319882396
+IN consume
+OUT! target=9327882396
+IN poll t=9333667160
+OUT! wait=0 skipped=0 catch=0 target=9327882396
+IN consume
+OUT! target=9335882396
+IN poll t=9424390351
+OUT! wait=0 skipped=11 catch=0 target=9424390351
+IN consume
+OUT! target=9432390351
+IN poll t=9432414047
+OUT! wait=0 skipped=0 catch=0 target=9432390351
+IN consume
+OUT! target=9440390351
+IN poll t=9455213868
+OUT! wait=0 skipped=0 catch=1 target=9440390351
+IN consume
+OUT! target=9448390351
+IN poll t=9459632935
+OUT! wait=0 skipped=0 catch=1 target=9448390351
+IN consume
+OUT! target=9456390351
+IN poll t=9478139723
+OUT! wait=0 skipped=0 catch=1 target=9456390351
+IN consume
+OUT! target=9464390351
+IN poll t=9490470497
+OUT! wait=0 skipped=0 catch=1 target=9464390351
+IN consume
+OUT! target=9472390351
+IN poll t=9494319090
+OUT! wait=0 skipped=0 catch=1 target=9472390351
+IN consume
+OUT! target=9480390351
+IN poll t=9501034049
+OUT! wait=0 skipped=0 catch=1 target=9480390351
+IN consume
+OUT! target=9488390351
+IN poll t=9527197415
+OUT! wait=0 skipped=4 catch=0 target=9527197415
+IN consume
+OUT! target=9535197415
+IN poll t=9531163235
+OUT! wait=4034180 skipped=0 catch=0 target=9535197415
+IN poll t=9603181147
+OUT! wait=0 skipped=8 catch=0 target=9603181147
+IN consume
+OUT! target=9611181147
+IN poll t=9608971885
+OUT! wait=2209262 skipped=0 catch=0 target=9611181147
+IN poll t=9615487166
+OUT! wait=0 skipped=0 catch=0 target=9611181147
+IN consume
+OUT! target=9619181147
+IN poll t=9617150300
+OUT! wait=2030847 skipped=0 catch=0 target=9619181147
+IN poll t=9618964733
+OUT! wait=216414 skipped=0 catch=0 target=9619181147
+IN poll t=9634714783
+OUT! wait=0 skipped=0 catch=1 target=9619181147
+IN consume
+OUT! target=9627181147
+IN poll t=9637473629
+OUT! wait=0 skipped=0 catch=1 target=9627181147
+IN consume
+OUT! target=9635181147
+IN poll t=9644129479
+OUT! wait=0 skipped=0 catch=1 target=9635181147
+IN consume
+OUT! target=9643181147
+IN poll t=9650088875
+OUT! wait=0 skipped=0 catch=0 target=9643181147
+IN consume
+OUT! target=9651181147
+IN poll t=9650877983
+OUT! wait=303164 skipped=0 catch=0 target=9651181147
+IN poll t=9658573532
+OUT! wait=0 skipped=0 catch=0 target=9651181147
+IN consume
+OUT! target=9659181147
+IN poll t=9661314360
+OUT! wait=0 skipped=0 catch=0 target=9659181147
+IN consume
+OUT! target=9667181147
+IN poll t=9665450817
+OUT! wait=1730330 skipped=0 catch=0 target=9667181147
+IN poll t=9686581600
+OUT! wait=0 skipped=0 catch=1 target=9667181147
+IN consume
+OUT! target=9675181147
+IN poll t=9692897698
+OUT! wait=0 skipped=0 catch=1 target=9675181147
+IN consume
+OUT! target=9683181147
+IN poll t=9699685749
+OUT! wait=0 skipped=0 catch=1 target=9683181147
+IN consume
+OUT! target=9691181147
+IN poll t=9714185494
+OUT! wait=0 skipped=0 catch=1 target=9691181147
+IN consume
+OUT! target=9699181147
+IN poll t=9717016172
+OUT! wait=0 skipped=0 catch=1 target=9699181147
+IN consume
+OUT! target=9707181147
+IN poll t=9724886042
+OUT! wait=0 skipped=0 catch=1 target=9707181147
+IN consume
+OUT! target=9715181147
+IN poll t=9731306733
+OUT! wait=0 skipped=0 catch=1 target=9715181147
+IN consume
+OUT! target=9723181147
+IN poll t=9732171388
+OUT! wait=0 skipped=0 catch=1 target=9723181147
+IN consume
+OUT! target=9731181147
+IN poll t=9733343098
+OUT! wait=0 skipped=0 catch=0 target=9731181147
+IN consume
+OUT! target=9739181147
+IN poll t=9733412666
+OUT! wait=5768481 skipped=0 catch=0 target=9739181147
+IN poll t=9741417124
+OUT! wait=0 skipped=0 catch=0 target=9739181147
+IN consume
+OUT! target=9747181147
+IN poll t=9752489755
+OUT! wait=0 skipped=0 catch=0 target=9747181147
+IN consume
+OUT! target=9755181147
+IN poll t=9758061077
+OUT! wait=0 skipped=0 catch=0 target=9755181147
+IN consume
+OUT! target=9763181147
+IN poll t=9760713811
+OUT! wait=2467336 skipped=0 catch=0 target=9763181147
+IN poll t=9781306365
+OUT! wait=0 skipped=0 catch=1 target=9763181147
+IN consume
+OUT! target=9771181147
+IN poll t=9788571761
+OUT! wait=0 skipped=0 catch=1 target=9771181147
+IN consume
+OUT! target=9779181147
+IN poll t=9794504514
+OUT! wait=0 skipped=0 catch=1 target=9779181147
+IN consume
+OUT! target=9787181147
+IN poll t=9800372581
+OUT! wait=0 skipped=0 catch=1 target=9787181147
+IN consume
+OUT! target=9795181147
+IN poll t=9800872949
+OUT! wait=0 skipped=0 catch=0 target=9795181147
+IN consume
+OUT! target=9803181147
+IN poll t=9816175165
+OUT! wait=0 skipped=0 catch=1 target=9803181147
+IN consume
+OUT! target=9811181147
+IN poll t=9832222958
+OUT! wait=0 skipped=0 catch=1 target=9811181147
+IN consume
+OUT! target=9819181147
+IN poll t=9935981845
+OUT! wait=0 skipped=14 catch=0 target=9935981845
+IN consume
+OUT! target=9943981845
+IN poll t=9962622847
+OUT! wait=0 skipped=0 catch=1 target=9943981845
+IN consume
+OUT! target=9951981845
+IN poll t=9967833456
+OUT! wait=0 skipped=0 catch=1 target=9951981845
+IN consume
+OUT! target=9959981845
+IN poll t=10052819099
+OUT! wait=0 skipped=11 catch=0 target=10052819099
+IN consume
+OUT! target=10060819099
+IN poll t=10054503037
+OUT! wait=6316062 skipped=0 catch=0 target=10060819099
+IN poll t=10060456580
+OUT! wait=362519 skipped=0 catch=0 target=10060819099
+IN poll t=10067008067
+OUT! wait=0 skipped=0 catch=0 target=10060819099
+IN consume
+OUT! target=10068819099
+IN poll t=10075282093
+OUT! wait=0 skipped=0 catch=0 target=10068819099
+IN consume
+OUT! target=10076819099
+IN poll t=10102286743
+OUT! wait=0 skipped=0 catch=1 target=10076819099
+IN consume
+OUT! target=10084819099
+IN poll t=10108997742
+OUT! wait=0 skipped=0 catch=1 target=10084819099
+IN consume
+OUT! target=10092819099
+IN poll t=10115482924
+OUT! wait=0 skipped=0 catch=1 target=10092819099
+IN consume
+OUT! target=10100819099
+IN poll t=10119978739
+OUT! wait=0 skipped=0 catch=1 target=10100819099
+IN consume
+OUT! target=10108819099
+IN poll t=10128294663
+OUT! wait=0 skipped=0 catch=1 target=10108819099
+IN consume
+OUT! target=10116819099
+IN poll t=10134876528
+OUT! wait=0 skipped=0 catch=1 target=10116819099
+IN consume
+OUT! target=10124819099
+IN poll t=10161646270
+OUT! wait=0 skipped=4 catch=0 target=10161646270
+IN consume
+OUT! target=10169646270
+IN poll t=10163755311
+OUT! wait=5890959 skipped=0 catch=0 target=10169646270
+IN poll t=10191471382
+OUT! wait=0 skipped=0 catch=1 target=10169646270
+IN consume
+OUT! target=10177646270
+IN poll t=10195471806
+OUT! wait=0 skipped=0 catch=1 target=10177646270
+IN consume
+OUT! target=10185646270
+IN poll t=10198776410
+OUT! wait=0 skipped=0 catch=1 target=10185646270
+IN consume
+OUT! target=10193646270
+IN poll t=10229233333
+OUT! wait=0 skipped=4 catch=0 target=10229233333
+IN consume
+OUT! target=10237233333
+IN poll t=10232905783
+OUT! wait=4327550 skipped=0 catch=0 target=10237233333
+IN poll t=10239635472
+OUT! wait=0 skipped=0 catch=0 target=10237233333
+IN consume
+OUT! target=10245233333
+IN poll t=10249765697
+OUT! wait=0 skipped=0 catch=0 target=10245233333
+IN consume
+OUT! target=10253233333
+IN poll t=10264275980
+OUT! wait=0 skipped=0 catch=1 target=10253233333
+IN consume
+OUT! target=10261233333
+IN poll t=10317434446
+OUT! wait=0 skipped=7 catch=0 target=10317434446
+IN consume
+OUT! target=10325434446
+IN poll t=10324503578
+OUT! wait=930868 skipped=0 catch=0 target=10325434446
+IN poll t=10330882534
+OUT! wait=0 skipped=0 catch=0 target=10325434446
+IN consume
+OUT! target=10333434446
+IN poll t=10351883543
+OUT! wait=0 skipped=0 catch=1 target=10333434446
+IN consume
+OUT! target=10341434446
+IN poll t=10356137649
+OUT! wait=0 skipped=0 catch=1 target=10341434446
+IN consume
+OUT! target=10349434446
+IN poll t=10357697564
+OUT! wait=0 skipped=0 catch=1 target=10349434446
+IN consume
+OUT! target=10357434446
+IN poll t=10359566701
+OUT! wait=0 skipped=0 catch=0 target=10357434446
+IN consume
+OUT! target=10365434446
+IN poll t=10367171833
+OUT! wait=0 skipped=0 catch=0 target=10365434446
+IN consume
+OUT! target=10373434446
+IN poll t=10374750613
+OUT! wait=0 skipped=0 catch=0 target=10373434446
+IN consume
+OUT! target=10381434446
+IN poll t=10382067283
+OUT! wait=0 skipped=0 catch=0 target=10381434446
+IN consume
+OUT! target=10389434446
+IN poll t=10470715431
+OUT! wait=0 skipped=10 catch=0 target=10470715431
+IN consume
+OUT! target=10478715431
+IN poll t=10491125437
+OUT! wait=0 skipped=0 catch=1 target=10478715431
+IN consume
+OUT! target=10486715431
+IN poll t=10517077418
+OUT! wait=0 skipped=0 catch=1 target=10486715431
+IN consume
+OUT! target=10494715431
+IN poll t=10519709619
+OUT! wait=0 skipped=0 catch=1 target=10494715431
+IN consume
+OUT! target=10502715431
+IN poll t=10526378122
+OUT! wait=0 skipped=0 catch=1 target=10502715431
+IN consume
+OUT! target=10510715431
+IN poll t=10532153010
+OUT! wait=0 skipped=0 catch=1 target=10510715431
+IN consume
+OUT! target=10518715431
+IN poll t=10532472960
+OUT! wait=0 skipped=0 catch=1 target=10518715431
+IN consume
+OUT! target=10526715431
+IN poll t=10555886804
+OUT! wait=0 skipped=0 catch=1 target=10526715431
+IN consume
+OUT! target=10534715431
+IN poll t=10560816358
+OUT! wait=0 skipped=0 catch=1 target=10534715431
+IN consume
+OUT! target=10542715431
+IN poll t=10569716069
+OUT! wait=0 skipped=0 catch=1 target=10542715431
+IN consume
+OUT! target=10550715431
+IN poll t=10571687100
+OUT! wait=0 skipped=0 catch=1 target=10550715431
+IN consume
+OUT! target=10558715431
+IN poll t=10638178240
+OUT! wait=0 skipped=9 catch=0 target=10638178240
+IN consume
+OUT! target=10646178240
+IN poll t=10638178240
+OUT! wait=8000000 skipped=0 catch=0 target=10646178240
+IN poll t=10646920586
+OUT! wait=0 skipped=0 catch=0 target=10646178240
+IN consume
+OUT! target=10654178240
+IN poll t=10667563283
+OUT! wait=0 skipped=0 catch=1 target=10654178240
+IN consume
+OUT! target=10662178240
+IN poll t=10673119428
+OUT! wait=0 skipped=0 catch=1 target=10662178240
+IN consume
+OUT! target=10670178240
+IN poll t=10678692998
+OUT! wait=0 skipped=0 catch=1 target=10670178240
+IN consume
+OUT! target=10678178240
+IN counters
+OUT! missed=82 resyncs=10 catchups=54
+IN start t=10678692998
+OUT! target=10678692998
+IN poll t=10686692998
+OUT! wait=0 skipped=0 catch=1 target=10678692998
+IN start t=10686692998
+OUT! target=10686692998
+IN poll t=10710692998
+OUT! wait=0 skipped=0 catch=1 target=10686692998
+IN start t=10710692998
+OUT! target=10710692998
+IN poll t=10742692998
+OUT! wait=0 skipped=4 catch=0 target=10742692998
+IN counters
+OUT! missed=4 resyncs=1 catchups=2
+END
