@@ -1,0 +1,54 @@
+diff --git a/include/enet/win32.h b/include/enet/win32.h
+index 2d36061..4ad0153 100644
+--- a/include/enet/win32.h
++++ b/include/enet/win32.h
+@@ -48,6 +48,9 @@ typedef struct
+ #define ENET_API extern
+ #endif /* ENET_DLL */
+ 
++/* ARBS-H H1-A: selects the Win32 time source of enet_time_get() (see win32.c). */
++ENET_API int enet_arbs_precise_time;
++
+ typedef fd_set ENetSocketSet;
+ 
+ #define ENET_SOCKETSET_EMPTY(sockset)          FD_ZERO (& (sockset))
+diff --git a/win32.c b/win32.c
+index 4f37819..6bc2110 100644
+--- a/win32.c
++++ b/win32.c
+@@ -7,6 +7,7 @@
+ #define ENET_BUILDING_LIB 1
+ #include "enet/enet.h"
+ #include <windows.h>
++#include <mmsystem.h>
+ #include <mswsock.h>
+ #ifndef HAS_QOS_FLOWID
+ typedef UINT32 QOS_FLOWID;
+@@ -21,6 +22,11 @@ typedef UINT32 *PQOS_FLOWID;
+ 
+ static enet_uint32 timeBase = 0;
+ 
++/* ARBS-H H1-A: 1 = timeGetTime() (upstream lsalzman/enet time source), 0 = GetTickCount()
++   (this fork's original). The host sets it once before its first ENet host exists;
++   it must not change while a host is alive. 0 keeps the original behavior. */
++int enet_arbs_precise_time = 0;
++
+ #if !(defined(WINAPI_FAMILY) && WINAPI_FAMILY == WINAPI_FAMILY_APP)
+ # define HAS_QWAVE
+ # include <versionhelpers.h>
+@@ -118,13 +124,13 @@ enet_host_random_seed (void)
+ enet_uint32
+ enet_time_get (void)
+ {
+-    return (enet_uint32) GetTickCount () - timeBase;
++    return (enet_arbs_precise_time ? (enet_uint32) timeGetTime () : (enet_uint32) GetTickCount ()) - timeBase;
+ }
+ 
+ void
+ enet_time_set (enet_uint32 newTimeBase)
+ {
+-    timeBase = (enet_uint32) GetTickCount () - newTimeBase;
++    timeBase = (enet_arbs_precise_time ? (enet_uint32) timeGetTime () : (enet_uint32) GetTickCount ()) - newTimeBase;
+ }
+ 
+ int

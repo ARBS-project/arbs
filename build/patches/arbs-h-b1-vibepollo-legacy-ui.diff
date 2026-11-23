@@ -1,0 +1,26 @@
+diff --git a/src_assets/common/assets/web-legacy/stores/config.ts b/src_assets/common/assets/web-legacy/stores/config.ts
+index d7a3ca45b67267d646bcb14189cf49cbb8e49faf..cbb6022db8f1b9975e643aca180b49f17bfa4a29 100644
+--- a/src_assets/common/assets/web-legacy/stores/config.ts
++++ b/src_assets/common/assets/web-legacy/stores/config.ts
+@@ -72,7 +72,7 @@ const defaultGroups = [
+       global_state_cmd: [] as Array<{ do: string; undo: string; elevated?: boolean }>,
+       server_cmd: [] as Array<{ name: string; cmd: string; elevated?: boolean }>,
+       notify_pre_releases: 'enabled',
+-      update_check_interval: 86400,
++      update_check_interval: 0, // ARBS-H development build: off by default (code kept)
+       session_token_ttl_seconds: 86400,
+       remember_me_refresh_token_ttl_seconds: 604800,
+       system_tray: true,
+diff --git a/src_assets/common/assets/web-legacy/views/DashboardView.vue b/src_assets/common/assets/web-legacy/views/DashboardView.vue
+index 707bbba889d748830f2107f05e04ebbfe0e3df72..3ce53be6a9d6b5804019797c49b1ae411957f83f 100644
+--- a/src_assets/common/assets/web-legacy/views/DashboardView.vue
++++ b/src_assets/common/assets/web-legacy/views/DashboardView.vue
+@@ -764,7 +764,7 @@ async function checkForUpdates(
+ ): Promise<void> {
+   if (stopped || updateLoading.value) return;
+   notifyPreReleases.value = prereleasesEnabled(cfg.notify_pre_releases);
+-  const interval = Number(cfg.update_check_interval ?? 86400);
++  const interval = Number(cfg.update_check_interval ?? 0);
+   if (Number.isFinite(interval) && interval === 0 && !forced) {
+     availableUpdate.value = null;
+     availableRelease.value = null;

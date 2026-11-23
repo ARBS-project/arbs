@@ -1,0 +1,626 @@
+diff --git a/docs/configuration.md b/docs/configuration.md
+index f428b77ad939f97ddbadeaa9cf1150cdd58a490b..8bdd01266648186315b8f49902c13f47a45d19df 100644
+--- a/docs/configuration.md
++++ b/docs/configuration.md
+@@ -281,8 +281,8 @@ editing the `conf` file in a text editor. Use the examples as reference.
+     <tr>
+         <td>Default</td>
+         <td colspan="2">@code{}
+-            86400
+-            @endcode (24 hours)</td>
++            0
++            @endcode (off in ARBS-H development builds; upstream default 86400 = 24 hours)</td>
+     </tr>
+     <tr>
+         <td>Example</td>
+@@ -2856,6 +2856,33 @@ PyroWave is unchanged. Example: `pacing_group_demand_limit = true`.
+     </tr>
+ </table>
+ 
++### arbs_enet_precise_time
++
++<table>
++    <tr>
++        <td>Description</td>
++        <td colspan="2">
++            ARBS-H (Windows only). Selects the clock that the control stream's ENet library uses to time its waits.
++            When enabled, ENet uses <code>timeGetTime()</code> like upstream ENet, so the 5 ms control-loop wait used
++            while waveform haptics are active can end on time instead of at the next system tick (about 15.6 ms).
++            When disabled, ENet uses <code>GetTickCount()</code>, which is the original behavior of this build.
++            The value is read once, before the first stream creates the ENet host; restart the host to change it.
++            Each second with haptic PCM activity, the log shows one line starting with
++            <code>ARBS-H 햅틱 요약:</code> (block creation, queue drain and wait-return intervals).
++        </td>
++    </tr>
++    <tr>
++        <td>Default</td>
++        <td colspan="2">@code{}enabled@endcode</td>
++    </tr>
++    <tr>
++        <td>Example</td>
++        <td colspan="2">@code{}
++            arbs_enet_precise_time = disabled
++            @endcode</td>
++    </tr>
++</table>
++
+ ## Config Files
+ 
+ ### file_apps
+diff --git a/src/arbs_haptics_timing.h b/src/arbs_haptics_timing.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..5f269b813c812a476d350d82763392063ebbac4d
+--- /dev/null
++++ b/src/arbs_haptics_timing.h
+@@ -0,0 +1,214 @@
++// SPDX-License-Identifier: GPL-3.0-or-later
++/**
++ * @file src/arbs_haptics_timing.h
++ * @brief ARBS-H H1-0: one log line per second summarizing PCM haptics block timing.
++ *
++ * Three points of the host waveform haptics path are measured without logging per block:
++ *   1. creation - a 5 ms PCM block leaves the packetizer (USB/IP transport thread)
++ *   2. drain    - the control thread takes the block from the feedback queue and sends it
++ *   3. return   - the control thread returns from control_server_t::iterate() (enet_host_service)
++ * All blocks drained between two iterate() returns form one drain pass.
++ * The summary contains no addresses, tokens or client names.
++ */
++#pragma once
++
++#include <algorithm>
++#include <array>
++#include <chrono>
++#include <cstddef>
++#include <cstdint>
++#include <cstdio>
++#include <mutex>
++#include <optional>
++#include <string>
++#include <string_view>
++#include <vector>
++
++namespace arbs::haptics_timing {
++  using clock = std::chrono::steady_clock;
++
++  /// Length of one summary window.
++  inline constexpr std::chrono::milliseconds summary_period {1000};
++  /// Spacing at or above this is an idle gap, not burst spacing, and is not aggregated.
++  inline constexpr std::chrono::milliseconds max_interval {1000};
++
++  /// Count, mean, nearest-rank p95 and maximum of millisecond samples in one window.
++  class series_t {
++  public:
++    static constexpr std::size_t max_samples = 4096;
++
++    void add(double ms) {
++      ++count_;
++      sum_ += ms;
++      max_ = count_ == 1 ? ms : std::max(max_, ms);
++      if (samples_.size() < max_samples) {
++        samples_.push_back(ms);
++      }
++    }
++
++    std::uint32_t count() const {
++      return count_;
++    }
++
++    double mean() const {
++      return count_ ? sum_ / count_ : 0.0;
++    }
++
++    double max() const {
++      return max_;
++    }
++
++    /// p95 of the retained samples (the first max_samples of the window).
++    double p95() const {
++      if (samples_.empty()) {
++        return 0.0;
++      }
++      std::vector<double> sorted = samples_;
++      const std::size_t rank = (sorted.size() * 95 + 99) / 100;  // ceil(0.95 * n), n >= 1
++      const auto index = static_cast<std::ptrdiff_t>(rank - 1);
++      std::nth_element(sorted.begin(), sorted.begin() + index, sorted.end());
++      return sorted[static_cast<std::size_t>(index)];
++    }
++
++  private:
++    std::uint32_t count_ = 0;
++    double sum_ = 0;
++    double max_ = 0;
++    std::vector<double> samples_;
++  };
++
++  /// Values of one completed window.
++  struct summary_t {
++    double window_ms = 0;
++    std::uint32_t created = 0;  ///< blocks created in the window
++    series_t create_interval;  ///< spacing between consecutive created blocks
++    std::uint32_t drained = 0;  ///< blocks drained in the window
++    series_t drain_interval;  ///< spacing between consecutive drain passes that sent >= 1 block
++    series_t blocks_per_drain;  ///< blocks sent per drain pass
++    series_t queue_wait;  ///< creation -> drain per block
++    series_t iterate_interval;  ///< spacing between consecutive iterate() returns
++  };
++
++  inline double to_ms(clock::duration d) {
++    return std::chrono::duration<double, std::milli>(d).count();
++  }
++
++  /// Thread-safe recorder. Creation runs on the USB/IP transport thread, the rest on the control thread.
++  class recorder_t {
++  public:
++    void block_created(std::uint16_t id, std::uint32_t sequence, clock::time_point now) {
++      std::lock_guard lock {mutex_};
++      start_window_if_needed(now);
++      add_interval(current_.create_interval, last_create_, now);
++      ++current_.created;
++      pending_[sequence % pending_.size()] = {true, id, sequence, now};
++    }
++
++    void block_drained(std::uint16_t id, std::uint32_t sequence, clock::time_point now) {
++      std::lock_guard lock {mutex_};
++      start_window_if_needed(now);
++      ++current_.drained;
++      ++pass_blocks_;
++      pass_time_ = now;
++      auto &slot = pending_[sequence % pending_.size()];
++      if (slot.valid && slot.id == id && slot.sequence == sequence && now >= slot.created) {
++        current_.queue_wait.add(to_ms(now - slot.created));
++      }
++      slot.valid = false;
++    }
++
++    /// Ends the current drain pass and records the iterate() return spacing.
++    void iterate_returned(clock::time_point now) {
++      std::lock_guard lock {mutex_};
++      start_window_if_needed(now);
++      if (pass_blocks_ > 0) {
++        current_.blocks_per_drain.add(pass_blocks_);
++        add_interval(current_.drain_interval, last_drain_, pass_time_);
++        pass_blocks_ = 0;
++      }
++      add_interval(current_.iterate_interval, last_iterate_, now);
++    }
++
++    /**
++     * @brief Close the window once summary_period has elapsed.
++     * @return The completed window when it saw PCM blocks; otherwise nothing, so idle seconds log nothing.
++     */
++    std::optional<summary_t> take(clock::time_point now) {
++      std::lock_guard lock {mutex_};
++      if (!window_start_ || now - *window_start_ < summary_period) {
++        return std::nullopt;
++      }
++      summary_t done = std::move(current_);
++      done.window_ms = to_ms(now - *window_start_);
++      current_ = {};
++      window_start_ = now;
++      if (done.created == 0 && done.drained == 0) {
++        return std::nullopt;
++      }
++      return done;
++    }
++
++  private:
++    struct pending_block_t {
++      bool valid = false;
++      std::uint16_t id = 0;
++      std::uint32_t sequence = 0;
++      clock::time_point created {};
++    };
++
++    void start_window_if_needed(clock::time_point now) {
++      if (!window_start_) {
++        window_start_ = now;
++      }
++    }
++
++    static void add_interval(series_t &series, std::optional<clock::time_point> &last, clock::time_point now) {
++      if (last && now >= *last && now - *last < max_interval) {
++        series.add(to_ms(now - *last));
++      }
++      last = now;
++    }
++
++    std::mutex mutex_;
++    std::optional<clock::time_point> window_start_;
++    summary_t current_;
++    std::optional<clock::time_point> last_create_;
++    std::optional<clock::time_point> last_drain_;
++    std::optional<clock::time_point> last_iterate_;
++    std::uint32_t pass_blocks_ = 0;
++    clock::time_point pass_time_ {};
++    // The feedback queue holds at most 256 messages, so 1024 slots keyed by
++    // sequence do not alias a block that is still queued.
++    std::array<pending_block_t, 1024> pending_ {};
++  };
++
++  /// One summary line, starting with the fixed prefix "ARBS-H 햅틱 요약:".
++  inline std::string format_summary(const summary_t &s, std::string_view time_source) {
++    const auto stats = [](const series_t &series) {
++      char buffer[128];
++      std::snprintf(buffer, sizeof(buffer), "평균 %.2f p95 %.2f 최대 %.2f", series.mean(), series.p95(), series.max());
++      return std::string {buffer};
++    };
++    char buffer[256];
++    std::string line = "ARBS-H 햅틱 요약: ENet시간원=";
++    line.append(time_source);
++    std::snprintf(buffer, sizeof(buffer), " 구간 %.0fms | 생성 %u개 간격ms ", s.window_ms, static_cast<unsigned>(s.created));
++    line += buffer;
++    line += stats(s.create_interval);
++    std::snprintf(buffer, sizeof(buffer), " | 비움 %u회(블록 %u개) 블록/회 평균 %.2f 최대 %.0f 간격ms", static_cast<unsigned>(s.blocks_per_drain.count()), static_cast<unsigned>(s.drained), s.blocks_per_drain.mean(), s.blocks_per_drain.max());
++    line += buffer;
++    line += stats(s.drain_interval);
++    line += " | 대기ms ";
++    line += stats(s.queue_wait);
++    std::snprintf(buffer, sizeof(buffer), " | iterate %u회 간격ms ", static_cast<unsigned>(s.iterate_interval.count()));
++    line += buffer;
++    line += stats(s.iterate_interval);
++    return line;
++  }
++
++  /// Process-wide recorder shared by the USB/IP gamepad and the control stream.
++  inline recorder_t &recorder() {
++    static recorder_t instance;
++    return instance;
++  }
++}  // namespace arbs::haptics_timing
+diff --git a/src/config.cpp b/src/config.cpp
+index 0d0b2ba9039c4d874f01e14c56422c544ffa0675..f2ac4e872e03536aca0e1109b8b5919b22a4eadc 100644
+--- a/src/config.cpp
++++ b/src/config.cpp
+@@ -1011,6 +1011,7 @@ namespace config {
+ 
+     0,  // pacing_max_bitrate_kbps (0 = legacy 1 Gbps Ethernet assumption)
+     0,  // packetsize (0 = off)
++    true,  // arbs_enet_precise_time (ARBS-H H1-A: timeGetTime ENet clock on Windows)
+   };
+ 
+   nvhttp_t nvhttp {
+@@ -1129,7 +1130,7 @@ namespace config {
+     {},  // server commands
+     std::chrono::hours {2},  // session_token_ttl default 2h
+     std::chrono::hours {24 * 7},  // remember_me_refresh_token_ttl default 7d
+-    86400,  // update_check_interval_seconds default 24h
++    0,  // update_check_interval_seconds: ARBS-H development build default off (code kept)
+     true,  // session_history_enabled
+     0,  // session_history_ttl_days (disabled by default)
+     0  // session_history_db_size_limit_mb (disabled by default)
+@@ -2226,6 +2227,7 @@ namespace config {
+     bool_f(vars, "pacing_batch_demand_limit", stream.pacing_batch_demand_limit);
+     bool_f(vars, "pacing_group_demand_limit", stream.pacing_group_demand_limit);
+     bool_f(vars, "host_adaptive_pacing", stream.host_adaptive_pacing);
++    bool_f(vars, "arbs_enet_precise_time", stream.arbs_enet_precise_time);
+     if (stream.video_max_batch_size_kb == 0) {
+       stream.video_max_batch_size_kb = 64;
+     } else if (stream.video_max_batch_size_kb != 16 && stream.video_max_batch_size_kb != 32 && stream.video_max_batch_size_kb != 64) {
+diff --git a/src/config.h b/src/config.h
+index 5be1d4e2d871f41291fcc42f0d6e00ee894836f4..a6154597dae644ba90b218df20f27bc0f97b93c6 100644
+--- a/src/config.h
++++ b/src/config.h
+@@ -305,6 +305,10 @@ namespace config {
+ 
+     // Limit the packetsize to avoid fragmentation on a low MTU link. 0 = off.
+     int packetsize;
++
++    // ARBS-H H1-A: Windows ENet clock. true = timeGetTime(), false = GetTickCount()
++    // (original behavior). Read once before the first ENet host; restart to change.
++    bool arbs_enet_precise_time;
+   };
+ 
+   struct nvhttp_t {
+@@ -522,8 +526,9 @@ namespace config {
+     std::vector<server_cmd_t> server_cmds;
+     std::chrono::seconds session_token_ttl;  ///< Session token time-to-live (seconds)
+     std::chrono::seconds remember_me_refresh_token_ttl;  ///< Trusted device (remember-me) refresh TTL
+-    // Interval in seconds between automatic update checks (0 disables periodic checks)
+-    int update_check_interval_seconds {86400};
++    // Interval in seconds between automatic update checks (0 disables periodic checks).
++    // ARBS-H development build: default 0 (off); the update check code is kept.
++    int update_check_interval_seconds {0};
+     bool session_history_enabled {true};  ///< Persist stream/session history to SQLite
+     int session_history_ttl_days {0};  ///< Delete ended sessions older than this many days (0 disables age pruning)
+     int session_history_db_size_limit_mb {0};  ///< Approximate live DB quota in MiB (0 disables size pruning)
+diff --git a/src/network.cpp b/src/network.cpp
+index f7674376f165cced13b969e939bac1f212191491..c38be19b0bb54485738454e7b29ba424f47f467d 100644
+--- a/src/network.cpp
++++ b/src/network.cpp
+@@ -144,6 +144,12 @@ namespace net {
+   host_t host_create(af_e af, ENetAddress &addr, std::uint16_t port) {
+     static std::once_flag enet_init_flag;
+     std::call_once(enet_init_flag, []() {
++#ifdef _WIN32
++      // ARBS-H H1-A: choose the ENet clock once, before any ENet host exists.
++      enet_arbs_precise_time = config::stream.arbs_enet_precise_time ? 1 : 0;
++      BOOST_LOG(info) << "ARBS-H ENet 시간원: "sv << (enet_arbs_precise_time ? "timeGetTime"sv : "GetTickCount"sv)
++                      << " (arbs_enet_precise_time="sv << (enet_arbs_precise_time ? "enabled"sv : "disabled"sv) << ')';
++#endif
+       enet_initialize();
+     });
+ 
+diff --git a/src/platform/windows/dualsense_usbip_gamepad.cpp b/src/platform/windows/dualsense_usbip_gamepad.cpp
+index 31946e7b76d8072d2a126344886bf41e0a303480..5e344732809067d71e40e828fda92d2439b9ad14 100644
+--- a/src/platform/windows/dualsense_usbip_gamepad.cpp
++++ b/src/platform/windows/dualsense_usbip_gamepad.cpp
+@@ -3,6 +3,7 @@
+ 
+ #include "dualsense_usbip_gamepad_policy.h"
+ #include "dualsense_usbip_transport.h"
++#include "src/arbs_haptics_timing.h"
+ #include "src/controller_speaker_pcm.h"
+ #include "src/logging.h"
+ #include "vhf_gamepad_policy.h"
+@@ -283,6 +284,7 @@ namespace platf {
+         message.id = client_index;
+         message.data.haptics.sequence = pcm_sequence[global_index].fetch_add(1, std::memory_order_relaxed);
+         message.data.haptics.samples = samples;
++        arbs::haptics_timing::recorder().block_created(message.id, message.data.haptics.sequence, std::chrono::steady_clock::now());
+         // A stalled control connection must not make the USB transport thread
+         // block, grow a queue, or clear feedback from another controller.
+         bool queued = feedback_queue->try_raise(message);
+diff --git a/src/stream.cpp b/src/stream.cpp
+index a16f5aab871af7305991de66de47ed66f702f082..01fa613a265ef4831bd33dbea3b51010d68b12e0 100644
+--- a/src/stream.cpp
++++ b/src/stream.cpp
+@@ -40,6 +40,7 @@ extern "C" {
+ }
+ 
+ // local includes
++#include "arbs_haptics_timing.h"
+ #include "config.h"
+ #include "control_peer_timeout.h"
+ #include "crypto.h"
+@@ -1393,6 +1394,8 @@ namespace stream {
+       std::array<std::uint8_t, sizeof(control_encrypted_t) + crypto::cipher::round_to_pkcs7_padded(controller_speaker_pcm::payload_size + 4) + crypto::cipher::tag_size> encrypted_payload;
+       payload = encode_control(session, std::string_view(reinterpret_cast<const char *>(plaintext->data()), plaintext->size()), encrypted_payload);
+     } else if (msg.type == platf::gamepad_feedback_e::haptics_pcm) {
++      // ARBS-H H1-0: the control thread drained this block from the feedback queue.
++      arbs::haptics_timing::recorder().block_drained(msg.id, msg.data.haptics.sequence, std::chrono::steady_clock::now());
+       if (!(session->config.mlFeatureFlags & ML_FF_HAPTICS_PCM)) {
+         // PCM arrives in frequent chunks; report missing negotiation once per session.
+         if (!session->control.pcm_negotiation_warning_logged.exchange(true, std::memory_order_relaxed)) {
+@@ -2237,6 +2240,21 @@ namespace stream {
+       // Haptic samples and gamepad feedback must keep flowing even when the player
+       // is not moving.
+       server->iterate(haptics_client ? 5ms : 150ms);
++
++      // ARBS-H H1-0: one summary line per second while PCM haptics flow.
++      {
++        auto &timing = arbs::haptics_timing::recorder();
++        const auto returned = std::chrono::steady_clock::now();
++        timing.iterate_returned(returned);
++        if (const auto summary = timing.take(returned)) {
++#ifdef _WIN32
++          const auto time_source = enet_arbs_precise_time ? "timeGetTime"sv : "GetTickCount"sv;
++#else
++          const auto time_source = "platform"sv;
++#endif
++          BOOST_LOG(info) << arbs::haptics_timing::format_summary(*summary, time_source);
++        }
++      }
+     }
+ 
+     // Let all remaining connections know the server is shutting down
+diff --git a/src_assets/common/assets/web/components/layout/UpdateNotice.vue b/src_assets/common/assets/web/components/layout/UpdateNotice.vue
+index d6b986bff92c5f8d7228fd5ccc8613e2d4710180..65918b1b03f490c978f0884c800bfc38ba342948 100644
+--- a/src_assets/common/assets/web/components/layout/UpdateNotice.vue
++++ b/src_assets/common/assets/web/components/layout/UpdateNotice.vue
+@@ -33,7 +33,7 @@ async function check(forced = false): Promise<void> {
+     const config = await apiGet<Record<string, unknown>>('/api/config', {
+       signal: controller.signal,
+     });
+-    const interval = Number(config.update_check_interval ?? 86400);
++    const interval = Number(config.update_check_interval ?? 0);
+     nextCheck = Number.isFinite(interval) && interval >= 0 ? interval * 1000 : 86400000;
+     if (nextCheck === 0 && !forced) {
+       failed.value = false;
+diff --git a/src_assets/common/assets/web/configs/extendedSettings.ts b/src_assets/common/assets/web/configs/extendedSettings.ts
+index 9c99edce5a7e5deb3a6cbbede708042844b8fcb4..9da8d36eee556aecc6d7eaf373ec385647594254 100644
+--- a/src_assets/common/assets/web/configs/extendedSettings.ts
++++ b/src_assets/common/assets/web/configs/extendedSettings.ts
+@@ -43,7 +43,7 @@ export const extendedDefaults: Record<string, unknown> = {
+   sw_tune: 'zerolatency',
+   min_threads: 2,
+   locale: 'en',
+-  update_check_interval: 86400,
++  update_check_interval: 0, // ARBS-H development build: off by default (code kept)
+   session_token_ttl_seconds: 86400,
+   remember_me_refresh_token_ttl_seconds: 604800,
+   back_button_timeout: -1,
+diff --git a/src_assets/common/assets/web/public/assets/locale/en.json b/src_assets/common/assets/web/public/assets/locale/en.json
+index 159f49e954b6001879cdf1ce14327d4add1e1272..a3b973a2a153479f11f76587ba9572e6142bf5f8 100644
+--- a/src_assets/common/assets/web/public/assets/locale/en.json
++++ b/src_assets/common/assets/web/public/assets/locale/en.json
+@@ -955,6 +955,8 @@
+     "pacing_group_demand_limit_desc": "Experimental opt-in for ordinary video streams. Uses frame demand including FEC to limit each send call and set the wait threshold between pacing groups. A final FEC batch may exceed that threshold. Adaptive pacing and operator limits still apply when stricter. May increase host-side send work and does not guarantee a wire-level burst limit. PyroWave keeps its existing pacing behavior.",
+     "host_adaptive_pacing": "Adaptive Video Packet Pacing",
+     "host_adaptive_pacing_desc": "Experimental opt-in for ordinary H.264, HEVC and AV1 streams. Starts at twice the encoder bitrate or 1.25 times the packetized wire demand, whichever is higher, then probes upward by up to 12.5% while video is busy, standard client pings arrive and the control round trip time is stable. Loss reported by the client during a probe restores the previous rate; outside probes the rate is halved only after repeated failed frames or substantial recovered loss, and never falls below 1.25 times the wire demand. Encoder bitrate and frame rate never change. Clients that do not send loss reports cannot trigger a cut. It does not guarantee a wire-level burst limit. PyroWave is unaffected.",
++    "arbs_enet_precise_time": "ARBS-H: Precise ENet Clock (Windows)",
++    "arbs_enet_precise_time_desc": "Uses timeGetTime() instead of GetTickCount() for the control stream ENet waits, so the 5 ms wait used while waveform haptics are active is not stretched to the system tick (about 15.6 ms). Disable to restore the original clock. Takes effect after restarting the host.",
+     "pyrowave_critical_fec_percentage": "PyroWave Critical FEC Percentage",
+     "pyrowave_critical_fec_percentage_desc": "Error correction for the first few percent of each PyroWave frame, which carries its coarsest detail. Losing any of it drops the whole frame, while a loss elsewhere only blurs a small area for one frame, so only these packets get error correction packets, at least 2 per frame. 20 (default) costs well under 1% of the bitrate. 0 disables it, allowing larger frames. The FEC Percentage setting does not apply to PyroWave.",
+     "pkey": "Private Key",
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 5b939c1811c9db0610526569254cbc83666081b2..63ae2a7488d6b4e30ce62e82cb3fc50d92c3e44d 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -2115,6 +2115,8 @@ if(SUNSHINE_TEST_POWERSHELL)
+ endif()
+ 
+ sunshine_register_component(NAME test_component_controller_speaker_pcm TEST_SOURCE unit/test_controller_speaker_pcm.cpp)
++# ARBS-H H1-0: header-only PCM haptics timing summary.
++sunshine_register_component(NAME test_component_arbs_haptics_timing TEST_SOURCE unit/test_arbs_haptics_timing.cpp)
+ 
+ sunshine_register_component(NAME test_component_dualsense_audio_pcm TEST_SOURCE unit/test_dualsense_audio_pcm.cpp)
+ sunshine_register_component(NAME test_component_dualsense_launch_policy TEST_SOURCE unit/test_dualsense_launch_policy.cpp)
+diff --git a/tests/unit/test_arbs_haptics_timing.cpp b/tests/unit/test_arbs_haptics_timing.cpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..f355c7f485f9a19a1b8932faace6cd0ebcb1c336
+--- /dev/null
++++ b/tests/unit/test_arbs_haptics_timing.cpp
+@@ -0,0 +1,163 @@
++/**
++ * @file tests/unit/test_arbs_haptics_timing.cpp
++ * @brief ARBS-H H1-0 PCM haptics timing summary (pure; fixed time points, no clock reads).
++ */
++#include "../tests_common.h"
++
++#include "src/arbs_haptics_timing.h"
++
++#include <chrono>
++#include <cstdint>
++#include <string>
++
++namespace {
++  using namespace std::chrono_literals;
++  using arbs::haptics_timing::clock;
++  using arbs::haptics_timing::recorder_t;
++  using arbs::haptics_timing::series_t;
++
++  const clock::time_point t0 = clock::time_point {} + 100s;
++}  // namespace
++
++TEST(ArbsHapticsTiming, SeriesMeanP95Max) {
++  series_t series;
++  EXPECT_EQ(series.count(), 0u);
++  EXPECT_EQ(series.p95(), 0.0);
++  for (int i = 1; i <= 100; ++i) {
++    series.add(i);
++  }
++  EXPECT_EQ(series.count(), 100u);
++  EXPECT_DOUBLE_EQ(series.mean(), 50.5);
++  EXPECT_DOUBLE_EQ(series.max(), 100.0);
++  EXPECT_DOUBLE_EQ(series.p95(), 95.0);  // nearest rank: ceil(0.95 * 100) = 95th value
++}
++
++TEST(ArbsHapticsTiming, SingleSampleP95IsThatSample) {
++  series_t series;
++  series.add(7.5);
++  EXPECT_DOUBLE_EQ(series.p95(), 7.5);
++  EXPECT_DOUBLE_EQ(series.mean(), 7.5);
++  EXPECT_DOUBLE_EQ(series.max(), 7.5);
++}
++
++TEST(ArbsHapticsTiming, NoSummaryBeforeOneSecond) {
++  recorder_t recorder;
++  recorder.iterate_returned(t0);
++  recorder.block_created(0, 1, t0);
++  EXPECT_FALSE(recorder.take(t0 + 999ms).has_value());
++}
++
++TEST(ArbsHapticsTiming, NoSummaryWithoutPcmActivity) {
++  recorder_t recorder;
++  for (int i = 0; i <= 100; ++i) {
++    recorder.iterate_returned(t0 + i * 15ms);
++  }
++  EXPECT_FALSE(recorder.take(t0 + 1500ms).has_value());
++}
++
++TEST(ArbsHapticsTiming, TickBoundDrainShowsBursts) {
++  // Blocks are created every 5 ms but drained three at a time each 15 ms
++  // iterate() return: the bunching the H1 analysis expects with GetTickCount.
++  recorder_t recorder;
++  std::uint32_t sequence = 0;
++  for (int tick = 0; tick < 66; ++tick) {
++    const auto base = t0 + tick * 15ms;
++    for (std::uint32_t k = 0; k < 3; ++k) {
++      recorder.block_created(0, sequence + k, base + k * 5ms);
++    }
++    const auto drain_time = base + 15ms;
++    for (std::uint32_t k = 0; k < 3; ++k) {
++      recorder.block_drained(0, sequence + k, drain_time);
++    }
++    recorder.iterate_returned(drain_time + 15ms);  // pass closes at the next return
++    sequence += 3;
++  }
++  const auto summary = recorder.take(t0 + 1000ms + 15ms);
++  ASSERT_TRUE(summary.has_value());
++  EXPECT_EQ(summary->created, 198u);
++  EXPECT_EQ(summary->drained, 198u);
++  EXPECT_DOUBLE_EQ(summary->create_interval.mean(), 5.0);
++  EXPECT_EQ(summary->blocks_per_drain.count(), 66u);
++  EXPECT_DOUBLE_EQ(summary->blocks_per_drain.mean(), 3.0);
++  EXPECT_DOUBLE_EQ(summary->blocks_per_drain.max(), 3.0);
++  EXPECT_DOUBLE_EQ(summary->drain_interval.mean(), 15.0);
++  EXPECT_DOUBLE_EQ(summary->queue_wait.max(), 15.0);
++  EXPECT_DOUBLE_EQ(summary->queue_wait.mean(), 10.0);  // (15 + 10 + 5) / 3
++  EXPECT_DOUBLE_EQ(summary->iterate_interval.mean(), 15.0);
++}
++
++TEST(ArbsHapticsTiming, OnTimeDrainShowsOneBlockPerPass) {
++  recorder_t recorder;
++  for (std::uint32_t i = 0; i < 199; ++i) {
++    const auto created = t0 + i * 5ms;
++    recorder.block_created(0, i, created);
++    recorder.block_drained(0, i, created + 1ms);
++    recorder.iterate_returned(created + 2ms);
++  }
++  const auto summary = recorder.take(t0 + 1000ms);
++  ASSERT_TRUE(summary.has_value());
++  EXPECT_DOUBLE_EQ(summary->blocks_per_drain.max(), 1.0);
++  EXPECT_DOUBLE_EQ(summary->drain_interval.max(), 5.0);
++  EXPECT_DOUBLE_EQ(summary->queue_wait.p95(), 1.0);
++}
++
++TEST(ArbsHapticsTiming, IdleGapsAreNotIntervals) {
++  recorder_t recorder;
++  recorder.block_created(0, 0, t0);
++  recorder.block_created(0, 1, t0 + 5ms);
++  recorder.block_created(0, 2, t0 + 3005ms);  // 3 s pause in the game's haptics
++  const auto summary = recorder.take(t0 + 3005ms);
++  ASSERT_TRUE(summary.has_value());
++  EXPECT_EQ(summary->created, 3u);
++  EXPECT_EQ(summary->create_interval.count(), 1u);
++  EXPECT_DOUBLE_EQ(summary->create_interval.max(), 5.0);
++}
++
++TEST(ArbsHapticsTiming, UnmatchedDrainHasNoQueueWait) {
++  recorder_t recorder;
++  recorder.block_created(1, 10, t0);
++  recorder.block_drained(2, 10, t0 + 4ms);  // other controller, same sequence
++  recorder.block_drained(1, 11, t0 + 4ms);  // never created (e.g. evicted slot)
++  recorder.iterate_returned(t0 + 5ms);
++  const auto summary = recorder.take(t0 + 1s);
++  ASSERT_TRUE(summary.has_value());
++  EXPECT_EQ(summary->drained, 2u);
++  EXPECT_EQ(summary->queue_wait.count(), 0u);
++  EXPECT_DOUBLE_EQ(summary->blocks_per_drain.max(), 2.0);
++}
++
++TEST(ArbsHapticsTiming, ReturnWithoutDrainIsNotADrainPass) {
++  recorder_t recorder;
++  recorder.iterate_returned(t0);
++  recorder.block_created(0, 0, t0);
++  recorder.iterate_returned(t0 + 5ms);
++  const auto summary = recorder.take(t0 + 1s);
++  ASSERT_TRUE(summary.has_value());
++  EXPECT_EQ(summary->blocks_per_drain.count(), 0u);
++  EXPECT_EQ(summary->iterate_interval.count(), 1u);
++}
++
++TEST(ArbsHapticsTiming, WindowResetsAfterSummary) {
++  recorder_t recorder;
++  recorder.block_created(0, 0, t0);
++  ASSERT_TRUE(recorder.take(t0 + 1s).has_value());
++  EXPECT_FALSE(recorder.take(t0 + 2s).has_value());
++}
++
++TEST(ArbsHapticsTiming, SummaryLineHasPrefixAndOneLine) {
++  recorder_t recorder;
++  recorder.block_created(0, 0, t0);
++  recorder.block_created(0, 1, t0 + 5ms);
++  recorder.block_drained(0, 0, t0 + 6ms);
++  recorder.block_drained(0, 1, t0 + 6ms);
++  recorder.iterate_returned(t0 + 6ms);
++  const auto summary = recorder.take(t0 + 1s);
++  ASSERT_TRUE(summary.has_value());
++  const auto line = arbs::haptics_timing::format_summary(*summary, "timeGetTime");
++  EXPECT_EQ(line.rfind("ARBS-H 햅틱 요약:", 0), 0u) << line;
++  EXPECT_NE(line.find("ENet시간원=timeGetTime"), std::string::npos) << line;
++  EXPECT_NE(line.find("생성 2개"), std::string::npos) << line;
++  EXPECT_NE(line.find("비움 1회(블록 2개) 블록/회 평균 2.00 최대 2"), std::string::npos) << line;
++  EXPECT_NE(line.find("대기ms 평균 3.50 p95 6.00 최대 6.00"), std::string::npos) << line;
++  EXPECT_EQ(line.find('\n'), std::string::npos);
++}

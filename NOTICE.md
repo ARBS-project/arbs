@@ -14,12 +14,15 @@ carry `SPDX-License-Identifier: GPL-3.0-or-later`. Each ARBS fork keeps its upst
 | Moonlight PC (moonlight-qt) | [moonlight-stream/moonlight-qt](https://github.com/moonlight-stream/moonlight-qt), base commit `28629dc1` | arbs-w | GPL-3.0 |
 | Moonlight for Android | [moonlight-stream/moonlight-android](https://github.com/moonlight-stream/moonlight-android), base commit `b48494cb` | arbs-a | GPL-3.0 |
 | moonlight-common-c (official) | [moonlight-stream/moonlight-common-c](https://github.com/moonlight-stream/moonlight-common-c) | upstream of the Nonary fork | GPL-3.0 |
-| moonlight-common-c (Nonary fork) | [Nonary/moonlight-common-c](https://github.com/Nonary/moonlight-common-c) | arbs-h, arbs-w (submodule); arbs-a (copied work tree, commit `6f05ee89`) | GPL-3.0 |
+| moonlight-common-c (Nonary fork) | [Nonary/moonlight-common-c](https://github.com/Nonary/moonlight-common-c) | arbs-h (submodule); arbs-w (submodule at public commit `6f05ee89` + ARBS patch in arbs-w `patches/`); arbs-a (copied work tree, commit `6f05ee89`) | GPL-3.0 |
 | ENet (Moonlight fork) | [cgutman/enet](https://github.com/cgutman/enet), inside moonlight-common-c | arbs-h, arbs-w, arbs-a | MIT |
+| SudoVDA (bundled driver) | [SudoMaker/SudoVDA](https://github.com/SudoMaker/SudoVDA) | arbs-h installer | README: "MIT and CC0 or Public Domain" for the author's changes; no top-level LICENSE file |
+| Windows-driver-samples (basis of SudoVDA) | [microsoft/Windows-driver-samples](https://github.com/microsoft/Windows-driver-samples) | arbs-h installer | MS-PL |
 | Other bundled third-party code | as listed in each upstream repository (`third-party/`, `.gitmodules`, `libs/`, upstream `NOTICE`) | each fork | their own licenses |
 
-The ARBS-H build applies a small patch to the bundled ENet (precise time). That patch and the build scripts will be
-published in this repository (`build/`) before any binary release.
+The ARBS-H build applies a small patch to the bundled ENet (precise time). That patch and the build scripts are in
+[`build/`](build/README.md). The ARBS-W build keeps moonlight-common-c at public commit `6f05ee89` and applies
+`patches/moonlight-common-c-6f05ee89-arbs.patch` from the arbs-w repository.
 
 ## ApexSenseBridge
 
