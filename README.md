@@ -52,7 +52,12 @@ Download the latest release from the
 - **ARBS-W (Windows client):** put `arbs-w-<version>-windows-portable.zip` and its `.sha256` in the same folder, unzip, and
   run `ARBS-W 설치·업데이트.cmd` in the `ARBS-W 도구` folder. It installs to `D:\ARBS-W` (or `%LOCALAPPDATA%\ARBS-W` when
   there is no D: drive), adds an `ARBS-W` desktop shortcut and keeps settings and pairing on update.
-- **Unsigned builds:** the binaries are not code-signed, so Windows SmartScreen may warn. Compare the SHA-256 value first.
+- **ARBS-A (Android client):** when a release is available, download `arbs-a-<version>-release.apk` and its `.sha256` from the
+  [arbs-a Releases](https://github.com/ARBS-project/arbs-a/releases) page, compare the SHA-256, open the APK on the device (allow
+  installing from this source when Android asks), pair once with the PIN and connect the APEX dongle by USB. The application ID
+  `io.github.arbs_project.arbsa` is new, so it is a separate app from earlier test builds.
+  Release signing certificate SHA-256: _to be added after the device check_
+- **Unsigned builds:** the ARBS-H and ARBS-W binaries are not code-signed, so Windows SmartScreen may warn. Compare the SHA-256 value first.
 
 ## License
 
@@ -71,6 +76,9 @@ moonlight-qt 포크), [arbs-a](https://github.com/ARBS-project/arbs-a)(Android �
 상태: 실험적. ARBS-H 0.1.2·ARBS-W 0.1.0 실기 확인(내부망·외부망), ARBS-A 준비 중입니다.
 다운로드: [arbs-h Releases](https://github.com/ARBS-project/arbs-h/releases), [arbs-w Releases](https://github.com/ARBS-project/arbs-w/releases). ARBS-A는 아직 배포하지 않습니다.
 설치·업데이트: ARBS-H는 `arbs-h-<버전>-setup.exe`의 SHA-256을 확인한 뒤 실행(새 설치기로 덮어 업데이트). ARBS-W는 zip과 `.sha256`을 같은 폴더에 두고
-압축을 푼 뒤 `ARBS-W 도구\ARBS-W 설치·업데이트.cmd`를 실행합니다(설정·페어링 유지). 코드 서명이 없어 SmartScreen 경고가 나올 수 있으니 SHA-256을 먼저 확인하세요.
+압축을 푼 뒤 `ARBS-W 도구\ARBS-W 설치·업데이트.cmd`를 실행합니다(설정·페어링 유지). ARBS-H·ARBS-W는 코드 서명이 없어 SmartScreen 경고가 나올 수 있으니 SHA-256을 먼저 확인하세요.
+ARBS-A는 릴리스가 올라오면 [arbs-a Releases](https://github.com/ARBS-project/arbs-a/releases)에서 `arbs-a-<버전>-release.apk`와 `.sha256`을 받아 SHA-256을 비교하고,
+기기에서 APK를 열어(묻는 경우 이 출처의 앱 설치 허용) 설치한 뒤 PIN으로 한 번 페어링하고 APEX 동글을 USB로 연결합니다. 새 앱 ID(`io.github.arbs_project.arbsa`)라서 이전 시험판과 별개 앱입니다.
+릴리스 서명 인증서 SHA-256: _실기 확인 뒤 기재_
 **Flydigi와 관련 없는 비공식 오픈소스 프로젝트**이며 Moonlight·Sunshine·Apollo·Vibepollo 프로젝트와도 관련이 없습니다.
 제품 이름과 상표는 각 소유자의 것입니다.
