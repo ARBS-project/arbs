@@ -36,6 +36,7 @@ $script:AppExeName = 'ARBS-W.exe'                          # 0.1.0 부터 (R-02)
 $script:LegacyExeName = 'Moonlight.exe'                       # b2* 까지
 $script:SendDirName = 'ARBS-보낼로그'
 $script:ResultName = '설치-결과.txt'
+$script:ManifestName = 'package-files.sha256'   # R1b-fix1 G2: 패키지 안 파일·해시 목록
 $script:Steps = New-Object System.Collections.ArrayList
 
 # 채널별 이름·위치 (D-R1b-7)
@@ -189,6 +190,121 @@ function Get-StableSearchDirs([string]$KitDir) {
     return @(@($KitDir, $unpacked, $beside) + @(Get-DefaultSearchDirs $KitDir) | Where-Object { $_ } | Select-Object -Unique)
 }
 
+# ------------------------------------------------------------------------------------------------ R1b-fix1 G2: 압축을 푼 폴더로 설치
+# 패키지 안 목록('ARBS-W 도구\package-files.sha256'). 덜 풀림·손상을 잡는다. 목록도 함께 바뀌면 변조는 못 막는다(변조 확인은 zip 의 .sha256).
+# 이름 변형까지 허용한 정식 zip 의 버전. 규칙에 맞지 않으면 $null
+function Get-ZipVariantVersion([string]$Name) {
+    $m = [regex]::Match($Name, '^arbs-w-(\d{1,6})\.(\d{1,6})\.(\d{1,6})-windows-portable(?: \(\d{1,3}\)| - 복사본(?: \(\d{1,3}\))?| - Copy(?: \(\d{1,3}\))?)?\.zip$', 'IgnoreCase')
+    if (-not $m.Success) { return $null }
+    return New-Object Version ([int]$m.Groups[1].Value), ([int]$m.Groups[2].Value), ([int]$m.Groups[3].Value)
+}
+
+# 목록의 상대 경로: '/' 구분, 위로 가기·절대 경로·드라이브·파일 이름에 못 쓰는 글자 금지
+function Test-ManifestRelPath([string]$Rel) {
+    if ([string]::IsNullOrEmpty($Rel) -or $Rel.StartsWith('/')) { return $false }
+    $invalid = [IO.Path]::GetInvalidFileNameChars()
+    foreach ($seg in $Rel.Split('/')) {
+        if ($seg -eq '' -or $seg -eq '.' -or $seg -eq '..') { return $false }
+        if ($seg.IndexOfAny($invalid) -ge 0) { return $false }
+    }
+    return $true
+}
+
+# 결과 {Version; Entries(각 {Hash; Rel})}. 형식이 틀리면 예외
+function Read-PackageManifest([string]$Path) {
+    $bad = '설치 파일 목록이 손상됐습니다. zip을 다시 받아 새 폴더에 푼 뒤 실행하세요'
+    $lines = @([IO.File]::ReadAllLines($Path, (New-Object Text.UTF8Encoding $false)))
+    if ($lines.Count -lt 3) { throw $bad }
+    $head = [regex]::Match($lines[0], '^# arbs-w-package 1 (\d{1,6}\.\d{1,6}\.\d{1,6})$')
+    if (-not $head.Success) { throw $bad }
+    $seen = @{}
+    $entries = New-Object System.Collections.ArrayList
+    for ($i = 1; $i -lt $lines.Count; $i++) {
+        if ($lines[$i] -eq '') { continue }
+        $m = [regex]::Match($lines[$i], '^([0-9a-f]{64})  (.+)$')
+        if (-not $m.Success) { throw $bad }
+        $rel = $m.Groups[2].Value
+        if (-not (Test-ManifestRelPath $rel)) { throw $bad }
+        $key = $rel.ToLowerInvariant()
+        if ($seen.ContainsKey($key)) { throw $bad }
+        $seen[$key] = $true
+        [void]$entries.Add([pscustomobject]@{ Hash = $m.Groups[1].Value; Rel = $rel })
+    }
+    if (-not $seen.ContainsKey($script:AppExeName.ToLowerInvariant()) -or -not $seen.ContainsKey('portable.dat')) { throw $bad }
+    return [pscustomobject]@{ Version = $head.Groups[1].Value; Entries = @($entries) }
+}
+
+# zip 옆의 같은 버전 해시 파일(이름 변형 포함) 중 내용이 맞는 것을 찾는다. 결과 {State = ok|bad|nohash; Hash}
+function Test-PackageZipPair($ZipFile, [string]$Version) {
+    $canon = 'arbs-w-' + $Version + '-windows-portable.zip'
+    $shas = @(Get-ChildItem -LiteralPath $ZipFile.DirectoryName -File -Filter ('arbs-w-' + $Version + '-windows-portable*.sha256') -ErrorAction SilentlyContinue)
+    if ($shas.Count -eq 0) { return [pscustomobject]@{ State = 'nohash'; Hash = '' } }
+    $act = (Get-FileHash -LiteralPath $ZipFile.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+    foreach ($s in $shas) {
+        if ($s.Length -gt 4096) { continue }
+        $exp = Read-Sha256Text ([IO.File]::ReadAllText($s.FullName))
+        if ($null -eq $exp -or $exp.Hash -ne $act) { continue }
+        if ($null -eq $exp.Name -or $exp.Name -ieq $ZipFile.Name -or $exp.Name -ieq $canon) { return [pscustomobject]@{ State = 'ok'; Hash = $act } }
+    }
+    return [pscustomobject]@{ State = 'bad'; Hash = $act }
+}
+
+# 같은 버전 zip 고르기. 결과 {State = ok(확인됨)|bad(해시 다름)|none(zip 또는 해시 파일 없음); File; Hash}
+function Select-PackageZip([string[]]$Dirs, [string]$Version) {
+    $canon = 'arbs-w-' + $Version + '-windows-portable.zip'
+    $want = [version]$Version
+    $all = @()
+    foreach ($d in $Dirs) {
+        if ([string]::IsNullOrWhiteSpace($d)) { continue }
+        if (-not (Test-Path -LiteralPath $d -PathType Container)) { continue }
+        foreach ($f in @(Get-ChildItem -LiteralPath $d -File -Filter ('arbs-w-' + $Version + '-windows-portable*.zip') -ErrorAction SilentlyContinue)) {
+            $v = Get-ZipVariantVersion $f.Name
+            if ($null -ne $v -and $v -eq $want) { $all += $f }
+        }
+    }
+    $badFile = $null
+    foreach ($z in @($all | Sort-Object @{ Expression = { $_.Name -ieq $canon }; Descending = $true }, @{ Expression = 'LastWriteTimeUtc'; Descending = $true })) {
+        $r = Test-PackageZipPair $z $Version
+        if ($r.State -eq 'ok') { return [pscustomobject]@{ State = 'ok'; File = $z; Hash = $r.Hash } }
+        if ($r.State -eq 'bad' -and $null -eq $badFile) { $badFile = $z }
+    }
+    if ($null -ne $badFile) { return [pscustomobject]@{ State = 'bad'; File = $badFile; Hash = '' } }
+    return [pscustomobject]@{ State = 'none'; File = $null; Hash = '' }
+}
+
+# 이중 폴더(압축 풀기가 같은 이름 폴더를 한 번 더 만든 경우): zip 은 도구 폴더의 위 3단계에 있다
+function Get-PackageSearchDirs([string[]]$Dirs, [string]$KitDir) {
+    $p = Split-Path -Parent $KitDir
+    for ($i = 0; $i -lt 2 -and $p; $i++) { $p = Split-Path -Parent $p }
+    return @(@($Dirs) + @($p) | Where-Object { $_ } | Select-Object -Unique)
+}
+
+function Test-SamePath([string]$A, [string]$B) {
+    if (-not $A -or -not $B) { return $false }
+    return ([IO.Path]::GetFullPath($A).TrimEnd('\') -ieq [IO.Path]::GetFullPath($B).TrimEnd('\'))
+}
+
+# 목록에 있는 파일만 임시 폴더로 복사하면서 해시 확인. 끼어든 파일은 설치되지 않고, 확인 뒤 바뀔 틈도 없다. 결과 = 파일 수
+function Copy-ManifestToStaging([string]$PkgRoot, $Manifest, [string]$StagingDir) {
+    $missing = 0
+    foreach ($e in $Manifest.Entries) {
+        if (-not (Test-Path -LiteralPath (Join-Path $PkgRoot $e.Rel.Replace('/', '\')) -PathType Leaf)) { $missing++ }
+    }
+    if ($missing -gt 0) { throw ('파일이 일부 없습니다(' + $missing + '개). 받은 zip을 마우스 오른쪽 버튼 → [압축 풀기]로 전부 푼 뒤 다시 실행하세요') }
+    Reset-StagingDir $StagingDir
+    foreach ($e in $Manifest.Entries) {
+        $rel = $e.Rel.Replace('/', '\')
+        $to = Join-Path $StagingDir $rel
+        $toDir = Split-Path -Parent $to
+        if (-not (Test-Path -LiteralPath $toDir)) { New-Item -ItemType Directory -Path $toDir -Force | Out-Null }
+        [IO.File]::Copy((Join-Path $PkgRoot $rel), $to, $false)
+        if ((Get-FileHash -LiteralPath $to -Algorithm SHA256).Hash.ToLowerInvariant() -ne $e.Hash) {
+            throw '파일이 손상됐거나 바뀌었습니다. zip을 다시 받아 새 폴더에 푼 뒤 실행하세요'
+        }
+    }
+    return @($Manifest.Entries).Count
+}
+
 # 그 폴더가 실제로 쓰는 설정 파일: 새 위치가 있으면 그것, 없으면 옛 위치. 없으면 $null
 function Get-ActiveSettingsIni([string]$Dir) {
     $new = Join-Path $Dir ($script:NewSettingsDirName + '\ARBS-W.ini')
@@ -295,9 +411,13 @@ function Format-Report([string]$Title) {
 }
 
 # ------------------------------------------------------------------------------------------------ 부작용 함수(얇게)
-function Expand-ToStaging([string]$Zip, [string]$StagingDir) {
+function Reset-StagingDir([string]$StagingDir) {
     if (Test-Path -LiteralPath $StagingDir) { Remove-Item -LiteralPath $StagingDir -Recurse -Force }
     New-Item -ItemType Directory -Path $StagingDir | Out-Null
+}
+
+function Expand-ToStaging([string]$Zip, [string]$StagingDir) {
+    Reset-StagingDir $StagingDir
     Expand-Archive -LiteralPath $Zip -DestinationPath $StagingDir -Force
 }
 
@@ -460,7 +580,29 @@ function Invoke-Install {
     }
     if ($ok) { $ok = Invoke-Step '설치 위치' { Get-TargetStepMsg } }
     $zip = $null
-    if ($ok) {
+    $script:zipFile = $null; $script:PkgManifest = $null; $script:FolderSource = $null; $script:ZipHashMsg = $null
+    # R1b-fix1 G2: 패키지 안 목록이 있으면(정식 zip) 같은 버전 zip 을 확인하고, zip·해시 파일이 없으면 압축을 푼 폴더를 원본으로 쓴다
+    $manifestPath = Join-Path $kitDir $script:ManifestName
+    if ($ok -and $script:KitChannel -eq 'Stable' -and (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
+        $ok = Invoke-Step '설치 원본 확인' {
+            $script:PkgManifest = Read-PackageManifest $manifestPath
+            $look = if ($SearchDirs) { $SearchDirs } else { Get-PackageSearchDirs $dirs $kitDir }
+            $sel = Select-PackageZip $look $script:PkgManifest.Version
+            if ($sel.State -eq 'bad') { throw ('같은 버전 zip(' + $sel.File.Name + ')이 손상됐거나 바뀌었습니다. 그 zip을 지우거나 다시 받으세요') }
+            if ($sel.State -eq 'ok') {
+                $script:zipFile = $sel.File
+                $script:ZipHashMsg = '해시 일치 ' + $sel.Hash.Substring(0, 12) + '…'
+                ('zip 으로 설치합니다: ' + $sel.File.Name)
+            } else {
+                $from = Split-Path -Parent $kitDir
+                if (Test-SamePath $from $Target) { throw '압축을 푼 폴더가 설치 위치와 같습니다. 다운로드 같은 다른 폴더에 풀고 다시 실행하세요' }
+                $script:FolderSource = $from
+                '압축을 푼 폴더로 설치합니다'
+            }
+        }
+        if ($ok -and $script:zipFile) { $zip = $script:zipFile.FullName }
+    }
+    if ($ok -and -not $script:FolderSource -and -not $zip) {
         $ok = Invoke-Step 'zip 찾기' {
             if ($script:KitChannel -eq 'Stable') {
                 $script:zipFile = Select-StableZip $dirs
@@ -473,8 +615,9 @@ function Invoke-Install {
         }
         if ($ok) { $zip = $script:zipFile.FullName }
     }
-    if ($ok) {
+    if ($ok -and -not $script:FolderSource) {
         $ok = Invoke-Step 'SHA-256 확인' {
+            if ($script:ZipHashMsg) { return $script:ZipHashMsg }
             $r = Test-ZipHash $zip
             if (-not $r.Ok) { throw $r.Msg }
             $r.Msg
@@ -490,13 +633,16 @@ function Invoke-Install {
     $staging = Join-Path $StagingRoot ('arbs-w-staging-' + $stamp)
     $pkgRoot = $null
     if ($ok) {
-        $ok = Invoke-Step 'zip 풀기(임시 폴더)' {
-            Expand-ToStaging $zip $staging
+        $unpackStep = if ($script:FolderSource) { '압축을 푼 폴더 확인(임시 폴더)' } else { 'zip 풀기(임시 폴더)' }
+        $ok = Invoke-Step $unpackStep {
+            $count = 0
+            if ($script:FolderSource) { $count = Copy-ManifestToStaging $script:FolderSource $script:PkgManifest $staging }
+            else { Expand-ToStaging $zip $staging }
             $script:pkgRoot = Find-PackageRoot $staging
             if ($null -eq $script:pkgRoot) { throw 'zip 안에 실행 파일·portable.dat 가 없음' }
             $script:pkgExe = Get-AppExeName $script:pkgRoot
             if ($script:KitChannel -eq 'Stable' -and $script:pkgExe -ne $script:AppExeName) { throw '정식 zip 안에 ARBS-W.exe 가 없음' }
-            ($script:pkgExe + '·portable.dat 확인')
+            if ($script:FolderSource) { ('파일 ' + $count + '개 확인 완료') } else { ($script:pkgExe + '·portable.dat 확인') }
         }
         if ($ok) { $pkgRoot = $script:pkgRoot }
     }
