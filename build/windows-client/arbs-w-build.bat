@@ -7,10 +7,12 @@ rem   e.g. arbs-w-build.bat arbs-w-b2-d2-baseline
 rem        arbs-w-build.bat arbs-w-b2-portable.zip
 setlocal enableDelayedExpansion
 
-set ARBS_ROOT=D:\AI\ARBS-APEX
+rem CI1 (2026-11-24): ARBS_ROOT / ARBS_TC / ARBS_QT_BIN / ARBS_VC_REDIST_DLL_PATH may be set by the caller (CI);
+rem unset = the original build PC values below.
+if not defined ARBS_ROOT set "ARBS_ROOT=D:\AI\ARBS-APEX"
 set ARBS_SRC=%ARBS_ROOT%\client-w\arbs-w
 set ARBS_OUT=%ARBS_ROOT%\client-w\out
-set ARBS_TC=D:\AI\ARBS-APEX\toolchain
+if not defined ARBS_TC set "ARBS_TC=%ARBS_ROOT%\toolchain"
 set OUT_BASE=%~1
 if "%OUT_BASE%"=="" set OUT_BASE=arbs-w-build
 
@@ -25,7 +27,8 @@ if "!ARBS_W_EDITION!"=="" (
 echo [arbs-w-build] edition !ARBS_W_EDITION!
 
 rem --- tool PATH (process only) ---
-set PATH=%ARBS_TC%\Qt\6.12.1\msvc2022_64\bin;%ProgramFiles%\7-Zip;%PATH%
+if not defined ARBS_QT_BIN set "ARBS_QT_BIN=%ARBS_TC%\Qt\6.12.1\msvc2022_64\bin"
+set PATH=%ARBS_QT_BIN%;%ProgramFiles%\7-Zip;%PATH%
 
 rem --- side-effect guards (B1 lesson EA-B1-V-03 / B2_DESIGN 6-3) ---
 set VSCMD_SKIP_SENDTELEMETRY=1
@@ -45,7 +48,7 @@ rem --- build-arch.bat fork switches ---
 set ARBS_SKIP_MSI=1
 rem B2 D9: Discord is excluded from the build (app.pro); also drop discord-rpc.dll from the package
 set ARBS_NO_DISCORD=1
-set ARBS_VC_REDIST_DLL_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC143.CRT
+if not defined ARBS_VC_REDIST_DLL_PATH set "ARBS_VC_REDIST_DLL_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Redist\MSVC\14.44.35112\x64\Microsoft.VC143.CRT"
 rem CI_VERSION intentionally not defined -> portable.dat is placed in the package
 set CI_VERSION=
 rem cl.exe multi-process compile inside nmake batch rules (speed only, no output change)

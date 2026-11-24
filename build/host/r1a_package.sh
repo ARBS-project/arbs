@@ -5,7 +5,7 @@
 # Stage = package_portable tree minus scripts\ (ApolloService / "Apollo" rule scripts), drivers\sunshine\,
 # drivers\vhf-gamepad\ (touch Vibepollo devices), the portable launcher/README/config, plus tools\sunshinesvc.exe
 # (analysis/R1a.md D-R1a-6/7, 2-3). The b1~b5 ZIPs in host/out are never touched.
-source /d/AI/ARBS-APEX/host/scripts/r1a_env.sh
+source "${ARBS_ROOT:-/d/AI/ARBS-APEX}/host/scripts/r1a_env.sh"
 cd "$ARBS_SRC"
 grep -q "^BUILD_VERSION:UNINITIALIZED=$ARBS_BUILD_VERSION\$" "$ARBS_BUILD/CMakeCache.txt"
 grep -q '^ARBS_H_SERVICE_NAME:STRING=ARBSHService$' "$ARBS_BUILD/CMakeCache.txt"

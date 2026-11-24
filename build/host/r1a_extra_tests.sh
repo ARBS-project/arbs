@@ -5,10 +5,11 @@
 #  3. web unit tests (node --test scripts/*.test.ts), including the R1a update target / asset rule tests.
 # Usage (Git Bash or MSYS): bash r1a_extra_tests.sh   -> prints one PASS/FAIL line per test, exit 0 if all pass.
 set -u
-ROOT=/d/AI/ARBS-APEX
+# CI1 (2026-11-24): ARBS_ROOT / ARBS_UCRT_BIN / ARBS_NODE_DIR override the original build PC paths.
+ROOT="${ARBS_ROOT:-/d/AI/ARBS-APEX}"
 SRC=$ROOT/host/arbs-h
-UCRT=/d/AI/ARBS-APEX/toolchain/msys64/ucrt64/bin
-NODE=/d/AI/ARBS-APEX/toolchain/node-v22.22.2-win-x64
+UCRT="${ARBS_UCRT_BIN:-$ROOT/toolchain/msys64/ucrt64/bin}"
+NODE="${ARBS_NODE_DIR:-$ROOT/toolchain/node-v22.22.2-win-x64}"
 TMP=$(mktemp -d)
 rc=0
 

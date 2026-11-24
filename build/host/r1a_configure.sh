@@ -1,6 +1,6 @@
 # ARBS-H R1a (0.1.0): configure the existing build tree as ARBS-H 0.1.0 (installer build).
 # The repo/publisher values are passed explicitly because the old Nonary values are already cached.
-source /d/AI/ARBS-APEX/host/scripts/r1a_env.sh
+source "${ARBS_ROOT:-/d/AI/ARBS-APEX}/host/scripts/r1a_env.sh"
 bash "$ARBS_ROOT/host/scripts/b1_apply_patches.sh"
 cd "$ARBS_SRC"
 cmake -B "$ARBS_BUILD" -G Ninja -S . \

@@ -1,7 +1,10 @@
 # ARBS build files
 
 Patches and scripts used for the ARBS-H (host) and ARBS-W (Windows client) builds, published for GPL-3.0 source
-availability. Paths inside the scripts are those of the original build PC (`D:\AI\ARBS-APEX`, `D:\AI\ARBS-APEX\toolchain`); adjust them.
+availability. Paths inside the scripts default to those of the original build PC (`D:\AI\ARBS-APEX`, `D:\AI\ARBS-APEX\toolchain`).
+Override them with environment variables (unset = original values): host scripts `ARBS_ROOT`, `ARBS_TOOLS`, `ARBS_NODE_DIR`,
+`ARBS_DOTNET`, `ARBS_ISCC`, `ARBS_EVIDENCE_DIR`, `ARBS_TEMP`, `ARBS_UCRT_BIN` (`b1_run.cmd`: `ARBS_ROOT_WIN`); Windows client
+`ARBS_ROOT`, `ARBS_TC`, `ARBS_QT_BIN`, `ARBS_VC_REDIST_DLL_PATH`. The GitHub Actions workflows of `arbs-h` and `arbs-w` use them.
 
 | Folder | Contents | Original location |
 |---|---|---|

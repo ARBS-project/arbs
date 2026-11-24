@@ -1,5 +1,5 @@
 # Applies host/patches/*.patch to pinned submodules without moving their commits. Idempotent.
-source /d/AI/ARBS-APEX/host/scripts/b1_env.sh
+source "${ARBS_ROOT:-/d/AI/ARBS-APEX}/host/scripts/b1_env.sh"
 enet="$ARBS_SRC/third-party/moonlight-common-c/enet"
 patch="$ARBS_ROOT/host/patches/enet-c7353c05-arbs-precise-time.patch"
 test "$(git -C "$enet" rev-parse HEAD)" = c7353c059373f8d3fc83d451f8f1a477be3dc94e
