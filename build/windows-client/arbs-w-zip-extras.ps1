@@ -48,6 +48,7 @@ $readme = @(
     'Install or update: unzip, then run the install tool in the "ARBS-W tools" folder (the Korean-named folder',
     'next to this file). It does not need administrator rights. If this zip and its .sha256 are nearby, they are checked too.',
     'This build is not code-signed, so Windows may show a warning. Check the SHA-256 value first.',
+    'The tool does not change or remove an earlier test build (ARBS-W test) folder or shortcut (on the first install it only reads its settings).',
     '',
     '----',
     "ARBS-W $Version (Moonlight-qt $BaseVersion 기반)",
@@ -60,7 +61,8 @@ $readme = @(
     '',
     '설치·업데이트: 압축을 푼 뒤 ''ARBS-W 도구'' 폴더의 ''ARBS-W 설치·업데이트.cmd'' 를 더블클릭합니다(관리자 권한 불필요).',
     '이 zip 과 .sha256 이 가까이 있으면 함께 확인합니다.',
-    '코드 서명이 없어 Windows 경고가 나올 수 있습니다. 먼저 SHA-256 값을 확인하세요.'
+    '코드 서명이 없어 Windows 경고가 나올 수 있습니다. 먼저 SHA-256 값을 확인하세요.',
+    '이전 시험판(ARBS-W 시험) 폴더·바로 가기는 이 도구가 바꾸거나 지우지 않습니다(첫 설치 때 설정만 읽어 옴).'
 )
 [IO.File]::WriteAllText((Join-Path $work 'README-ARBS-W.txt'), (($readme -join "`r`n") + "`r`n"), (New-Object Text.UTF8Encoding $true))
 

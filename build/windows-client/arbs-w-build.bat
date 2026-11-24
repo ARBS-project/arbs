@@ -82,18 +82,6 @@ if !ERRORLEVEL! NEQ 0 exit /b 3
 rem R1b (D-R1b-7/9): LICENSE, NOTICE, README and the user tools folder go into every zip.
 powershell -NoProfile -ExecutionPolicy Bypass -File "%ARBS_ROOT%\client-w\scripts\arbs-w-zip-extras.ps1" -Zip "%DST_ZIP%" -Version "!ARBS_W_EDITION!" -BaseVersion "%VERSION%"
 if !ERRORLEVEL! NEQ 0 exit /b 5
-rem R1b: the release name carries only the user tools; the developer test kit stays in test-named zips.
-set ARBS_RELEASE_NAME=0
-echo %OUT_BASE%| findstr /r /x /c:"arbs-w-[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*-windows-portable\.zip" >nul && set ARBS_RELEASE_NAME=1
-rem B4b 5-2: home PC test kit into the zip as test-kit\ (two launchers + lib\HomeKit.ps1, not tests\).
-rem -mcu=on = UTF-8 entry names (Korean launcher names). The hash below is computed after this step.
-if "!ARBS_RELEASE_NAME!"=="0" if exist "%ARBS_ROOT%\client-w\test-kit\lib\HomeKit.ps1" (
-    pushd "%ARBS_ROOT%\client-w"
-    7z a -tzip -mcu=on "%DST_ZIP%" "test-kit\ARBS-W-*.cmd" "test-kit\lib\HomeKit.ps1" >nul
-    set KIT_RC=!ERRORLEVEL!
-    popd
-    if !KIT_RC! NEQ 0 exit /b 4
-    echo [arbs-w-build] test-kit added
-)
+rem W011 F4: the test channel is gone; no zip gets the old test-kit launchers any more (only the user tools above).
 powershell -NoProfile -Command "$h=(Get-FileHash -LiteralPath '%DST_ZIP%' -Algorithm SHA256).Hash.ToLower(); Set-Content -LiteralPath '%DST_ZIP%.sha256' -Value ($h + '  ' + (Split-Path -Leaf '%DST_ZIP%')) -Encoding ascii; Write-Output ('[arbs-w-build] ' + $h + '  %DST_ZIP%')"
 exit /b 0
