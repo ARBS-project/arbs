@@ -10,7 +10,7 @@ setlocal enableDelayedExpansion
 set ARBS_ROOT=D:\AI\ARBS-APEX
 set ARBS_SRC=%ARBS_ROOT%\client-w\arbs-w
 set ARBS_OUT=%ARBS_ROOT%\client-w\out
-set ARBS_TC=D:\AI\toolchain
+set ARBS_TC=D:\AI\ARBS-APEX\toolchain
 set OUT_BASE=%~1
 if "%OUT_BASE%"=="" set OUT_BASE=arbs-w-build
 

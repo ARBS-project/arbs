@@ -4,4 +4,4 @@ setlocal
 set MSYSTEM=UCRT64
 set CHERE_INVOKING=1
 set HOME=
-"D:\AI\toolchain\msys64\usr\bin\bash.exe" -lc "bash /d/AI/ARBS-APEX/host/scripts/%*"
+"D:\AI\ARBS-APEX\toolchain\msys64\usr\bin\bash.exe" -lc "bash /d/AI/ARBS-APEX/host/scripts/%*"

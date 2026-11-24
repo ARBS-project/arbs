@@ -7,8 +7,8 @@
 set -u
 ROOT=/d/AI/ARBS-APEX
 SRC=$ROOT/host/arbs-h
-UCRT=/d/AI/toolchain/msys64/ucrt64/bin
-NODE=/d/AI/toolchain/node-v22.22.2-win-x64
+UCRT=/d/AI/ARBS-APEX/toolchain/msys64/ucrt64/bin
+NODE=/d/AI/ARBS-APEX/toolchain/node-v22.22.2-win-x64
 TMP=$(mktemp -d)
 rc=0
 

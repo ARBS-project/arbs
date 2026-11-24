@@ -1,7 +1,7 @@
 # ARBS build files
 
 Patches and scripts used for the ARBS-H (host) and ARBS-W (Windows client) builds, published for GPL-3.0 source
-availability. Paths inside the scripts are those of the original build PC (`D:\AI\ARBS-APEX`, `D:\AI\toolchain`); adjust them.
+availability. Paths inside the scripts are those of the original build PC (`D:\AI\ARBS-APEX`, `D:\AI\ARBS-APEX\toolchain`); adjust them.
 
 | Folder | Contents | Original location |
 |---|---|---|
