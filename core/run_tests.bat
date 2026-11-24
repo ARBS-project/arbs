@@ -10,9 +10,9 @@ set CORE=%CORE:~0,-1%
 set BUILD=%CORE%\build
 
 rem --- tool paths: environment variables win, empty = previous defaults ---
-rem   ARBS_TOOLCHAIN_DIR  folder for the dotnet/nuget caches below (default D:\AI\toolchain)
+rem   ARBS_TOOLCHAIN_DIR  folder for the dotnet/nuget caches below (default D:\AI\ARBS-APEX\toolchain)
 rem   ARBS_VCVARS         full path of vcvarsall.bat (default: Visual Studio 2022 Build Tools)
-if not defined ARBS_TOOLCHAIN_DIR set "ARBS_TOOLCHAIN_DIR=D:\AI\toolchain"
+if not defined ARBS_TOOLCHAIN_DIR set "ARBS_TOOLCHAIN_DIR=D:\AI\ARBS-APEX\toolchain"
 
 rem --- side-effect guards ---
 set VSCMD_SKIP_SENDTELEMETRY=1
