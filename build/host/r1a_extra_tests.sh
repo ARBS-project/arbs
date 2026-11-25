@@ -3,6 +3,7 @@
 #     Windows.h shim): the web UI startup toggle opens ARBSHService, never ApolloService (D-R1a-2).
 #  2. tests/unit/test_display_restore_task.py (needs Python, not found by this toolchain's CMake): restore task name.
 #  3. web unit tests (node --test scripts/*.test.ts), including the R1a update target / asset rule tests.
+#  4. ARBS WebUI unit tests (web-arbs, node --test scripts/*.test.ts), 0.2.0.
 # Usage (Git Bash or MSYS): bash r1a_extra_tests.sh   -> prints one PASS/FAIL line per test, exit 0 if all pass.
 set -u
 # CI1 (2026-11-24): ARBS_ROOT / ARBS_UCRT_BIN / ARBS_NODE_DIR override the original build PC paths.
@@ -28,6 +29,10 @@ if [ $r -eq 0 ]; then echo "PASS test_display_restore_task.py (ARBS-H-DisplayRes
 (cd "$SRC/src_assets/common/assets/web" && PATH="$NODE:$PATH" node --experimental-strip-types --test scripts/*.test.ts > "$TMP/web.log" 2>&1)
 r=$?; grep -E "^# (tests|pass|fail)" "$TMP/web.log"
 if [ $r -eq 0 ]; then echo "PASS web unit tests"; else echo "FAIL web unit tests ($r)"; rc=1; fi
+
+(cd "$SRC/src_assets/common/assets/web-arbs" && PATH="$NODE:$PATH" node --experimental-strip-types --test scripts/*.test.ts > "$TMP/web-arbs.log" 2>&1)
+r=$?; grep -E "^# (tests|pass|fail)" "$TMP/web-arbs.log"
+if [ $r -eq 0 ]; then echo "PASS web-arbs unit tests (ARBS WebUI)"; else echo "FAIL web-arbs unit tests ($r)"; rc=1; fi
 
 rm -rf "$TMP"
 exit $rc
