@@ -6,10 +6,11 @@
 # 0.2.0 (2026-11-25): ARBS WebUI at /arbs/ (new default web screen).
 # 0.2.1 (2026-11-26): ARBS WebUI polish (menu headings, gamepad list, default apps, statistics).
 # 0.2.2 (2026-11-26): ARBS WebUI menu titles in orange, session history kept 30 days by default.
+# 0.3.0 (2026-11-26): "Remote access" page, network diagnostics API, ARBS-H port 45989 for new installs.
 # CI1 (2026-11-24): ARBS_ROOT / ARBS_ISCC / ARBS_EVIDENCE_DIR may be set by the caller (CI); unset = original build PC.
 source "${ARBS_ROOT:-/d/AI/ARBS-APEX}/host/scripts/b1_env.sh"
-export ARBS_BUILD_VERSION=0.2.2
+export ARBS_BUILD_VERSION=0.3.0
 # Inno Setup 6 compiler (already present on this PC; only ISCC.exe is run, nothing is installed).
 export ARBS_ISCC="${ARBS_ISCC:-/c/Program Files (x86)/Inno Setup 6/ISCC.exe}"
 export ARBS_R1A_STAGE="$ARBS_BUILD/r1a-stage"
-export ARBS_EVIDENCE_DIR="${ARBS_EVIDENCE_DIR:-$ARBS_ROOT/evidence/H022}"
+export ARBS_EVIDENCE_DIR="${ARBS_EVIDENCE_DIR:-$ARBS_ROOT/evidence/NET2}"
