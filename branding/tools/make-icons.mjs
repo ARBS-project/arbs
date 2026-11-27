@@ -67,10 +67,21 @@ function squareOf(svg) {
 function baseFor(size) {
   return SMALL[size] ?? DEPLOY;
 }
+/**
+ * C-02 (G1): tray only, 32 px. The master's side decks end 1.25 units from the tile edge, which is under 1 px at 32 px and
+ * looks cut in the tray. This tray base moves only the two deck ends inward (3.5 -> 7, 60.5 -> 57); arch, gamepad and wave
+ * are unchanged, and the app icon (32 px and up) keeps the master as it is.
+ */
+const MASTER_DECKS = 'M3.5 40H11A21 24 0 0 1 53 40H60.5';
+if (!DEPLOY.includes(MASTER_DECKS)) throw new Error('master deck path not found');
+const TRAY32 = DEPLOY.replace(MASTER_DECKS, 'M7 40H11A21 24 0 0 1 53 40H57').replace('<title>ARBS</title>', '<title>ARBS (tray base, 32 px)</title>');
+function trayBaseFor(size) {
+  return size === 32 ? TRAY32 : baseFor(size);
+}
 
 /** Tray state badge (docs/analysis/H031.md §5-2): bottom-right circle with a white ring; shape differs per state. */
 function traySvg(state, size) {
-  const base = baseFor(size);
+  const base = trayBaseFor(size);
   const [, , vw, vh] = viewBoxOf(base);
   const s = size / 16; // 1 px at 16
   // Whole pixels so the badge stays sharp: diameter 7 / 9 / 11 / 14 px at 16 / 20 / 24 / 32, ring 1 px up to 31 px.
@@ -255,7 +266,7 @@ try {
     for (const size of TRAY_SIZES) {
       const svg = traySvg(state, size);
       if (state && [16, 20, 24, 32].includes(size)) put(`svg/arbs-tray-${state}-${size}.svg`, svg);
-      images.push({ size, rgba: state ? await render(svg, size) : appImg[size] ?? (await render(baseFor(size), size)) });
+      images.push({ size, rgba: state ? await render(svg, size) : await render(trayBaseFor(size), size) });
     }
     put(`ico/arbs-tray${state ? `-${state}` : ''}.ico`, ico(images));
   }
@@ -268,6 +279,49 @@ try {
   put('web/apple-touch-icon.png', png(await render(square, 180), 180, 180));
   put('web/arbs-logo-45.png', png(await render(DEPLOY, 45), 45, 45));
   put('web/arbs-logo-90.png', png(await render(DEPLOY, 90), 90, 90));
+
+  put('svg/arbs-tray-base-32.svg', TRAY32);
+
+  // C-02 (G1): margin between each side deck end and the transparent area outside the tile, in whole orange pixels.
+  // Per row: from the first fully opaque pixel, count pixels that are the tile orange (each channel within 3); rows with
+  // no other colour are skipped; the smallest count is the margin. Badge states: a row whose first non-orange pixel from
+  // the right lies in the badge circle (radius + 1 px) is skipped on that side, since the badge sits on the corner by design.
+  const margins = [];
+  const isOrange = (d, i) => d[i + 3] === 255 && Math.abs(d[i] - 0xc2) <= 3 && Math.abs(d[i + 1] - 0x41) <= 3 && Math.abs(d[i + 2] - 0x0c) <= 3;
+  function margin(rgba, size, badgeD = 0) {
+    const c = size - badgeD / 2;
+    const inBadge = (x, y) => badgeD > 0 && (x + 0.5 - c) ** 2 + (y + 0.5 - c) ** 2 <= (badgeD / 2 + 1) ** 2;
+    let left = Infinity;
+    let right = Infinity;
+    for (let y = 0; y < size; y++) {
+      const row = (x) => (y * size + x) * 4;
+      let x0 = 0;
+      while (x0 < size && rgba[row(x0) + 3] !== 255) x0++;
+      let x1 = size - 1;
+      while (x1 >= 0 && rgba[row(x1) + 3] !== 255) x1--;
+      if (x0 > x1) continue;
+      let other = false;
+      for (let x = x0; x <= x1; x++) if (!isOrange(rgba, row(x))) other = true;
+      if (!other) continue;
+      let k = 0;
+      while (x0 + k <= x1 && isOrange(rgba, row(x0 + k))) k++;
+      left = Math.min(left, k);
+      let r = 0;
+      while (x1 - r >= x0 && isOrange(rgba, row(x1 - r))) r++;
+      if (!inBadge(x1 - r, y)) right = Math.min(right, r);
+    }
+    return { left, right };
+  }
+  for (const s of [16, 20, 24, 32, 48]) margins.push({ icon: 'app', size: s, ...margin(appImg[s], s) });
+  for (const state of ['', 'playing', 'pausing', 'locked']) {
+    for (const s of [16, 20, 24, 32]) {
+      const rgba = await render(state ? traySvg(state, s) : trayBaseFor(s), s);
+      const d = Math.round((7 * s) / 16);
+      margins.push({ icon: `tray-${state || 'default'}`, size: s, ...margin(rgba, s, state ? d : 0) });
+    }
+  }
+  put('check/margins.json', JSON.stringify(margins, null, 1) + '\n');
+  console.log(margins.map((m) => `${m.icon} ${m.size}: left ${m.left}, right ${m.right}`).join('\n'));
 
   // 4. White drawing only.
   const glyph = glyphOf(MASTER);
@@ -341,7 +395,7 @@ ${vdPath(strokes[1].d, strokes[1].w, color)}
   for (const state of ['', 'playing', 'pausing', 'locked']) {
     temp[state] = [];
     for (const s of sizes) {
-      const rgba = state ? await render(traySvg(state, s), s) : appImg[s];
+      const rgba = await render(state ? traySvg(state, s) : trayBaseFor(s), s);
       temp[state].push({ size: s, src: `data:image/png;base64,${png(rgba, s, s).toString('base64')}` });
     }
   }

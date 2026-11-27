@@ -5,9 +5,9 @@
   <!-- Small-size version of arbs-icon-master.svg on the 20 px grid: 2 px arch and decks, 1.5 px gamepad, wave with 2 bumps. -->
   <rect width="20" height="20" rx="4" fill="#c2410c"/>
   <g fill="none" stroke="#fff">
-    <path d="M1 13H3A7 9 0 0 1 17 13H19" stroke-width="2"/>
-    <path d="M7.5 9.25H12.5Q14.25 9.25 14.25 11V14.5Q14.25 15.25 13.5 15.25H13L11.25 14H8.75L7 15.25H6.5Q5.75 15.25 5.75 14.5V11Q5.75 9.25 7.5 9.25Z" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M7.25 11.6q1.375-1.6 2.75 0t2.75 0" stroke-width="1.5"/>
+    <path d="M2 13H4A6 9 0 0 1 16 13H18" stroke-width="2"/>
+    <path d="M8.5 9.25H11.5Q13.25 9.25 13.25 11V14.5Q13.25 15.25 12.5 15.25H12L10.75 14H9.25L8 15.25H7.5Q6.75 15.25 6.75 14.5V11Q6.75 9.25 8.5 9.25Z" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M7.75 11.6q1.125-1.6 2.25 0t2.25 0" stroke-width="1.5"/>
   </g>
 </svg>
   <circle cx="15.5" cy="15.5" r="4.5" fill="#fff"/><rect x="14" y="14" width="1" height="4" fill="#1f2937"/><rect x="16" y="14" width="1" height="4" fill="#1f2937"/>

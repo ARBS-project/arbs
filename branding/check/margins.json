@@ -1,0 +1,128 @@
+[
+ {
+  "icon": "app",
+  "size": 16,
+  "left": 1,
+  "right": 1
+ },
+ {
+  "icon": "app",
+  "size": 20,
+  "left": 2,
+  "right": 2
+ },
+ {
+  "icon": "app",
+  "size": 24,
+  "left": 2,
+  "right": 2
+ },
+ {
+  "icon": "app",
+  "size": 32,
+  "left": 0,
+  "right": 0
+ },
+ {
+  "icon": "app",
+  "size": 48,
+  "left": 1,
+  "right": 1
+ },
+ {
+  "icon": "tray-default",
+  "size": 16,
+  "left": 1,
+  "right": 1
+ },
+ {
+  "icon": "tray-default",
+  "size": 20,
+  "left": 2,
+  "right": 2
+ },
+ {
+  "icon": "tray-default",
+  "size": 24,
+  "left": 2,
+  "right": 2
+ },
+ {
+  "icon": "tray-default",
+  "size": 32,
+  "left": 2,
+  "right": 2
+ },
+ {
+  "icon": "tray-playing",
+  "size": 16,
+  "left": 1,
+  "right": 2
+ },
+ {
+  "icon": "tray-playing",
+  "size": 20,
+  "left": 2,
+  "right": 3
+ },
+ {
+  "icon": "tray-playing",
+  "size": 24,
+  "left": 2,
+  "right": 3
+ },
+ {
+  "icon": "tray-playing",
+  "size": 32,
+  "left": 2,
+  "right": 4
+ },
+ {
+  "icon": "tray-pausing",
+  "size": 16,
+  "left": 1,
+  "right": 2
+ },
+ {
+  "icon": "tray-pausing",
+  "size": 20,
+  "left": 2,
+  "right": 3
+ },
+ {
+  "icon": "tray-pausing",
+  "size": 24,
+  "left": 2,
+  "right": 3
+ },
+ {
+  "icon": "tray-pausing",
+  "size": 32,
+  "left": 2,
+  "right": 4
+ },
+ {
+  "icon": "tray-locked",
+  "size": 16,
+  "left": 1,
+  "right": 2
+ },
+ {
+  "icon": "tray-locked",
+  "size": 20,
+  "left": 2,
+  "right": 3
+ },
+ {
+  "icon": "tray-locked",
+  "size": 24,
+  "left": 2,
+  "right": 3
+ },
+ {
+  "icon": "tray-locked",
+  "size": 32,
+  "left": 2,
+  "right": 4
+ }
+]

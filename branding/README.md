@@ -20,6 +20,8 @@ outline inside the arch, and a soft wave inside the gamepad.
 | `ico/arbs.ico` | Windows app icon: 16, 20, 24, 32, 48, 64 (32-bit BMP entries) and 256 (PNG entry). |
 | `ico/arbs-tray.ico`, `arbs-tray-playing.ico`, `arbs-tray-pausing.ico`, `arbs-tray-locked.ico` | ARBS-H tray states: 16, 20, 24, 32, 40, 48, 64, 128. Default = the app icon; streaming = green dot; paused = white dot with two bars; locked = dark dot (padlock from 32 px). Each badge has a white ring and its own shape, so colour is not the only difference. |
 | `svg/arbs-tray-<state>-<size>.svg` | The tray badge drawings at 16 / 20 / 24 / 32 px (generated). |
+| `svg/arbs-tray-base-32.svg` | Tray only, 32 px: the master with the two side-deck ends moved inward (3.5 -> 7, 60.5 -> 57) so they do not look cut at the tile edge; arch, gamepad and wave unchanged. The app icon keeps the master. |
+| `check/margins.json` | Whole orange pixels between each side-deck end and the outside of the tile (16 / 20 / 24 / 32 / 48 app, 16-32 tray states). Small versions keep at least 1 px at 16 and 2 px at 20 / 24 / tray 32. |
 | `svg/arbs-glyph.svg` | White drawing only, no background (generated). |
 | `web/favicon.ico` (16, 32, 48), `web/icon.svg`, `web/arbs-logo.svg`, `web/apple-touch-icon.png` (180, full square), `web/arbs-logo-45.png`, `web/arbs-logo-90.png` | Web copies. The SVGs are the master without its metadata block (drawing unchanged). |
 | `android/res/...`, `android/play-512.png` | Android adaptive icon (background `#c2410c`, white foreground and monochrome layer inside the 66 dp safe zone) and legacy launcher PNGs. Files only: ARBS-A uses them in a later update. |
