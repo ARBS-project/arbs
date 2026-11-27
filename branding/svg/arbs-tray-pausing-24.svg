@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <title>ARBS tray (pausing, 24 px)</title>
+  <svg x="0" y="0" width="24" height="24" viewBox="0 0 24 24">
+  
+  <!-- Small-size version of arbs-icon-master.svg on the 24 px grid: 2 px arch and decks, 1.5 px gamepad, 2 px wave with 2 bumps. -->
+  <rect width="24" height="24" rx="5" fill="#c2410c"/>
+  <g fill="none" stroke="#fff">
+    <path d="M1 15H4A8 9 0 0 1 20 15H23" stroke-width="2"/>
+    <path d="M8.75 10.25H15.25Q17.25 10.25 17.25 12.25V16.5Q17.25 17.5 16.25 17.5H15.75L13.5 16H10.5L8.25 17.5H7.75Q6.75 17.5 6.75 16.5V12.25Q6.75 10.25 8.75 10.25Z" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M9 13.1q1.5-1.5 3 0t3 0" stroke-width="2"/>
+  </g>
+</svg>
+  <circle cx="18.5" cy="18.5" r="5.5" fill="#fff"/><rect x="16" y="16" width="2" height="5" fill="#1f2937"/><rect x="20" y="16" width="2" height="5" fill="#1f2937"/>
+</svg>

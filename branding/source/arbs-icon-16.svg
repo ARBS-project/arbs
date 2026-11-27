@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <title>ARBS (16 px)</title>
+  <!-- Small-size version of arbs-icon-master.svg: same parts (arch + side decks, gamepad outline, soft wave),
+       drawn on the 16 px grid: 2 px arch and decks, 1 px gamepad, wave with 2 bumps, straight lines on pixel edges. -->
+  <rect width="16" height="16" rx="3" fill="#c2410c"/>
+  <g fill="none" stroke="#fff">
+    <path d="M0 11H2A6 7 0 0 1 14 11H16" stroke-width="2"/>
+    <path d="M6 7.5H10Q11.5 7.5 11.5 9V12Q11.5 12.5 11 12.5H10.5L9.25 11.5H6.75L5.5 12.5H5Q4.5 12.5 4.5 12V9Q4.5 7.5 6 7.5Z" stroke-width="1" stroke-linejoin="round"/>
+    <path d="M5.5 9.5q1.25-2 2.5 0t2.5 0" stroke-width="1"/>
+  </g>
+</svg>
